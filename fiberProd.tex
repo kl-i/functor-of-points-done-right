@@ -1,0 +1,423 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+We give intuition for fiber products of affine schemes.
+To do this, we first give intuition for fiber products of sets.
+A fiber product generalises the following notions : 
+\begin{enumerate}
+  \item Given a map $f : X \to Y$ of sets,
+  then subsets $V$ of $Y$ pullback to subsets $f^{-1}V$ of $X$.
+  \item Given two sets $X , Y$ ,
+  we can form the product $X \times Y$.
+\end{enumerate}
+To describe fiber products,
+it is convenient to realise the following tautology : 
+a map of sets $X \to S$ can equivalently be thought of as
+a family of sets $X_s$ parameterised by points $s \in S$
+where $X_s$ are the fibers of the map above $s$.
+This is called the \emph{relative point of view}
+and it was first realized by Grothendieck.
+To emphasize that when we are thinking of $X \to S$
+as a family of sets over $S$,
+one often draws the arrow \emph{vertically}.
+\begin{cd}
+  X \\
+  S 
+  \arrow[from = 1-1 , to = 2-1]
+\end{cd}
+With this, we are ready for the fiber product.
+\begin{dfn}[Fiber product of sets]
+  
+  Let $S$ be a set and $X \to S , Y \to S$ be families of sets over $S$.
+  We define their \emph{fiber product} as
+  \[
+    X \times_S Y := \coprod_{s \in S} X_s \times Y_s
+  \]
+  This has a natural projection to $S$
+  making it a family of sets over $S$ with
+  fiber over $s$ giving $X_s \times Y_s$.
+\end{dfn}
+
+\begin{ex}
+  Show that we can alternatively define 
+  \[
+    X \times_S Y := 
+    \set{ (x , y) \in X \times Y \st x = y \text{ when projected to } S}  
+  \]
+  Projection into the $X$ and $Y$ factors gives
+  maps \[
+    X \leftarrow X \times_S \rightarrow Y  
+  \]
+  By definition, the two are equal when composed with
+  $X \to S , Y \to S$ respectively
+  and thus defines a morphism $X \times_S Y \to S$.
+\end{ex}
+
+\begin{prop}[Universal property of fiber product of sets]
+  
+  Let $S$ be a set and $X \to S , Y \to S$ be families of sets over $S$.
+  Define \[
+    X \times_S Y \to X
+  \] by doing
+  the projection $X_s \times Y_s \to X_s$ for each fiber above $s \in S$.
+  We can similarly define $X \times_S Y \to Y$.
+  Then we have a commutative square \begin{cd}
+    X & {X \times_S Y} \\
+    S & Y
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=2-2, to=2-1]
+  \end{cd}
+  and furthermore,
+  for any $T \to S$ together with maps
+  $x : T \to X$ and $y : T \to Y$ over $S$,
+  there exists a unique map $(x , y) : T \to X \times_S Y$
+  commuting with the two projections to $X, Y$.
+  \begin{cd}
+    & & T \\
+    X & {X \times_S Y} \\
+    S & Y
+    \arrow[from=2-1, to=3-1]
+    \arrow[from=2-2, to=2-1]
+    \arrow[from=2-2, to=3-2]
+    \arrow[from=3-2, to=3-1]
+    \arrow["x"', bend right = 30, from=1-3, to=2-1]
+    \arrow["y", bend left = 30, from=1-3, to=3-2]
+    \arrow["{(x , y)}"{description}, dashed, from=1-3, to=2-2]
+  \end{cd}
+
+\end{prop}
+\begin{proof}
+  An easy exercise.
+\end{proof}
+
+Given a commutative square \begin{cd}
+  X & T \\
+	S & Y
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=1-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=2-2, to=2-1]
+\end{cd}
+such that the induced map $T \to X \times_S Y$ is an isomorphism,
+we denote \begin{cd}
+  X & T \\
+	S & Y
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=1-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=2-2, to=2-1]
+	\arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-2, to=2-1]
+\end{cd}
+and say that we have a \emph{cartesian square}.
+
+Using the universal property,
+it is easy to verify the following.
+(It is also easy to directly provide an isomorphism.)
+
+\begin{eg}[Pullback of subsets as fiber products]
+  
+  Let $f : X \to Y$ be a map of sets.
+  For the inclusion of a subset $V \subs Y$,
+  we have an isomorphism of sets over $X$ \[
+    f^{-1}V \simeq X \times_Y V  
+  \]
+\end{eg}
+
+\begin{eg}[Products as fiber products]
+  
+  For $X \to S$ and $Y \to S$ where $S$ is singleton,
+  we have \[
+    X \times_S X \simeq X \times Y  
+  \]
+\end{eg}
+
+To deal with fiber products in a general category such as $\AFF_k$,
+one reverses the above and defines
+fiber products by the universal property.
+First, we introduce terminology for the relative point of view.
+
+\begin{dfn}
+  
+  Let $S$ be an affine scheme over $k$.
+  Then \emph{an affine scheme over $S$} is defined as
+  a morphism $T \to S$ in $\AFF_k$.
+\end{dfn}
+
+Meta remark : 
+The ``logically correct'' thing to do that we could have done
+at the beginning of our theory is to start by defining
+the category of affine schemes $\AFF$ as
+opposite to the category of commutative rings,
+not over any base field in particular.
+Then for every field $k$,
+the category of affine schemes over $\SPEC k$
+is equivalent to what we have called $\AFF_k$.
+Of course, this was inconvenient for our
+narrative of commutative algebras as formalising physical systems
+which is why we started with $\AFF_k$.
+We hope the reader will forgive us.
+We will henceforth work with $\AFF$ as our basic category of affine schemes.
+All the results of closed embeddings and basic opens still hold
+without a base field by the same arguments.
+Affine $n$-space $\bA^n$ is defined instead as $\bZ[x_1 , \dots , x_n]$
+and its universal property is similarly proved.
+
+\begin{dfn}[Fiber products in $\AFF$]
+
+  Let $X \to S , Y \to S$ be affine schemes over an affine scheme $S$.
+  A \emph{fiber product of $X , Y$ over $S$} is
+  an affine scheme $X \times_S Y$ together with
+  morphisms $X \times_S Y \to X , Y$ such that we have
+  a commutative square \begin{cd}
+    X & {X \times_S Y} \\
+    S & Y
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=2-2, to=2-1]
+  \end{cd}
+  and furthermore,
+  for any $T \to S$ together with maps
+  $x : T \to X$ and $y : T \to Y$ over $S$,
+  there exists a unique map $(x , y) : T \to X \times_S Y$
+  commuting with the two projections to $X, Y$.
+  \begin{cd}
+    & & T \\
+    X & {X \times_S Y} \\
+    S & Y
+    \arrow[from=2-1, to=3-1]
+    \arrow[from=2-2, to=2-1]
+    \arrow[from=2-2, to=3-2]
+    \arrow[from=3-2, to=3-1]
+    \arrow["x"', bend right = 30, from=1-3, to=2-1]
+    \arrow["y", bend left = 30, from=1-3, to=3-2]
+    \arrow["{(x , y)}"{description}, dashed, from=1-3, to=2-2]
+  \end{cd}
+\end{dfn}
+
+We give examples of fiber products.
+
+\begin{eg}[Zero locus is the preimage of zero]
+  
+  Let $i$ denote the closed embedding \[
+    \set{0} \to \bA^1
+  \]
+  corresponding to the quotient map $\bZ[t] \to \bZ[t] / (t)$.
+  Let $f \in A$ where $A$ is a ring.
+  Reinterpreting $f$ as a map $\SPEC A \to \bA^1$,
+  we can consider the fiber product : 
+  \begin{cd}
+    {\mathrm{Spec}\,A} & {?} \\
+    {\mathbb{A}^1} & {\{0\}}
+    \arrow["f"', from=1-1, to=2-1]
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow["i", from=2-2, to=2-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-2, to=2-1]
+  \end{cd}
+  Unraveling the definition of fiber products,
+  we are trying to find a ring $B$ together with a commutative diagram
+  \begin{cd}
+    A & B \\
+    {\mathbb{Z}[t]} & {\mathbb{Z}[t] / (t)}
+    \arrow["{t \mapsto f}", from=2-1, to=1-1]
+    \arrow["{t \mapsto t}"', from=2-1, to=2-2]
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=2-2, to=1-2]
+  \end{cd}
+  such that 
+  for all algebras $C$ with maps
+  $A \to C$ and $\bZ[t]/(t) \to C$ such that
+  both agree when restricted to $\bZ[t]$,
+  there exists a unique map $B \to C$ making the following diagram commute :
+  \begin{cd}
+    && C \\
+    A & B \\
+    {\mathbb{Z}[t]} & {\mathbb{Z}[t] / (t)}
+    \arrow["{t \mapsto f}", from=3-1, to=2-1]
+    \arrow["{t \mapsto t}"', from=3-1, to=3-2]
+    \arrow[from=2-1, to=2-2]
+    \arrow[from=3-2, to=2-2]
+    \arrow[from=2-1, to=1-3, bend left = 20]
+    \arrow[from=3-2, to=1-3, bend right = 20]
+    \arrow["{\exists !}"{description}, dashed, from=2-2, to=1-3]
+  \end{cd}
+  The fact that the square for $B$ commutes
+  is equivalent to the fact that under $A \to B$,
+  the element $f$ becomes zero.
+  The map $\bZ[t] / (t) \to B$ is completely determined
+  by the map $\bZ[t] \to A \to B$.
+
+  Similarly, the map $\bZ[t] / (t) \to C$ is uniquely determined by the map
+  $\bZ[t] \to A \to C$ and exists iff
+  $\bZ[t] \to A \to C$ sends $t$ to zero in $C$,
+  which happens iff $f \in A$ is sent to zero in $C$.
+  This shows that the universal property of $B$ as a fiber product
+  is equivalent to the universal property of $A \to B$,
+  which is plainly the universal property of the quotient map 
+  $A \to A / (f)$.
+  This shows that we have a cartesian square   
+  \begin{cd}
+    {\mathrm{Spec}\,A} & {\SPEC A / (f)} \\
+    {\mathbb{A}^1} & {\{0\}}
+    \arrow["f"', from=1-1, to=2-1]
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow["i", from=2-2, to=2-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-2, to=2-1]
+  \end{cd}
+  In other words, 
+  \emph{the zero locus of $f$ is the preimage of
+  0 in $\bA^1$ under the reinterpretation of $f$ as a map
+  $\SPEC A \to \bA^1$}.
+
+\end{eg}
+
+\begin{eg}[Basic open is the preimage of $\bA^1 \setminus \set{0}$]
+  
+  Let $j$ denote the inclusion of the basic open \[
+    \bA^1\setminus\set{0} := D(t) \to \bA^1 
+  \]
+  corresponding to the ring map $\bZ[t] \to \bZ[t , t^{-1}]$.
+  Let $f \in A$ where $A$ is a ring.
+  Reinterpreting $f$ as a map $\SPEC A \to \bA^1$,
+  one can similarly show that we have a cartesian square :
+  \begin{cd}
+    {\mathrm{Spec}\,A} & {D(f)} \\
+    {\mathbb{A}^1} & {D(t)}
+    \arrow["f"', from=1-1, to=2-1]
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow["j", from=2-2, to=2-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-2, to=2-1]
+  \end{cd}
+\end{eg}
+
+\begin{eg}
+  
+  An easy exercise is to show that $\bA^2$ with its two projections
+  to $\bA^1$ is a fiber product of $\bA^1 , \bA^1$ over
+  $\SPEC \bZ$.
+\end{eg}
+
+\begin{eg}[A family of pairs of points]
+  
+  For this example, let us work over an algebraically closed field $k$,
+  which means we are working in $\AFF_k$.
+  We will further assume $k$ has characteristic not equal to two.
+  Consider the following morphism
+  \[
+    \varphi : \bA^1_k \to \bA^1_k , t \mapsto t^2
+  \]
+  corresponding to the $k$-algebra map
+  $k[t] \to k[t] , t \mapsto t^2$.
+  We have an identitification : 
+  \[
+    \bA^1_k(k) \simeq k , \la \mapsto t(\la)  
+  \]
+  For each $\la \in k$ let $\la$ also denote
+  the morphism $\SPEC k \to \bA^1_k$ of affine schemes over $k$.
+  Let us investigate the fibers of $\varphi$ over $\la$,
+  or in other words,
+  give a fiber product \begin{cd}
+    {\bA^1_k} & {\SPEC A_\la} \\
+    {\bA^1_k} & {\SPEC k}
+    \arrow["{t^2}"', from=1-1, to=2-1]
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow["{\la}", from=2-2, to=2-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-2, to=2-1]
+  \end{cd}
+  Unraveling the definition of fiber products,
+  one can see that $A_\la$ is supposed to have
+  an element $f$ with $f^2 - \la = 0$ and
+  $A_\la$ is supposed to be the universal such $k$-algebra.
+  $A_\la = k[t] / (t^2 - \la)$ does the trick.
+  Indeed, we have a commutative square \begin{cd}
+    {k[t]} & {k[t] / (t^2 - \lambda)} \\
+    {k[t]} & k
+    \arrow["{t \mapsto t^2}", from=2-1, to=1-1]
+    \arrow["{t \mapsto \lambda}"', from=2-1, to=2-2]
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=2-2, to=1-2]
+  \end{cd}
+  and the universal property is equivalent to
+  the universal property of the quotient map
+  $k[t] \to k[t] / (t^2 - \la)$.
+
+  The interesting thing here is that for $\la \neq 0$,
+  since $k$ is algebraically closed and characteristic not two,
+  we have a factoring \[
+    t^2 - \la = (t - a) (t + a)
+  \]
+  with $a \neq - a \in k$.
+  By the chinese remainder theorem, we then have \[
+    k[t] / (t^2 - \la) \simeq k[t] / (t - a) \times k[t] / (t + a)  
+  \]
+  From this it follows that $\SPEC A_\la$ has
+  exactly two $k$-points corresponding to $\pm a$.
+
+  When $\la = 0$ we do not have such a factoring.
+  We have \[
+    \SPEC A_\la = \SPEC k[t] / (t^2)  
+  \]
+  which only has a single $k$-point corresponding to $t = 0$.
+  So the map \begin{cd}
+    {\bA^1_k} \\
+    {\bA^1_k}
+    \arrow[from = 1-1, to = 2-1 , "{t^2}"]
+  \end{cd}
+  behaves almost like a family of two points at the level of $k$-points.
+  It only fails at the origin.
+  \textbf{However},
+  if instead of counting the number of $k$-points we counted
+  the \emph{dimension} of $A_\la$ as a vector space over $k$,
+  then we would get a constant number two.
+  Indeed, we will see much later that
+  this is a consequence of the fact
+  \[
+    k[t] = k[t^2] \oplus t k[t^2] 
+  \]
+  as modules over $k[t^2]$ and hence $\varphi : k[t] \to k[t]$
+  exhibits the latter as a free rank 2 module over $k[t]$.
+  So in this sense,
+  we do have a family of two points;
+  it's just that sometimes the two points are ``on top of each other''.
+  In algebraic geometry, this is called a \emph{double point}.
+  This shows that \emph{nilpotents} are useful
+  for keeping track of ``degenerate cases''
+  such as $\la = 0$ in this example.
+\end{eg}
+
+For fiber products in general, we have the following :
+
+\begin{prop}[Fiber products exist in affine schemes.]
+  
+  Let $A \to B , A \to C$ be algebra maps.
+  Then a fiber product of $\SPEC B , \SPEC C$ over $\SPEC A$
+  is given by $\SPEC (B \otimes_A C)$
+  where $B \otimes_A C$ is the tensor product of
+  $B$ and $C$ over $A$ as rings.
+\end{prop}
+\begin{proof}
+  This is a restatement of universal property of the tensor product of rings.
+\end{proof}
+
+We have secretly danced around an important question : 
+\[
+  \text{\emph{Given two fiber products of the same diagram,
+  are they isomorphic?}}  
+\]
+More generally, we have seen many examples of objects with
+universal properties by now.
+\[
+  \text{\emph{Given two objects with the same universal properties,
+  are they isomorphic?}}  
+\]
+The answer is given by \emph{Yoneda's lemma}
+but we will delay the discussion to a later section
+so that we can give more examples of ``algebra capturing geometry''.
+
+\end{document}

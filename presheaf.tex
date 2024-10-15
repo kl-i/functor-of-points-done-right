@@ -1,0 +1,399 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+Before we discuss an example of ``non-affine phenomenon'',
+which will lead us to the definition of schemes,
+let us give the promised discussion on
+\emph{uniqueness} of objects equipped with universal properties.
+This will nicely lead us to consider
+an enlargement of $\AFF$ in which schemes will eventually reside.
+The reader familiar with category theory can skip this section.
+
+To recap, we have seen the following examples of
+objects with universal properties :
+\begin{enumerate}
+  \item The affine lines $\bA^1$ has the universal property that
+  morphisms into it correspond to elements of coordinate rings.
+  In other words,
+  we have an isomorphism \[
+    \AFF(S , \bA^1)  \simeq \cO(S)
+  \]
+  functorial in $S \in \AFF$.
+  \item Given a closed embedding $i : Z \to X$ in $\AFF$
+  with ideal $I_Z$,
+  a morphism $S \to X$ factors through $i$ iff
+  $I_Z$ pullsback to zero on $S$ and the
+  factoring is unique when it exists.
+  This can be phrased as saying
+  composition with $i$ gives a bijection
+  \[
+    \AFF (S , Z) \simeq \set{
+      x \in \AFF(S , X) \st \forall\,f \in I_Z , f(x) = 0
+    } 
+  \]
+  functorial in $S \in \AFF_k$.
+  This is a nice rephrasing because the latter set
+  is a subset of $\AFF(S , X)$
+  which aligns with the idea that $i$ realises
+  $Z$ as a ``subspace'' of $X$.
+  \item Let $X \in \AFF$ and $f \in \cO(X)$.
+  Then the universal property of $j : D(f) \to X$ can 
+  phrased as saying the composition with $j$ gives a bijection
+  \[
+    \AFF(S , D(f)) \simeq \set{
+      x \in \AFF(S , X) \st f(x) \in \cO(S)^\times
+    }
+  \]
+  functorial in $S \in \AFF$.
+  Again, the latter is a subset of $\AFF(S , X)$ which is nice
+  because one thinks of $j$ as realising $D(f)$ as a ``subspace'' of $X$.
+  \item Let $X , Y$ be affine schemes over an affine scheme $S$.
+  Given a fiber product $W$ of $X , Y$ over $S$
+  with projections $a : W \to X , b : W \to Y$,
+  note that composition by $a$ and $b$ gives 
+  \[
+    \AFF(T , W) \to \AFF(T , X)  
+  \]
+  \[
+    \AFF(T , W) \to \AFF(T , Y)  
+  \]
+  functorial in $T \in \AFF$.
+  Furthermore, the assumption that $W \to X \to S$ equals
+  $W \to Y \to S$ implies that
+  we have a map of sets \[
+    \AFF(T , W) \to \AFF(T , X) \times_{\AFF(T , S)} \AFF(T , Y)
+  \]
+  functorial in $T \in \AFF$.
+  The universal property of $W$ as a fiber product
+  then precisely says that the above map
+  functorial in $T$ is a bijection.
+\end{enumerate}
+
+The finite disjoint union and basic Zariski coverings
+are of a dual nature since their universal property is
+not about mapping \emph{into} them but rather
+mapping \emph{out}.
+We will discuss these in the next section.
+
+Back to the four examples above,
+the common pattern is that
+they are all of the form of \[
+  \AFF(\_ , \cX) \simeq F(\_)  
+\]
+where \begin{itemize}
+  \item $F$ is a functor $\AFF^\OP \to \SET$
+  describing the desired property
+  \item $\cX$ is an affine scheme and $\AFF(\_ , \cX)$
+  is the functor $\AFF^\OP \to \SET, S \mapsto \AFF(S , \cX)$.
+  \item the above isomorphism exhibits $\cX$
+  as being the \emph{universal} affine scheme
+  with the desired property specificed by $F$.
+\end{itemize}
+Our goal is to show that in the above situation,
+the affine scheme $\cX$ is unique is some appropriate sense.
+Now that we have enough examples,
+we make the formal development.
+
+\begin{dfn}
+  
+  The category of \emph{presheaves (on $\AFF$)} is
+  defined as the category of functors $\AFF^\OP \to \SET$.
+
+  For each $S \in \AFF$,
+  we have the presheaf \[
+    \underline{S} : \AFF^\OP \to \SET ,
+    T \mapsto S(T)
+  \]
+  This defines a functor called the \emph{Yoneda embedding}
+  \[
+    \AFF \to \PSH \AFF , S \mapsto \underline{S}    
+  \]
+\end{dfn}
+Hopefully through the four examples we have seen now,
+one can see that intuitively a presheaf $X$ is supposed
+to be ``something affine schemes map into''.
+In more details,
+\begin{itemize}
+  \item For each $S \in \AFF$, one should think of
+  the set $X(S)$ as ``the set of morphisms $S \to X$''.
+  \item Given $t : T \to S$ in $\AFF$,
+  we should be able to ``restrict morphisms $S \to X$
+  to get morphisms $T \to X$''.
+  In other words, we should be given a map of sets 
+  \[
+    X(S) \to X(T) 
+  \]
+  which we will denote with $x \mapsto x t$.
+  \item If $t = \id_S : S \to S$,
+  then we should have \[
+    X(S) \to X(S) , x \mapsto x \id_S = x
+  \]
+  \item Functoriality of $X$ expresses
+  the idea that iterated restriction
+  should be equal to restricting along the composition.
+  \item A morphism of presheaves $\varphi : X \to Y$ should be
+  the data of turning maps $S \to X$ from $S \in \AFF$
+  into $S \to Y$.
+  In other words, for every $S \in \AFF$ a map \[
+    \varphi : X(S) \to Y(S)  
+  \]
+  Naturality expresses the idea that
+  given $t : T \to S$ in $\AFF$,
+  composing $x : S \to X$ by $\varphi$ then restricting along $t$
+  should be equal to first restricting along $T$ and then
+  composing with $\varphi$.
+  \[
+    (\varphi x) t  = \varphi (x t) 
+  \]
+  \item Each affine $S$ is clearly something
+  that affines can map to.
+  This is what $\underline{S}$ records.
+\end{itemize}
+With the above intuition,
+one obvious question to ask is whether we have an isomorphism
+\[
+  (\PSH \AFF)(\underline{S} , X) \simeq X(S)
+\]
+for a presheaf $X$ and affine $S$.
+Given a morphism $\varphi : \underline{S} \to X$
+which we see as a map from $S \to X$ as presheaves,
+we should be able to get a map $S \to X$ as a point in $X(S)$.
+The obvious thing to do is to ``compose $\varphi$ with the identity of $S$''.
+This is precisely \emph{Yoneda's lemma}.
+\begin{prop}[Yoneda's lemma]
+  
+  We have a bijection \[
+    (\PSH \AFF)(\underline{S} , X) \simeq X(S) ,
+    \varphi \mapsto \varphi \id_S
+  \]
+  functorial in $X \in \PSH \AFF$ and $S \in \AFF$.
+  We will henceforth confuse the two sets.
+\end{prop}
+\begin{proof}
+  (Functoriality in $S$)
+  Given $t : T \to S$,
+  we have \begin{cd}
+    {\varphi \underline{t}} &&& {(\varphi \, \underline{t})(\id_T) = \varphi (t)
+    = (\varphi \id_S) t} \\
+    & {\mathrm{PSh}(\underline{T} , X)} & {X(T)} \\
+    & {\mathrm{PSh}(\underline{S} , X)} & {X(S)} \\
+    \varphi &&& {\varphi \id_S}
+    \arrow[from=3-2, to=3-3]
+    \arrow[from=3-2, to=2-2]
+    \arrow[from=3-3, to=2-3]
+    \arrow[from=2-2, to=2-3]
+    \arrow[from=4-1, to=1-1]
+    \arrow[from=4-1, to=4-4]
+    \arrow[from=4-4, to=1-4]
+    \arrow[from=1-1, to=1-4]
+  \end{cd}
+
+  (Functoriality in $X$)
+  Given $\varphi : X \to Y$, we have 
+  \begin{cd}
+    x &&& {x \id_S} \\
+    & {\mathrm{PSh}(\underline{S} , X)} & {X(S)} \\
+    & {\mathrm{PSh}(\underline{S} , Y)} & {Y(S)} \\
+    {\varphi x} &&& {(\varphi x) \id_S = \varphi (x \id_S)}
+    \arrow[from=3-2, to=3-3]
+    \arrow[from=2-2, to=2-3]
+    \arrow[from=2-2, to=3-2]
+    \arrow[from=2-3, to=3-3]
+    \arrow[from=1-1, to=4-1]
+    \arrow[from=4-1, to=4-4]
+    \arrow[from=1-1, to=1-4]
+    \arrow[from=1-4, to=4-4]
+  \end{cd}
+
+  (Inverse) Given $x \in X(S)$, we construct 
+  $\underline{x} : \underline{S} \to X$ as follows : 
+  for each $t \in \underline{S}(T) = S(T)$ define
+  $\underline{x} t := x t$ by functoriality of $X$.
+  Naturality of $\underline{x}$ : 
+  For $r : U \to T$ in $\AFF$, we have for every $t \in \underline{S}(T) = S(T)$
+  \[
+    (\underline{x} t) r = (x t) r = x (t r) = \underline{x}(t r)
+  \]
+  where the middle equality is functoriality of $X$.
+  Clearly, $\underline{x} \id_S = x$.
+  And conversely given $\varphi : \underline{S} \to X$,
+  we have that for all points $t \in \underline{S}(T) = S(T)$,
+  \[
+    \varphi t = \varphi (\id_S t) = (\varphi \id_S) t 
+    = \underline{\varphi \id_S} t
+  \]
+\end{proof}
+
+Yoneda's lemma implies that : 
+\begin{prop}
+  
+  The Yoneda embedding $\AFF \to \PSH \AFF$
+  is fully faithful.
+  We henceforth confuse $S$ with $\underline{S}$ for $S \in \AFF$
+  and view $\AFF$ as a full subcategory of $\PSH \AFF$.
+\end{prop}
+
+Yoneda's lemma also justifies the idea that
+points of a presheaf $X$ are precisely maps from affines in $X$.
+A presheaf should be determined by its points
+and thus the following theorem surfaces.
+
+\begin{prop}[Density theorem A.K.A. function extensionality for presheaves]
+  
+  Let $X , Y \in \PSH \AFF$
+  Then  \begin{align*}
+    (\PSH \AFF)(X , Y) 
+    &= \set{ (\varphi x) \prod_{S \in \AFF} \prod_{x \in X(S)} Y(S)
+    \st \text{ for all $t : T \to S$ in $\AFF$ we have }
+    (\varphi x) t = \varphi (x t)
+    } \\
+    &\simeq \set{ (\varphi x) \prod_{x : S \to X} \PSH(S , Y)
+    \st \text{ for all $t : T \to S$ in $\AFF$ we have }
+    (\varphi x) t = \varphi (x t)}
+  \end{align*}
+  where $S \to X$ ranges over all morphisms from all affines into $X$.
+\end{prop}
+This expresses $X$ as the colimit of
+the diagram $\AFF / X$ in $\PSH \AFF$.
+\begin{proof}
+  The isomorphism is given by Yoneda's lemma.
+\end{proof}
+To talk about uniqueness of objects equipped with universal properties,
+we need the notion of a final object in a category.
+% It is clear that in our discussion of presheaves so far
+% we have used nothing about the category $\AFF$.
+% It can really be replaced by any category.
+\begin{prop}[Final objects and their uniqueness]
+  
+  Let $\cC$ be a category and $A$ an object of $\cC$.
+  $A$ is called a final object when 
+  every object in $\cC$ has a \emph{unique} morphism to $A$.
+  Suppose $A, B$ are both final objects over $\cC$.
+  Then there exists a unique isomorphism $A \simeq B$.
+  
+\end{prop}
+\begin{proof}
+  By finality of $A$ there exists a unqiue map $a : B \to A$.
+  Similarly there exists a unique map $b : A \to B$.
+  The composition $a b : A \to A$ and the identity of $A$
+  both give maps from $A$ to itself so we must have
+  $a b = \id_A$.
+  Similarly $b a = \id_B$.
+\end{proof}
+We are ready.
+\begin{prop}[Uniquness of objects defined by universal properties]
+  
+  Let $X \in \PSH$, $S \in \AFF$ and $x : S \to X$.
+  The following are equivalent : 
+  \begin{enumerate}
+    \item $x$ is an isomorphism of presheaves
+    \item $x : S \to X$ is final in the category $\AFF / X$
+  \end{enumerate}
+  When the above is true we say that
+  $x$ exhibits $S$ as a representative of $X$
+  It follows that representatives $(S,x)$ are unique up to unique isomorphism
+  in the sense that given another representative $(\tilde{S} , \tilde{x})$
+  there exists a unique isomorphism $S \simeq \tilde{S}$ such that
+  we have a commuting triangle \begin{cd}
+    & S \\
+    {\tilde{S}} & X
+    \arrow["{\tilde{x}}"', from=2-1, to=2-2]
+    \arrow["x", from=1-2, to=2-2]
+    \arrow["\sim", from=2-1, to=1-2]
+  \end{cd}
+\end{prop}
+\begin{proof}
+  (1 to 2) Clear.
+  (2 to 1) We need to construct an inverse $s : X \to S$ to $x$.
+  We do it by the density theorem of presheaves.
+  For a point $t : T \to X$ where $T \in \AFF$,
+  by finality of $(S , x)$
+  there exists a unique map $s t : T \to S$ such that $x (s t) = t$.
+  We need to show that given 
+  $u : U \to T$ in $\AFF$ and $t : T \to X$ we have \[
+    s (t u) = (s t) u
+  \]
+  By uniqueness of the finality of $(S , x)$,
+  it suffices to show $x (s (t u)) = x((s t) u)$.
+  We have \begin{align*}
+    x(s (t u)) 
+    &= t u &\text{    by def of $s (t u)$} \\
+    &= (x (s t)) u &\text{    by def of $s t$} \\
+    &= x((s t) u) &\text{    by naturality of $x$}
+  \end{align*}
+  This defines a morphism $s : X \to S$
+  which by definition satisfies $x s = \id_X$.
+  It remains to check $s x = \id_S$.
+  By uniqueness of finality of $(S,x)$ it suffices to check that
+  $x (s x) = x$.
+  This is true by definition of $s x$.
+
+\end{proof}
+That concludes the discussion on uniqueness of objects defined by
+universal properties.
+For the rest of this section,
+we give some features of the presheaf category $\PSH \AFF$.
+First, it interacts well with relative point of view.
+
+\begin{prop}
+  For $S \in \PSH \AFF$,
+  the Yoneda embedding $\AFF \to \PSH \AFF$
+  gives a fully faithful functor
+  \[
+    \AFF / S \to (\PSH \AFF) / S 
+  \]
+  This extends to an equivalence \[
+    \PSH(\AFF / S) \simeq (\PSH \AFF) / S
+  \]
+  In particular,
+  for any algebra $k$,
+  $(\PSH \AFF) / \SPEC k \simeq \PSH(\AFF_k)$.
+\end{prop}
+\begin{proof}
+  For $X \in \PSH(\AFF / S)$,
+  use the density theorem to write it as the colimit
+  of affines over $S$.
+  Taking this diagram and take the colimit in $\PSH \AFF$.
+  This defines a presheaf equipped with a morphism to $S$.
+  This procedure is functorial in $X$.
+  For a quasi-inverse functor,
+  simply do the reverse.
+  Take a presheaf $X$ with a morphism to $S$,
+  write $X$ as the colimit of affines using the density theorem.
+  These affines map to $S$ via $X \to S$
+  and so define objects in $\AFF / S$.
+  Finally take the colimit in $\PSH(\AFF / S)$.
+\end{proof}
+
+As another show case of the power of the Yoneda embedding.
+Let us prove the following fact which we will need next section.
+The yoga is that once you know the proof in the category of sets,
+you know the proof in any presheaf category and hence
+any category.
+\begin{prop}[Criterion for factoring through monomorphisms]
+  The following are true : 
+  \begin{enumerate}
+    \item Let $f : X \to Y$ be a map of sets and
+    $V \subs Y$ a subset of $Y$.
+    Then $f$ factors through $V$ iff there exists
+    a map $X \to V$ which exhibits $X \simeq X \times_Y V$.
+    \item The same in $\AFF$,
+    replacing subset with monomorphism.
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  (1) is an easy exercise.
+  (2) We have already seen that
+  fiber product of presheaves is computed
+  ``pointwise'' : 
+  for presheaves $X , Y$ over a presheaf $S$
+  we have isomorphism functorial in affine $T$
+  \[
+    (X \times_S Y)(T) \simeq X(T) \times_{S(T)} Y(T)
+  \]
+  Similarly, a morphism of presheaves
+  is a monomorphism iff it is pointwise a monomorphism.
+  It follows that (1) implies (2).
+\end{proof}
+
+\end{document}

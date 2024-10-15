@@ -1,0 +1,352 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+Let $\SPEC A$ be a physical system
+and $a_0$ a single state in it.
+Suppose $a_0$ actually lies in a line of states $a$,
+\begin{cd}
+  \PT & {\SPEC A} \\
+	{\bA^1}
+	\arrow["a"', from=2-1, to=1-2]
+	\arrow["0"', from=1-1, to=2-1]
+	\arrow["{a_0}", from=1-1, to=1-2]
+\end{cd}
+Then given a measuring device $f$ on $\SPEC A$,
+we get 
+\[
+  f(a) = f_0 + f_1 t + f_2 t^2 + \cdots \in \cO(\bA^1)
+\]
+where $t$ is the standard meausring device on $\bA^1$.
+Note that $f_0 = f(a_0)$.
+This says the way the value of $f$ changes over
+the family of states $a$ is described as
+a polynomical expression in the values of $t$.
+
+The idea of a \emph{tangent vector at the state $a_0$ in the direction of $a$}
+is we want only the \emph{first order change of $f$ along $a$}.
+With highschool intuition, we write
+\[
+  \brkt{\frac{\partial}{\partial a}}_{a_0} f
+  = \frac{f(a) - f(a_0)}{t} \text{ ignore $t^2$ and above}
+\]
+But we see that this is actually formal! This is the coefficient $f_1$.
+This gives the first definition of a tangent vector.
+
+\begin{dfn}[Deformation perspective of tangent vectors]
+
+  A tangent vector at $a_0$ is an extension 
+  \begin{cd}
+    \PT & {\SPEC A} \\
+    {\SPEC k[t]/(t^2)}
+    \arrow["a"', from=2-1, to=1-2, dashed]
+    \arrow["0"', from=1-1, to=2-1]
+    \arrow["{a_0}", from=1-1, to=1-2]
+  \end{cd}
+
+  For such an extension,
+  we will write 
+  \[
+    f(a) = f(a_0) + \brkt{\brkt{\frac{\partial}{\partial a}}_{a_0} f} t
+  \]
+
+  More generally,
+  a vector field along a map $a_0 : \SPEC B \to \SPEC A$
+  is an extension
+  \begin{cd}
+    {\SPEC B} & {\SPEC A} \\
+    {\SPEC B[t]/(t^2)}
+    \arrow["a"', from=2-1, to=1-2, dashed]
+    \arrow["0"', from=1-1, to=2-1]
+    \arrow["{a_0}", from=1-1, to=1-2]
+  \end{cd}
+\end{dfn}
+
+Cons of this perspective : 
+\begin{itemize}
+  \item the $k$-vector space structure of tangent spaces
+  is not clear.
+  It is only clearly pointed.
+  \footnote{
+    Actually, a $k$-vector space structure is present,
+  but it is non-trivial to check.
+  The key is 
+  \[
+    \frac{k[x]}{(x^2)} \times_k \frac{k[y]}{(y^2)}
+    \simeq \frac{k[x,y]}{(x,y)^2}
+  \]
+  Then the $k$-vector space structure on $(t)$ inside $k[t]/(t^2)$
+  makes $k[t]/(t^2)$ into a
+  \emph{``$k$-vector space object in $k$-algebras''}.
+  \footnote{
+    i.e. it is an abelian group object in $k$-algebras and
+    additionally we have a monoid morphism $k \to \END_{k\dash\ALG} k[t]/(t^2)$.
+  }
+  Making this into spaces,
+  we want $\SPEC \frac{k[x,y]}{(x,y)^2}$ to be the pushout of
+  $\SPEC k[x]/(x^2) \leftarrow \SPEC k \rightarrow k[y]/(y^2)$
+  at least in the category of $k$-schemes.
+  One of showing this is to see that any map
+  into a $k$-scheme must factor through an affine open
+  and thus reduces to the affine case where it is true.
+  This endows the $k$-valued points of the tangent bundle with
+  a $k$-vector space structure.
+  To get this for $B$-valued points where $B$ is any $k$-algebra,
+  one must repeat the above for $B[t]/(t^2)$.
+  The non-trivial part is showing $\SPEC B[x,y]/(x,y)^2$ 
+  is the desired pushout in the category of schemes.
+  This is \cite[\href{https://stacks.math.columbia.edu/tag/07RS}{Lemma 37.14.1}]{stacks}.
+  }
+  At this point, this is too much work for something that should be trivial.
+  This \emph{is} however useful for defining tangent bundle of stacks
+  because it is less obvious to generalise algebraic derivations.
+\end{itemize}
+
+Pros of this perspective : 
+\begin{itemize}
+  \item it is closest to highschool intuition :
+  that of first order change.
+  \item the definition of the tangent bundle of $\SPEC A$ is intuitive.
+  It is the space $T\SPEC A$ such that
+  \[
+    \AFF(\SPEC \_ , T\SPEC A) \simeq 
+    \AFF(\SPEC (\_ [t] / (t^2)) , \SPEC A)
+  \]
+  This exists a priori in $\PSH \AFF$.
+  \item it is clear that tangent vectors pushforward;
+  this is a direct consequence of composing maps.
+  \item the relative definition is also clear.
+  Consider the example of $\pi : \bA^2 \to \bA^1, (x , y) \mapsto x$
+  and finding a tangent vectors in $\bA^2$ relative to $\pi$
+  at points.
+  You will discover that the tangent vectors are forced to be
+  \emph{vertical},
+  i.e. lie within the fiber of $\pi$.
+  This leads to the general definition :
+  Given a map $X \to S$ of affine schemes,
+  a vector field along a map $T \to X$ is a solution
+  to the lifting problem : 
+  \begin{cd}
+    T & X \\
+    {T \times_k k[t]/(t)^2} & S
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=2-1, to=2-2]
+    \arrow[from=1-2, to=2-2]
+    \arrow[dashed, from=2-1, to=1-2]
+  \end{cd}
+  
+  \item Given a sequence of affine schemes $X \to Y \to S$,
+  we get $T(X / S) \to T(Y / S)$ where $T(\_ / S)$ denotes
+  tangent bundle relative to $S$.
+  There is also $T(X / Y)$ consisting of tangent vectors in $X$
+  which lie in the fibers of the map $X \to Y$.
+  Since fibers of $X \to Y$ lie in fibers of $X \to S$,
+  we obtain 
+  \[
+    T(X / Y) \subs T(X / S) \to T(Y / S)
+  \]
+  Looking at the fibers as pointed sets,
+  one can see that $T(X / Y)$ is
+  in the ``kernel'' of $T(X / S) \to T(Y / S)$.
+  Conversely, any tangent vector of $X$ relative $S$
+  which dies under projection to $Y$
+  must tautologically lie in $T(X / Y)$.
+  So the above is ``left exact'',
+  if only we are able to put these three spaces
+  inside some abelian category.
+  This is one of the pros of the next definition of tangent vectors.
+
+\end{itemize}
+
+One can see that the data of $a$ is equivalent to
+specifying the linear operator 
+$\brkt{\frac{\partial}{\partial a}}_{a_0} \in k\MOD(A , k)$.
+Following one's nose, 
+we see that such linear operators $\partial$ satisfy the Leibniz rule.
+\[
+  \partial(f g) = \partial(f) g(a_0) + f(a_0) \partial(g)
+\]
+These are called \emph{$k$-derivations}.
+Let $\mathrm{Der}_k(A , k) \subs k\MOD(A , k)$ denote the
+subset of $k$-derivations.
+One can show $\mathrm{Der}_k(A , k)$ bijects
+with the set tangent vectors in our first definition,
+giving a second definition of tangent vectors.
+
+\begin{dfn}[Pragmatic perspective on tangent vectors]
+  
+  A tangent vector at state $a_0$ is a 
+  $k$-derivation from $A$ to $k_{a_0}$.
+
+  More generally, a vector field along $a_0 : \SPEC B \to \SPEC A$
+  is a $k$-derivation $A \to B$ where $B$ is an $A$-module via
+  its $A$-algebra structure.
+\end{dfn}
+
+Pros of the this perspective : 
+\begin{itemize}
+  \item Computable!
+  E.g. show that the tangent space of any point in $\bA^n$ 
+  is an $n$-dimensional vector space.
+  \item Makes obvious the $k$-vector space structure of tangent spaces.
+  We can do even better.
+  Given $a : \SPEC B \to \SPEC A$,
+  \begin{align*}
+    \AFF_A (\SPEC B , T\SPEC A)
+    \simeq \mathrm{Der}_k(A , B)
+  \end{align*}
+  shows that local sections of the tangent bundle $T\SPEC A$
+  have an $A$-module structure.
+
+  \item Let $X \to Y \to S$ be maps of affine schemes and
+  $R \to A \to B$ be the corresponding maps of algebras of functions.
+  Then the sequence of spaces 
+  \[
+    T(X / Y) \subs T(X / S) \to T(Y / S)
+  \]
+  corresponds to the sequence 
+  \[
+    0 \to \mathrm{Der}_A(B , \_) \overset{(1))}{\to}
+    \mathrm{Der}_R(B , \_) \overset{(2)}{\to} \mathrm{Der}_R(A , \_)
+  \]
+  \begin{enumerate}
+    \item ``fibers of $X \to Y$ lie in fibers of $X \to S$ so
+    relative tangents of $X$ to $Y$ are also relative tangents of $X$ to $S$''
+    is precisely the injection (1).
+    \item ``relative tangents of $X \to Y$ die when pushforward to $Y$''
+    is precisely the fact that at (2)
+    the image lies in the kernel.
+    \item ``relative tangents of $X \to S$ whose pushforward to $Y$ is zero
+    are relative tangents of $X \to Y$''
+    precisely says that at (2) the kernel lies in the image.
+  \end{enumerate}
+  
+\end{itemize}
+
+So far, we have seen how to
+differentiate $f \in A$ with respect to some state $a \in \SPEC A$
+using a tangent vector.
+In other words,
+we have the inclusion of $A$-modules 
+\[
+  \mathrm{Der}_k(A , \ka(a)) \to k\MOD(A , k)
+\]
+But the duality of space and function via evaluation
+gives us \begin{align*}
+  A &\to k\MOD(\mathrm{Der}_k(A , \kappa(a)) , k) \\
+  f &\mapsto 
+  \brkt{
+    \res{\frac{\partial}{\partial v}}{a} \mapsto 
+    \res{\frac{\partial}{\partial v}}{a} f
+  }
+  =: (df)_a
+\end{align*}
+In the example of $A = k[x]$, one sees that
+\[
+  (df)_a(X) = X(f) = f^\prime(a) X(x)
+  = f^\prime(a) (dx)_a(X)
+\]
+in other words
+\[
+  (df)_a = f^\prime(a) (dx)_a
+\]
+\begin{dfn}[Algebraic one forms as dual of vector fields]
+  
+  Let $R \to A$ be a map of algebras.
+  Then a \emph{module of differentials of $A$ relative $R$}
+  is an $A$-module $\Om_{A / R}$ representing the 
+  functor on $A$-modules $\mathrm{Der}_R(A , \_)$.
+  In other words, $\Om_{A / R}$ is equipped with
+  an isomorphism 
+  \[
+    A\MOD(\Om_{A / R} , \_) \simeq \mathrm{Der}_R(A , \_)
+  \]
+\end{dfn}
+This definition can be seen as
+the algebraic formulation of the idea that
+one forms are dual of tangent vectors.
+This is somewhat unsatisfying because 
+it would be nice to have a way of thinking about one forms
+independent of tangent vectors.
+
+Given a point $a : A \to k$, 
+we have the following interpretation.
+\[
+  (df)_a := f - f(a) \text{ mod }I(a)^2
+\]
+To get one forms with domains larger than a point,
+we need to generalise the above formula to $a : A \to B$.
+This is an issue because there is no canonical copy of $B$ inside $A$
+for general $B$ unlike $B = k$.
+
+% We rewrite the formula by considering the map 
+% \[
+%   a \otimes \id : A \otimes A \to A , f \otimes g \mapsto f(a) g
+% \]
+
+Let $I_\De$ be the kernel of $A \otimes A \to A , f \otimes g \mapsto f g$.
+Consider $I_\De$ as an $A$-module via the left component of $A$.
+If $f_0 \otimes g_0 + f_1 \otimes g_1$ is in $I_\De$,
+then 
+\[
+  f_0 g_0 + f_1 g_1 = 0
+\]
+It follows that
+\[
+  f_0 \otimes g_0 + f_1 \otimes g_1
+  = f_0 (1 \otimes g_0 - g_0 \otimes 1)
+ + f_1 (1 \otimes g_1 - g_1 \otimes 1)
+\]
+This generalises to $f_0 g_0 + \cdots + f_n g_n$ in $I_\De$
+and hows that $I_\De$ is generated as a left $A$-module
+by elements of the form
+\[
+  1 \otimes f - f \otimes 1
+\]
+For the example of $A = k[t]$ and $A \otimes A = k[x , y]$,
+elements like this look like 
+\[
+  f(y) - f(x)
+\]
+This inspires the choice of notation 
+\[
+  \De f := 1 \otimes f - f \otimes 1
+\]
+which in turn inspires the definition 
+\[
+  df := \De f \text{ mod } I_\De^2
+\]
+Let's check this is $k$-linear.
+For $\la \in k$ and $f \in A$,
+we have
+\begin{align*}
+  d(\la f) = 1 \otimes \la f - \la f \otimes 1
+  = \la (1 \otimes f - f \otimes 1) = \la (d f)
+\end{align*}
+So $k$-linearity of $d$ comes from
+the fact that $k$ is allowed to pass between the two sides in $A \otimes A$.
+
+\begin{dfn}[Algebraic one forms as linear change]
+  
+  For a map of algebras $R \to A$,
+  let $I_\De$ be the kernel of multiplication $A \otimes_R A \to A$.
+  Then define 
+  \[
+    \Om_{A / R} := I_\De / I_\De^2
+  \]
+  This is a left $A$-module via $A \otimes 1 \subs A \otimes A$.
+  Define \[
+    d : A \to \Om_{A / R} , f \mapsto (1 \otimes f - f \otimes 1) 
+    \text{ mod } I_\De^2 
+  \]
+  This map is only $R$-linear.
+\end{dfn}
+
+Our computation earlier shows that
+$\Om_{A / R}$ is generated as an $A$-module by
+the image of $d$.
+
+Relation between the two definitions?
+Something something universal square zero extension.
+
+\end{document}

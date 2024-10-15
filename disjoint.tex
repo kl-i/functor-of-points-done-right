@@ -1,0 +1,113 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+In the previous section,
+we saw that for $k$ algebraically closed characteristic not two,
+we have \[
+  k[t] / (t^2 - \la) \simeq k[t] / (t - a) \times k[t] / (t + a)  
+\]
+for $\la \in k^\times$ and some $a \in k$ with $a^2 = \la$.
+The $k$-algebras $k[t] / (t \pm a)$ individually are isomorphic to $k$
+and we saw that the $k$-points of the affine scheme associated
+to the above ring had exactly two elements.
+This is an example of \emph{finite disjoint unions of affine schemes}.
+Once again, the notion of finite disjoint union in $\AFF$ 
+can be understood by 
+\begin{enumerate}
+  \item considering finite disjoint union in 
+  the category of sets
+  \item extracting the universal property in the example of sets
+  \item using the universal property to define finite disjoint
+  union of affine schemes.
+\end{enumerate}
+Since we have done this a few times now,
+we skip straight to the answer.
+
+\begin{dfn}
+  
+  Let $S_1 , \dots , S_n$ be a finite collection of affine schemes.
+  Then a \emph{disjoint union of $S_1 , \dots , S_n$} is defined as
+  an affine scheme $S$ together with morphisms
+  $\io_k : S_k \to S$ such that
+  for all affines schemes $T$ together with
+  morphism $\tau_k : S_k \to T$ there
+  exists a unique morphism $S \to T$ making the following
+  diagram commute : 
+  \begin{cd}
+    {S_1} \\
+    \vdots & S & T \\
+    {S_n}
+    \arrow["{\iota_1}"', from=1-1, to=2-2]
+    \arrow["{\iota_n}", from=3-1, to=2-2]
+    \arrow["{\tau_1}", from=1-1, to=2-3, bend left = 20]
+    \arrow["{\tau_n}"', from=3-1, to=2-3, bend right = 20]
+    \arrow["{\exists !}"{description}, dashed, from=2-2, to=2-3]
+  \end{cd}
+
+\end{dfn}
+
+\begin{prop}[Existence of finite disjoint union]
+  
+  Let $A_1 , \dots , A_n$ be a finite collection of rings.
+  Let $A := \prod_{l = 1}^n A_l$.
+  Then a disjoint union of $\SPEC A_1 , \dots , \SPEC A_n$ is
+  given by $\SPEC A$
+  where the maps $\SPEC A_i \to \SPEC A$
+  come from the projections $A \to A_k$.
+  Furthermore, the morphisms $\SPEC A_k \to \SPEC A$
+  are both closed embeddings and basic open embeddings.
+
+\end{prop}
+Note that this makes sense intuitively : 
+a function on $\SPEC A \sqcup \SPEC B$ should be
+a pair of functions, one on $\SPEC A$ and one on $\SPEC B$,
+i.e. an element of $A \times B$.
+\begin{proof}
+  For the existence, down to the universal property of the product of rings.
+
+  The fact that $\SPEC A_k \to \SPEC A$
+  is a closed embedding comes down to
+  the fact that the projection $A \to A_k$ is surjective.
+
+  Let $e_k \in A$ denote the
+  element that is $1$ in the $k$-th component and zero everywhere else.
+  Then the kernel of the projection to $A_k$ is precisely
+  the elements $f$ such that $f e_k = 0$.
+  It follows that for any ring map $A \to B$ which inverts $e_k$,
+  the kernel of the projection $A \to A_k$ is annihilated
+  so $A \to B$ factors through $A \to A_k$
+  which proves that $\SPEC A_k \to \SPEC A$ is a basic open 
+  of $\SPEC A$ for $e_k$.
+\end{proof}
+
+We also have a criterion.
+
+\begin{prop}
+  
+  Let $S \in \AFF$.
+  Then $S$ is a disjoint union of two affine schemes
+  iff there exists an idempotent $e \in \cO(S)$.
+\end{prop}
+Intuitively, a idempotent $e$ is
+the constant function with value 1 on a closed and open subspace
+and $1 - e$ is the corresponding constant function with value 1
+on the complement.
+\begin{proof}
+  Exercise. Hint : See footnote.\footnote{
+    Use the chinese remainder theorem.
+  }
+\end{proof}
+
+One may be wondering why we are sticking to finite disjoint unions
+when the proof of the existence of disjoint unions
+does not seem to use finiteness.
+The following exercise demonstrates infinite product of rings
+``computes the wrong thing''.
+
+\begin{ex}
+  Define the affine scheme $S := \SPEC \bF_2^\bN$ over $\bF_2$.
+  Show that $S$ has a $\bF_2$-point which does not
+  come from any of the projections $\bF_2^\bN \to \bF_2$.
+\end{ex}
+
+\end{document}

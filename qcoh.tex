@@ -1,0 +1,198 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+\begin{dfn}[Quasi-coherent sheaves on a functor]
+  
+  Let $X \in \PSH \AFF$.
+  Then a quasi-coherent sheaf on $X$ 
+  consists of the following data : 
+  \begin{itemize}
+    \item for each $x : \SPEC A \to X$, 
+    an $A$-module $\cF_x$.
+    \item (transition map) 
+    for each $f : \SPEC B \to \SPEC A$ and $x : \SPEC A \to X$,
+    a morphism of $A$-modules 
+    \[
+      \cF_x \to \cF_{x f}
+    \]
+    that is identity when $f$ is.
+    We call the map $\cF_x \to \cF_{xf}$ 
+    the \emph{transition map associated to $f$}.
+    \item (transitivity) We require the maps given in the previous point 
+    to satisfy that for any commuting triangle on the left,
+    \begin{cd}
+      {\SPEC C} && \rightsquigarrow & {\cF_{xfg}} \\
+      {\SPEC B} & {\SPEC A} && {\cF_{xf}} & {\cF_x}
+      \arrow["g"', from=1-1, to=2-1]
+      \arrow["f"', from=2-1, to=2-2]
+      \arrow[from=1-1, to=2-2]
+      \arrow[from=2-5, to=2-4]
+      \arrow[from=2-4, to=1-4]
+      \arrow[from=2-5, to=1-4]
+    \end{cd}
+    we get a commuting triangle on the right of $A$-modules.
+    \item (quasi-coherence)
+    The transition map associated to $f : \SPEC B \to \SPEC A$
+    for any point $x : \SPEC A \to X$
+    induces an isomorphism $\cF_x \otimes_A B \simeq \cF_{x f}$.
+  \end{itemize}
+  Let $\cF , \cG$ be two quasi-coherent sheaves on $X$.
+  Then a morphism $\varphi : \cF \to \cG$ consists of the data : 
+  \begin{itemize}
+    \item for each $x : \SPEC A \to X$,
+    a morphism of $A$-modules 
+    \[
+      \varphi_x : \cF_x \to \cG_x  
+    \]
+    \item for each $f : \SPEC B \to \SPEC A$ and $x : \SPEC A \to X$,
+    we have the commutative diagram in $A$-modules 
+    \begin{cd}
+      {\mathcal{F}_{xf}} & {\mathcal{G}_{xf}} \\
+      {\mathcal{F}_x} & {\mathcal{G}_x}
+      \arrow[from=2-1, to=1-1]
+      \arrow[from=2-2, to=1-2]
+      \arrow["{\varphi_x}"', from=2-1, to=2-2]
+      \arrow["{\varphi_{xf}}", from=1-1, to=1-2]
+    \end{cd}
+    where the vertical morphisms are
+    the transition maps of $\cF$ and $\cG$
+    associated to $f$.
+  \end{itemize}
+  We write $\QCOH X$ for the category of quasi-coherent sheaves on $X$.
+\end{dfn}
+
+A priori, a quasi-coherent sheaf consists of
+infinite amount of data.
+We nonetheless have the following for affine schemes.
+
+\begin{prop}
+  
+  Let $X = \SPEC R$.
+  We define a functor $R\MOD \to \QCOH X$.
+  \begin{enumerate}
+    \item (Objects) Let $M \in R\MOD$.
+    \begin{itemize}
+      \item (fibers) 
+      For every algebra map $R \to A$,
+      we have an $A$-module $A \otimes_R M$.
+      \item (transition maps) For $R \to A \to B$,
+      the adjunction $B \otimes_A \_ \dashv \text{ forget } : 
+      A\MOD \leftrightarrow B\MOD$ gives the morphism
+      \[
+        A \otimes_R M \to B\otimes_R M ,
+        a \otimes x \mapsto \tilde{a} \otimes x
+      \]
+      where $\tilde{a}$ is the image of $a$ in $B$.
+      If $A \to B$ is the identity of $A$
+      then the above map is indeed the identity.
+      \item (transitivity) This is clear.
+      \item (quasi-coherence)
+      The map $A \otimes_R M \to B\otimes_R M$
+      indeed induces
+      \[
+        B \otimes_A (A \otimes_R M) \map{\sim}{} B\otimes_R M
+      \]
+    \end{itemize}
+    \item (Morphisms) Let $\al : M \to N$ be a morphism
+    of $R$-modules.
+    Then functoriality of $A \otimes_R \_$
+    across all $R \to A$ defines
+    a morphism between the quasi-coherent sheaves associated with
+    $M$ and $N$.
+    Functoriality is readily checked.
+  \end{enumerate}
+  We have a functor $\QCOH X \to R\MOD$ given by
+  taking fiber at $\id : \SPEC R \to \SPEC R$.
+  Then this gives an equivalence \[
+    R\MOD \simeq \QCOH X  
+  \]
+\end{prop}
+The proof has no geometric content and is included
+purely for pedantry.
+Indeed, this definition of quasi-coherent sheaves
+is designed so that this proposition holds more-or-less by definition.
+\begin{proof}
+  It is clear that the composition
+  $R\MOD \to \QCOH X \to R\MOD$ is on-the-dot
+  the identity functor.
+  We show the other composition
+  $\QCOH X \to R\MOD \to \QCOH X$ is isomorphic to the identity functor.
+  Let $\cF \in \QCOH X$, $M = \cF_{\id_R}$ and $\tilde{M}$
+  the image of $M$ under $R\MOD \to \QCOH X$.
+  Then for each algebra map $x : \SPEC A \to \SPEC R$,
+  quasi-coherence of $\cF$ implies that
+  the equality $M = \cF_{\id_R}$ extends to
+  an isomorphism
+  \[
+    \varphi_x^\cF : \tilde{M}_x = A \otimes_R M \map{\sim}{} \cF_x
+  \]
+  Now we show that for $f : \SPEC B \to \SPEC A$,
+  the above square in the following diagram commutes :
+  \begin{cd}
+    {\tilde{M}_{xf}} & {\mathcal{F}_{xf}} \\
+    {\tilde{M}_x} & {\mathcal{F}_x} \\
+    M & {\mathcal{F}_{\id_R}}
+    \arrow[from=2-1, to=1-1]
+    \arrow[from=2-2, to=1-2]
+    \arrow["{\varphi_x^\cF}"', from=2-1, to=2-2]
+    \arrow["{\varphi_{xf}^\cF}", from=1-1, to=1-2]
+    \arrow[from=3-1, to=2-1]
+    \arrow["{=}"', from=3-1, to=3-2]
+    \arrow[from=3-2, to=2-2]
+  \end{cd}
+  By the universal property of $\tilde{M}_x = A \otimes_R M$,
+  it suffices to show that from $M$,
+  ``up-up-right = up-right-up''.
+  Indeed \begin{align*}
+    \text{ ``up-up-right'' }
+    &= \text{ ``right-up-up'' }\,\,\,\text{by def of $\varphi_{xf}$} \\
+    &= \text{ ``up-right-up'' }\,\,\,\text{by def of $\varphi_x$}
+  \end{align*}
+  We have thus defined an isomorphism morphism 
+  $\varphi^\cF : \tilde{M} \simeq \cF$.
+  Now let $\al : \cF \to \cG$ in $\QCOH X$
+  and $\varphi^\cG : \tilde{N} \simeq \cG$ be the corresponding
+  reconstruction morphism for $\cG$.
+  Let $\tilde{\al} : \tilde{M} \to \tilde{N}$ be the
+  reconstructed morphism from $\al$.
+  We wish to check commutativity of
+  \begin{cd}
+    {\tilde{M}} & {\mathcal{F}} \\
+    {\tilde{N}} & {\mathcal{G}}
+    \arrow["{\tilde{\alpha}}"', from=1-1, to=2-1]
+    \arrow["{\varphi^\mathcal{G}}"', from=2-1, to=2-2]
+    \arrow["\alpha", from=1-2, to=2-2]
+    \arrow["{\varphi^\mathcal{F}}", from=1-1, to=1-2]
+  \end{cd}
+  We consider how we defined $\varphi_x^\cF, \varphi_x^\cG$ in the first place : 
+  \begin{cd}
+    M & {\mathcal{F}_{\id_R}} \\
+    N & {\mathcal{G}_{\id_R}} & {\tilde{M}_x} & {\mathcal{F}_x} \\
+    && {\tilde{N}_x} & {\mathcal{G}_x}
+    \arrow["{\tilde{\alpha}_x}"', from=2-3, to=3-3]
+    \arrow["{\varphi^\mathcal{G}_x}"', from=3-3, to=3-4]
+    \arrow["{\alpha_x}", from=2-4, to=3-4]
+    \arrow["{\varphi^\mathcal{F}_x}", from=2-3, to=2-4]
+    \arrow["{=}", from=2-1, to=2-2]
+    \arrow["{=}", from=1-1, to=1-2]
+    \arrow["{\alpha_{\id_R}}"', from=1-1, to=2-1]
+    \arrow["{\alpha_{\id_R}}", from=1-2, to=2-2]
+    \arrow[from=2-1, to=3-3]
+    \arrow[from=1-1, to=2-3]
+    \arrow[from=2-2, to=3-4]
+    \arrow[from=1-2, to=2-4]
+  \end{cd}
+  By the universal property of $\tilde{M}_x = A\otimes_R M$,
+  it suffices to show that starting from $M$
+  we have ``diagonal-right-down = diagonal-down-right''.
+  Indeed \begin{align*}
+    \text{ ``diag-right-down'' }
+    &= \text{ ``right-diag-down' }\,\,\,\text{by def of $\varphi_{x}^\cF$} \\
+    &= \text{ ``right-down-diag'' }\,\,\,\text{by def of $\al$} \\
+    &= \text{ ``down-right-diag'' }\,\,\, \text{clear}\\
+    &= \text{ ``down-diag-right'' }\,\,\,\text{by def of $\varphi_{x}^\cG$} \\
+    &= \text{ ``diag-down-right'' }\,\,\,\text{by def of $\al_{x}$} \\
+  \end{align*}
+\end{proof}
+
+\end{document}

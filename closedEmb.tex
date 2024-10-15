@@ -1,0 +1,105 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+One of the easiest way to
+create new spaces from given spaces is
+by taking ``subspaces''.
+The first of these kind of spaces
+we will consider is \emph{closed embedding}.
+\footnote{
+  This is more standardly called \emph{closed immersion}.
+  I do not like the terminology because
+  for those who have touched manifolds,
+  the word ``immersion'' brings too much preconceptions.
+}
+The idea is simple : 
+given $f \in A$ a $k$-algebra,
+we want to consider the ``subspace of $\SPEC A$ where $f = 0$''.
+
+\begin{dfn}
+  
+  Let $A$ be a $k$-algebra.
+  Given an element $f \in A$,
+  we define the \emph{zero locus of $f$} to be
+  the affine scheme $V(f) := \SPEC A / (f)$.
+  The quotient map $A \to A / (f)$
+  corresponds to a morphism of affine scheme over $k$ \[
+    i : \SPEC A / (f) \to \SPEC A
+  \]
+
+  More generally,
+  given a morphism $i : Z \to X$ of affine schemes over $k$,
+  we call it a \emph{closed embedding} when
+  the corresponding algebra map $\cO(X) \to \cO(Z)$ is surjective.
+  For such a morphism,
+  the kernel $I$ of $\cO(X) \to \cO(Z)$
+  is called \emph{the ideal of $i$}.
+  We refer to $Z$ as the \emph{zero locus of $I$}.
+
+  A \emph{closed subspace} of $X \in \AFF_k$
+  is an isomorphism class of closed embeddings into $X$.
+
+\end{dfn}
+
+\begin{prop}
+  
+  Let $S \in \AFF_k$.
+  Then we have an order reversing
+  bijection between
+  the set of closed embeddings into $S$ and
+  the set of ideals of $\cO(S)$
+  given by taking zero locus and taking ideals.
+\end{prop}
+\begin{proof}
+  A tautology.
+\end{proof}
+
+\begin{prop}[Universal property of zero locus]
+  
+  Let $i : Z \to X$ be a closed embedding in $\AFF_k$
+  and let $I$ be its ideal.
+  Then for any morphism $\varphi : T \to S$ in $\AFF_k$,
+  there is a factoring \begin{cd}
+    T & Z \\
+    & S 
+    \arrow[from = 1-1, to = 1-2 , dashed]
+    \arrow[from = 1-2 , to = 2-2 , "{i}"]
+    \arrow[from = 1-1 , to = 2-2 , "{\varphi}"']
+  \end{cd}
+  if and only if under the $k$-algebra map
+  $\varphi^* : \cO(S) \to \cO(T)$,
+  the ideal $I$ is sent to zero.
+  Furthermore,
+  such a factoring is unique when it exists.
+\end{prop}
+\begin{proof}
+  After dualizing affine schemes over $k$
+  to $k$-algebras,
+  this is precisely the universal property
+  of the quotient map $\cO(S) \to \cO(S) / I$.
+\end{proof}
+
+In what sense is a closed embedding $i : Z \to X$ 
+the ``injection of a subspace''?
+For this we review subsets of sets.
+
+\begin{prop}[Characterisation of monomorphisms in sets]
+  
+  Let $i : Z \to X$ be a map of sets.
+  Then $i$ is an isomorphism onto a subset of $X$ iff
+  for all maps $x , x_1 : T \to Z$ 
+  such that $i(x) = i(x_1)$,
+  we have $x = x_1$.
+\end{prop}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+The categorical property which generalises the above phenomenon
+is the notion of a \emph{monomorphism}.
+In fact, part of the
+statement of the universal property of zero locus
+is that the closed embedding is a 
+monomorphism in $\AFF_k$.
+
+\end{document}

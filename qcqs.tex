@@ -1,0 +1,305 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+In this section,
+we prove the concrete description of pushforward
+of quasi-coherent sheaves along a qcqs morphism $f : X \to Y$ between schemes.
+
+Let us first consider the case when $Y = \SPEC A$ an affine.
+\begin{prop}[Pushforward with affine target]
+  
+  The following three functors $\QCOH X \to \QCOH(\SPEC A)$ are isomorphic : 
+  \begin{enumerate}
+    \item (Abstract pushforward) the pushforward $f_*$
+    \item (Global sections) For each $\cF \in \QCOH X$,
+    take the $A$-module \[
+      \cF(X) := (\QCOH X)(\cO_X , \cF)
+    \]
+    \item (Practical) For an affine Zariski cover $(U_i)_{i \in I}$ of $X$
+    with $U_{ij} := U_i \cap U_j$ affine again,
+    take the $A$-module \[
+      \mathrm{Eq}\brkt{
+        \prod_{i \in I} \cF(U_i) \rightrightarrows
+        \prod_{i , j \in I} \cF(U_{i j})
+      }  
+    \]
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  (1 isomorphic 2)
+  \[
+    f_* \cF \simeq
+    A\MOD(A , f_* \cF) \simeq 
+    (\QCOH X)(f^* A , \cF) \simeq
+    (\QCOH X)(\cO_X , \cF) =: \cF(X)
+  \]
+
+  (2 isomorphic 3)
+  Let $\cU := \coprod_{i \in I} U_i$.
+  Then we use \[
+    \QCOH X \simeq \QCOH (X , \cU)  
+  \]
+  Under this equivalence,
+  $\cO_X \in \QCOH X$ is sent to
+  the descent data $(\cO(U_i))_{i \in I}$
+  with the natural cocycle data.
+  Then the $A$-module $(\QCOH X)(\cO_X , \cF)$
+  is isomorphic to
+  the $A$-module of morphisms of cocycle data \[
+    (\cO(U_i))_{i \in I} \to (\cF(U_i))_{i \in I}  
+  \]
+  Such a map is equivalent to
+  choosing a compatible system of sections of $\cF$
+  on the opens $U_i$,
+  i.e. an element of the desired equalizer.
+\end{proof}
+Most practical situations fall in the case of (3).
+For theoretical purposes,
+we can relax the condition of $U_i \cap U_i$ being affine 
+by choosing an affine Zariski cover $(U_{i j}^k)_{k \in I_{i,j}}$ 
+of $U_i \cap U_j$.
+With that, one can define $f_*\cF$ by the equaliser diagram in
+$\QCOH A$, 
+\[
+  f_* \cF \to \prod_{i \in I} \cF(U_i) \rightrightarrows
+  \prod_{i , j \in I} \prod_{k \in I_{i, j}} \cF(U_{ij}^k)
+\]
+Let us call the data of $((U_i)_{i \in I} , (U_{ij}^k)_{k \in I_{ij}})$
+a \emph{Zariski presentation} of $X$ because it ``presents''
+$X$ as a coequalizer of affines \[
+  \coprod_{ i ,j \in I} \coprod_{k \in I_{ij}} U_{ij}^k \rightrightarrows
+  \coprod_{i \in I} U_i \to X
+\]
+Let us be more ambitious now and consider 
+$f : X \to Y$ a morphism between schemes.
+By the definition of $\QCOH Y$,
+we must produce for each $y : \SPEC A \to Y$
+a module $y^*f_* \cF \in \QCOH A$
+equipped with quasi-coherent pullback when changing $y$.
+Given $y : \SPEC A \to Y$, one can form the pullback square : 
+\begin{cd}
+  {X_y} & X \\
+	{\mathrm{Spec}\,A} & Y
+	\arrow["y"', from=2-1, to=2-2]
+	\arrow["f", from=1-2, to=2-2]
+	\arrow["{\tilde{y}}", from=1-1, to=1-2]
+	\arrow["{\tilde{f}}"', from=1-1, to=2-1]
+	\arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+\end{cd}
+which suggests a way of forming $y^* f_* \cF$ is
+by using $\tilde{f}_* \tilde{y}^* \cF$ since 
+we know how to deal with $\tilde{f}_*$
+by the proposition we just proved.
+The main issue is the \emph{quasi-coherence}.
+\begin{enumerate}
+  \item With the abstract definition of $\tilde{f}_*$ as the right adjoint
+  of $\tilde{f}^*$ it is hard to say anything because
+  when we have a change in source $\SPEC B \to \SPEC A$,
+  we need to $\_ \otimes_A B$ which is a left adjoint.
+  Categorically we cannot say much about how left and right adjoints
+  interact.
+  \item With the global sections definition,
+  it is again not clear how this interacts with $\_ \otimes_A B$.
+  \item The definition with \[
+    \tilde{f}_*\tilde{y}^*\cF \to 
+    \prod_{i \in I}(\tilde{y}^*\cF)(U_i) \rightrightarrows
+    \prod_{i , j \in I} \prod_{k \in I_{ij}} (\tilde{y}^*\cF)(U_{ij}^k)
+  \]
+  where $((U_i)_{i \in I} , (U_{ij}^k)_{k \in I_{ij}})$ 
+  is Zariski presentation of $X_y$
+  has two orthogonal issues : 
+  \begin{enumerate}
+    \item Requires choosing a Zariski presentation of $X_y$
+    and thus will not be functorial in $y$.
+    \item $\_ \otimes_A B$ may not preserve equalisers.
+    \item $\_ \otimes_A B$ may not commute with the
+    arbitrary products defining the equaliser.
+  \end{enumerate}
+\end{enumerate}
+(a) can be solved by taking filtered colimit over
+all Zariski presentations ordered by refinement.
+(b) can be solved by using the equivalence \[
+  \QCOH Y \simeq \QCOH_\AFF Y  
+\]
+because for $\SPEC B \subs \SPEC A$ an inclusion of affine opens of $Y$
+the algebra map $A \to B$ is flat.
+(c) is a serious issue because
+$\_ \otimes_A B$ \emph{never} commutes with taking infinite products.
+For this to work,
+we need $I$ to be finite and each $I_{ij}$ also to be finite
+so that products are equivalent to direct sums.
+This leads us to the notion of \emph{quasi-compact quasi-separatedness}.
+
+\begin{dfn}
+  
+  Let $X$ be a scheme and $f : X \to Y$ be a morphism of schemes.
+  Then $X$ is called a quasi-compact when
+  it admits a \emph{finite} Zariski affine atlas.
+  Relatively, $f$ is called quasi-compact when for all $y : \SPEC A \to Y$,
+  $f^{-1}(y)$ is qc.
+
+  $X$ is called quasi-separated when
+  $\De : X \to X \times X$ is quasi-compact.
+  Relatively, $f$ is called quasi-separated when $\De_f : X \to X \times_Y X$ is qc.
+
+  One often asummes quasi-compact and quasi-separated together,
+  which we will abbreviate to qcqs.
+\end{dfn}
+
+The rough analogy is 
+\begin{cd}
+  {M \,A\text{-module}} & {X \text{ scheme}} \\
+	{M \text{ f.g.}} & {X \text{ q.c.}} \\
+	{M \text{ coherent}} & {X \text{ q.c.q.s}}
+\end{cd}
+
+\begin{prop}
+  
+	Let $f : X \to Y$ be a morphism of schemes.
+  Then $f$ is qcqs iff
+  for all $y : S \to Y$ with $S$ affine,
+  the scheme $X_y$ is qcqs.
+\end{prop}
+\begin{proof}
+	(Forward) $T := X \times_Y S$ is qc by definition.
+  To show qs, note that we have a commutative diagram
+  \begin{cd}
+    T & {T \times T} & {T \times T} \\
+    X & {X \times_Y X} & {X \times X}
+    \arrow[hook, from=2-2, to=2-3]
+    \arrow[from=2-1, to=2-2]
+    \arrow[hook, from=1-3, to=2-3]
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow[from=1-2, to=2-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-2, to=2-3]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+  \end{cd}
+  where \begin{enumerate}
+    \item The right square is cartesian because
+    $X \times_Y X \to X \times X$ is a monomorphism of presheaves
+    and $T \times T \to X \times T$ factors through $X \times_Y X$.
+    \item The outter square is cartesian because $T \to X$ is a monomorphism.
+    \item Hence the left square is cartesian.
+  \end{enumerate}
+  Since $X \to X \times_Y X$ is qc,
+  we have $T \to T \times T$ is qc as desired.
+
+  (Reverse)
+  Again, it is qs that is non-trivial.
+  Goal : 
+  for $S \to X \times_Y X$ with $S$ affine,
+  show $U := X \times_{X \times_Y X} S$ is qc.
+  Given $S \to X \times_Y X$,
+  we have single map $S \to Y$.
+  Let $T := X \times_S Y$.
+  Then we have \begin{cd}
+    X & T & U \\
+    {X \times_Y X} & {T \times T} & S
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=2-2, to=2-1]
+    \arrow[from=2-3, to=2-2]
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-2, to=2-1]
+    \arrow[from=1-3, to=1-2]
+    \arrow[from=1-3, to=2-3]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-3, to=2-2]
+  \end{cd}
+  where \begin{enumerate}
+    \item the left square is cartesian as in the proof of the forward direction
+    \item the bottom row comes from
+    $S \to X \times_S X$ factoring through $T \times T$
+    \item the outter square is cartesian by definition of $U$.
+  \end{enumerate}
+  It follows that the right square is cartesian.
+  By assumption, $T \to T \times T$ is qc so
+  $U \to S$ is qc and hence $U$ is qc.
+\end{proof}
+
+% \begin{dfn}
+  
+%   Let $\cF \in \QCOH X$ where $X$ is a scheme.
+%   Then the global sections of $\cF$ is defined as
+%   \[
+%     \cF(X) := (\QCOH X)(\cO_X , \cF)
+%   \]
+%   This is a $\cO_X(X)$-module.
+
+%   In general, for an open embedding $j : U \to X$,
+%   define the sections of $\cF$ on $U$ to be
+%   \[
+%     \cF(U) := (j^{-1}\cF)(U)
+%   \]
+% \end{dfn}
+
+% \begin{prop}
+  
+%   Let $f : X \to \SPEC A$ where $X$ is a scheme.
+%   We also assume $f$ is qcqs, equivalently that $X$ is qcqs.
+%   Then $f_* \_ \simeq \_ (X)$.
+% \end{prop}
+% \begin{proof}
+%   \textbf{Not sure if need qcqs.}
+%   \[
+%     f_* \cF \simeq A\MOD(A , f_* \cF)
+%     \simeq (\QCOH X)(f^* A , \cF)
+%     \simeq (\QCOH X)(\cO_X , \cF)
+%     = \cF(X)
+%   \]
+% \end{proof}
+
+% \begin{prop}
+  
+%   Let $f : X \to Y$ be a qc morphism of schemes,
+%   $\cF \in \QCOH X$.
+% \end{prop}
+% \begin{proof}
+  
+% \end{proof}
+% Let's keep things simple by assuming more than quasi-separated-ness : 
+% we assume $X$ has affine diagonal so that finite intersection of
+% affine opens is still affine.
+% At this point, we've effectively rediscovered 
+% Cech cohomology and are trying to prove the independence of
+% Cech cohomology w.r.t. an affine Zariski cover. 
+% Great. I finally self-motivated the colimit definition of Cech cohomology.
+% TLDR of Cech cohomology : 
+% \begin{enumerate}
+%   \item define $\check{C}^\bullet (\cU , \cF)$ for Zariski affine covers $\cU$.
+%   \item show if $\cV$ refines $\cU$, then 
+%   $\check{C}^\bullet (\cU , \cF) \to \check{C}^\bullet (\cV , \cF)$
+%   is quasi-isomorphism
+%   \item define $\check{H}^\bullet(X , \cF) := 
+%   \COLIM_{\cU} \check{H}^\bullet (\cU , \cF)$
+% \end{enumerate}
+
+\begin{prop}[Base change for affine opens]
+  
+  Let $f : X \to Y$ be a qcqs morphism between schemes.
+  Let $j : U \subs Y$ be an affine open and $\cF \in \QCOH X$.
+  Then \[
+    (f_* \cF)(U) \simeq \cF(f^{-1}(U))  
+  \]
+\end{prop}
+\begin{proof}
+  As we discussed.
+  $f$ qcqs implies that
+  for each $y : S \to Y$ with $S$ affine,
+  the fiber $X_y$ admits a \emph{finite} Zariski presentation.
+  Then the pushforward $X_y \to S$ can be computed
+  by taking global sections w.r.t.
+  any finite Zariski presentation of $X$.
+  To make this functorial in $y$,
+  we take the filtered colimit across all finite Zariski presentations
+  ordered by refinement.
+  Then the fact that the products in the equalizer
+  defining global sections are finite
+  and the fact that restricting along affine opens are flat
+  implies that we have defined a quasi-coherent sheaf on $Y$.
+  The fact that this is a right adjoint to $f^*$
+  follows from our computation of the pushforward
+  in the case of having an affine target.
+\end{proof}
+\end{document}

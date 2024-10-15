@@ -1,0 +1,218 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+Slogan : 
+\emph{
+  Commutative algebras as mathematical formalisation of
+physical systems
+}
+The above idea is from \cite{Nes21}.
+  
+The idea of scientific empiricisms is that 
+a \emph{physical system} nothing more than what we
+can \emph{observe}. Observations are made with \emph{measuring devices}.
+Measuring devices give for each \emph{state} a number.
+Numbers are elements of a \emph{field}.
+Given that numbers are elements of a field,
+one sees that measuring devices can be added, 
+subtracted, scaled, multiplied, but \textbf{not} divided
+because they may give zero for certain states.
+We thus arrive at the concept of a commutative ring with unity.
+All rings hencforth are assumed to be cummutative with unity from here on.
+  
+We think of a ring $A$ as defining
+a physical system by the measuring devices we can use on it.
+When we want to think to $A$ as a physical system,
+we refer to it as $\SPEC A$.
+% This is nice because this is one idea away from schemes:
+% schemes add the idea of allowing measuring devices
+% which can only give values on certain states,
+% i.e. \emph{local} measuring devices.
+% One also adds the idea that local measuring devices
+% can be \emph{patched together} along
+% states which they share equal values on.
+
+A single state in $\SPEC A$ is defined as
+  a morphism of $k$-algebras $A \to k$.
+  Intuitively, the role of a single state is give
+  for each measuring device a number.
+
+Examples of algebras and their physical interpretation : 
+  $k[x_1 , \dots , x_n]$ represents affine $n$-space,
+  $k$ represents the system where there is only one state.
+  If one thinks of all states as positions,
+  then it makes sense to confuse the word ``physical system''
+  with the word ``space''.
+  This is intuitively why one might call $\SPEC A$ a space.
+  
+A \emph{map of spaces} $\SPEC B \to \SPEC A$ 
+  should be determined by how measuring devices on $\SPEC A$
+  give rise to measuring devices on $\SPEC B$,
+  i.e. a morphism of $k$-algebras $A \to B$.
+  We take this as the definition.
+
+One can also think of a map $\SPEC B \to \SPEC A$
+as a family of states in $\SPEC A$ parameterised by $\SPEC B$.
+E.g. $\bA^1 \to \SPEC A$ is a line of states in $\SPEC A$.
+
+Let us make formal definitions.
+
+\begin{dfn}
+  
+  Throughout, we fix a field $k$.
+  Define the \emph{category $\AFF_k$ of affine schemes over $k$}
+  as the opposite category of the category of
+  commutative algebras over $k$.
+
+  For a $k$-algebra $A$,
+  we use $\SPEC A$ to denote the correponding object in $\AFF_k$.
+  We refer to $\SPEC A$ as the \emph{affine scheme associated to $A$}.
+  Conversely, given $S \in \AFF_k$,
+  we write $\cO(S)$ for the corresponding $k$-algebra.
+  We refer to $\cO(S)$ as the \emph{coordinate ring of $S$}.
+  We refer to elements $f \in \cO(S)$ as
+  \emph{functions on $S$}.
+
+  For a morphism $\varphi : \SPEC B \to \SPEC A$ in $\AFF_k$,
+  the corresponding map $A \to B$ will be denote \[
+    \varphi^* : A \to B , f \mapsto f \varphi  
+  \]
+  We refer to $\varphi^*$ as 
+  \emph{pulling back functions on $\SPEC A$ along $\SPEC B$}.
+\end{dfn}
+
+Remark for readers concerned about having a base field $k$ : 
+the theory of schemes importantly does \emph{not}
+need a base field $k$.
+Historically, one of the reasons schemes
+came about is because of the desire to apply
+geometric arguments to problems in number theory.
+(See Weil conjectures.)
+In such applications, it is important to work with
+\emph{all} commutative rings,
+or in other words $\bZ$-algebras.
+In the ``physics'' motivation we gave above,
+we fixed a base field $k$ only for narrative.
+
+\begin{dfn}
+  
+  Let $X$ be an affine scheme over $k$.
+  A \emph{$k$-point of $X$} is defined as
+  a morphism of affine schemes $\SPEC k \to X$.
+  We write $X(k)$ for the set of $k$-points of $X$.
+
+  More generally, for affine scheme $S$
+  an \emph{$S$-point of $X$} is defined as
+  a morphism of affine schemes $S \to X$.
+  We write $X(S)$ for the set of $S$-points of $X$.
+\end{dfn}
+
+\begin{eg}[$k$-points do not determine affine schemes]
+  
+  Consider the morphism of affine schemes over $k$
+  \[
+    0 : \SPEC k \to \SPEC k[t] / (t^2)
+  \] corresponding to
+  the algebra morphism $k[t] / (t^2) \to k$ given by
+  setting $t = 0$.
+  Note that tautologically, $0$ is a $k$-point of $\SPEC k[t]/(t^2)$.
+  This is in fact the unique $k$-point because
+  $t^2 = 0$ in $k[t]/(t^2)$ so
+  any $k$-algebra map $k[t]/(t^2) \to k$ must send $t \mapsto 0$.
+
+  There is only one $k$-point of $\SPEC k$
+  because the only $k$-algebra map $k \to k$ is the identity.
+  Composing with $0$ gives the $k$-point $0$ of $\SPEC k[t] / (t^2)$.
+  So the morphism $0$ induces a bijection on $k$-points : 
+  \[
+    \bullet = (\SPEC k)(k) \map{\sim}{} (\SPEC k[t]/(t^2))(k) = \set{0}
+  \]
+  However $0$ is not an isomorphism of affine schemes over $k$.
+  Indeed, $k[t]/(t^2) \to k$ is not an isomorphism of $k$-algebras.
+
+\end{eg}
+
+\begin{eg}[$k$-points can be empty]
+  
+  Let $k = \bQ$.
+  Consider $\nothing = \SPEC 0$ where $0$ is the zero ring.
+  Then $\nothing$ has no $k$-points because
+  $1 \neq 0$ in any field.
+
+  Consider $S = \SPEC \bQ[t] / (t^2 + 1)$.
+  Then $S$ has no $k$-points because $\bQ$ does not contain
+  an element $i$ such that $i^2 + 1 = 0$.
+
+  So $T, S$ both have empty sets of $k$-points!
+  Of course, the two are not isomorphic as affine schemes over $k$
+  because $\bQ[t] / (t^2 + 1) \simeq \bQ(i)$ as $\bQ$-algebras
+  and in particular not the zero ring.
+\end{eg}
+
+\begin{dfn}
+  
+  Affine $n$-space over $k$ is defined as 
+  the affine scheme $\bA^n_k$ corresponding to
+  the $k$-algebra $k[x_1 , \dots , x_n]$.
+\end{dfn}
+
+In the theory of smooth manifolds,
+we have a bijection between smooth functions and
+manifold morphisms to $\bR$ \[
+  C^\infty(M) \simeq \mathrm{Mfd}(M , \bR)
+\]
+which is functorial in manifolds $M$.
+The terminology is that $\bR$ \emph{classifies}
+smooth functions or
+that $\bR$ is a \emph{moduli space} for smooth functions.
+We have an analogous statement in algebraic geometry.
+
+\begin{prop}[Universal property of the affine line]
+  
+  There exists a bijection
+  \[
+    \cO(S) \simeq \AFF_k(S , \bA^1_k)
+  \]
+  functorial in $S \in \AFF_k$.
+  Given $f \in \cO(S)$,
+  we often say that \emph{by the universal property of $\bA^1_k$, 
+  $f$ gives a map $S \to \bA^1_k$}.
+  We will usually use $f$ again to denote the morphism $S \to \bA^1_k$.
+\end{prop}
+In our setup of algebraic geometry,
+the ring of functions on a space
+comes first before the space
+so this statement will be more or less a tautology.
+\begin{proof}
+  We describe the two directions : 
+\begin{enumerate}
+  \item Given $f \in \cO(S)$,
+  define $k[t] \to \cO(S)$ by $t \mapsto f$.
+  This defines a morphism
+  $S \to \bA^1_k$ in $\AFF_k$.
+  \item Given $\varphi : S \to \bA^1_k$ in $\AFF_k$,
+  we obtain an element $\varphi^*(t) = t \varphi \in \cO(S)$.
+\end{enumerate}
+One can show the above are inverses and
+functorial in $S$.
+\end{proof}
+Under this identitification,
+for $\varphi : T \to S$ in $\AFF_k$,
+the $k$-algebra map $\varphi^*$ really does
+correspond to precomposition of morphisms $S \to \bA^1_k$
+with $\varphi$.
+
+\begin{ex}[$\SPEC k$ is the final object of $\AFF_k$]
+  
+  Show that every affine scheme over $k$
+  has a unique map to $\SPEC k$.
+  In the language of category theory,
+  we say that $\SPEC k$ is a \emph{final object} of $\AFF_k$.
+  This is analogous to how the singleton set
+  is the final object in the category of sets.
+  In other words,
+  one should think of $\SPEC k$ as
+  ``the singleton space'' in the category $\AFF_k$.
+\end{ex}
+
+\end{document}

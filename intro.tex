@@ -1,0 +1,70 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+This documents my personal journey of understanding the foundations of
+modern algebraic geometry completely from the functorial point of view.
+At the risk of sounding controversial,
+I believe this is the way involving \emph{least} amount of technology,
+however requires developing the most intuition.
+
+Problems with courses in modern algebraic geometry I've seen :
+\begin{enumerate}
+  \item don't get to schemes, leaving students unable to access 
+  modern AG
+  \item amount of theory of sheaves on topological spaces
+  is demotivating.
+  I want sheaves to appear as
+  requiring coverings to be effective epimorphisms.
+  \item With locally ringed spaces, it feels difficult to write down
+  a scheme. 
+  New students often mistakenly conflate 
+  a scheme with its underlying topological space.
+  The point that ``schemes = commutative algebra + descent''
+  is clouded.
+  \item takes too long to get to modern treatment of varieties
+  \item With locally ringed spaces,
+  quasi-coherent sheaves live in a larger category of topological sheaves.
+  This obscures the idea that
+  ``quasi-coherent sheaves = a module in any chart compatibly''
+  and also takes longer to develop technically speaking.
+  \item too many properties of morphisms. 
+  Hard for students to get a handle on.
+  \item sheaf cohomology : is there really a need to see
+  abstract sheaf cohomology when seeing schemes for first time?
+\end{enumerate}
+When corrected motivated,
+the functor of points approach solves (1), (2), (3), (4), (5).
+Point (7) is debatable. 
+Point (6) may be better if there was a specific purpose for
+learning scheme theory?
+E.g. if one focuses on curves?
+
+Places where functors shine : 
+\begin{enumerate}
+  \item a scheme is really nothing more than 
+  ``affine schemes quotient along opens''.
+  \item definition of pullback of quasi-coherent sheaves
+  \item the associated topological space of a scheme is \emph{secondary},
+  so it avoids confusion.
+  \item definition of tangent bundle
+  \item formal schemes and ind-schemes are easy to introduce
+  and compute with
+  \item the generalization to algebraic spaces
+  is conceptually explained as replacing quotients along
+  open immersions to quotients along étale morphisms
+  \item the generalization to stacks is conceptually explained
+  as using groupoids to describe ``non-propositional equivalence relations''.
+\end{enumerate}
+
+Some questions for myself : 
+\begin{enumerate}
+  \item Maths where schemes are indispensible?
+  \begin{itemize}
+    \item Modular forms to Galois reps.
+    Modular curves are usually described complex analytically.
+    But the moduli description makes them over $\bQ$.
+    Now étale cohomologies naturally carry action from absolute Galois group.
+  \end{itemize}
+\end{enumerate}
+
+\end{document}

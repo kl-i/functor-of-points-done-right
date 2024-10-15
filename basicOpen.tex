@@ -1,0 +1,80 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+From the perspective of topology,
+the obvious thing to consider after closed embeddings
+is the notion of an \emph{open embedding}.
+This turns out to be quite subtle and
+will in fact lead us directly to schemes.
+For now, we introduce the more restrictive notion
+of a \emph{basic open}.
+The idea is again simple : 
+given an element $f \in A$ of a $k$-algebra,
+we want to consider the ``locus of $\SPEC A$ where $f$ is \emph{invertible}''.
+
+\begin{dfn}
+  
+  Let $X \in \AFF_k$ and $f \in \cO(X)$.
+  Define the \emph{basic open associated to $f$}
+  as \[
+    D(f) := \SPEC \cO(X)[1 / f]
+  \] where
+  $\cO(X)[1 / f] := \cO(X)[x] / (x f - 1)$
+  the $\cO(X)$-algebra obtained by freely adjoining an inverse to $f$.
+  The $k$-algebra map $\cO(X) \to \cO(X)[1 / f]$ defines
+  a morphism \[
+    j :  D(f) \to X
+  \]
+  We refer to $j$ as \emph{the inclusion of a basic open}.
+
+  More generally,
+  a basic open embedding of $X$ is 
+  a morphism $j : U \to X$ in $\AFF_k$ 
+  isomorphic to the inclusion of a basic open.
+\end{dfn}
+
+\begin{eg}
+  The quintessential example of a basic open embedding
+  is the morphism \[
+    \bA^1_k \setminus \set{0} := D(t) \to \bA^1_k  
+  \]
+  where $D(t) = \SPEC k[t , t^{-1}]$ and the
+  above morphism corresponds to the
+  $k$-algebra map $k[t] \to k[t , t^{-1}]$.
+  We will see later that in a precise sense
+  this is the \emph{universal basic open embedding}.
+  Note that we have also introduced
+  suggestive notation of $D(t)$ as
+  $\bA^1_k \setminus\set{0}$.
+  We will be able to explain this
+  in the next section after introducing \emph{fiber products}.
+\end{eg}
+
+\begin{prop}[Universal property of basic opens]
+  
+  Let $X \in \AFF_k$ and $f \in \cO(X)$.
+  Let $j : D(f) \to X$ denote the associated basic open embedding.
+  Then for all $s : T \to X$ in $\AFF_k$,
+  we have a factoring \begin{cd}
+    T & D(f) \\
+    & X
+    \arrow[from = 1-1 , to = 1-2 , dashed]
+    \arrow[from = 1-1 , to = 2-2 , "{s}"']
+    \arrow[from = 1-2 , to = 2-2, "{j}"]
+  \end{cd}
+  iff under the $k$-algebra map $s^* : \cO(X) \to \cO(T)$,
+  the element $f$ becomes invertible.
+  Furthermore, such a factoring is unique when it exists.
+\end{prop}
+\begin{proof}
+  This is just a restatement of
+  the universal property of the $\cO(X)$-algebra map 
+  $\cO(X) \to \cO(X)[1 / f]$.
+\end{proof}
+
+Again, the uniqueness part of the universal property
+of basic opens says that $j : D(f) \to X$ is a monomorphism in $\AFF_k$
+so it makes sense to think about $j$ as
+the isomorphism onto a subspace of $X$.
+
+\end{document}

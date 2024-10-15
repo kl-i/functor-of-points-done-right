@@ -1,0 +1,207 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+Slogan : 
+\emph{a scheme is the quotient of affines schemes 
+along open immersions}.
+For this, we need to define open immersions between Zariski sheaves.
+
+% To get the idea of the rigorous definition,
+% the question one needs to ask is : 
+% \emph{what should a open cover $\cU \to X$ do?}
+
+% Let $\cU$ be a set of affines and $X$ a presheaf.
+% Defining what it means for $U \in \cU$ to have
+% an open embedding $j_U : U \to X$ is easy enough :
+% the pullback to any affine should be a subset
+% which is the complement of a closed embedding.
+
+% Let us abuse notation and denote $\coprod_{U \in \cU} U$ 
+% again with $\cU$.
+% The question to ask is : 
+% how does giving a map $S \to X$ from an affine $S$
+% relate to maps into $\cU$?
+% The answer comes from considering the diagram 
+% \begin{cd}
+%   {\coprod_{i , j} S[1/f_i f_j]} & {\mathcal{V} \times_S \mathcal{V}} & {\mathcal{U} \times_X \mathcal{U}} \\
+% 	{\coprod_{i} S[1/f_i]} & {\mathcal{V}} & {\mathcal{U}} \\
+% 	S & S & X
+% 	\arrow[from=3-2, to=3-3]
+% 	\arrow[from=2-3, to=3-3]
+% 	\arrow[from=2-2, to=3-2]
+% 	\arrow[from=2-2, to=2-3]
+% 	\arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=2-2, to=3-3]
+% 	\arrow[from=3-1, to=3-2]
+% 	\arrow[from=2-1, to=3-1]
+% 	\arrow[shift left=2, from=1-1, to=2-1]
+% 	\arrow[shift right=2, from=1-1, to=2-1]
+% 	\arrow[from=2-1, to=2-2]
+% 	\arrow[shift right=2, from=1-3, to=2-3]
+% 	\arrow[shift left=2, from=1-3, to=2-3]
+% 	\arrow[shift left=2, from=1-2, to=2-2]
+% 	\arrow[shift right=2, from=1-2, to=2-2]
+% 	\arrow[from=1-1, to=1-2]
+% 	\arrow[from=1-2, to=1-3]
+% \end{cd}
+% The $\cU$ should pullback to $\cV$
+% which we should be able to refine with standard Zariski opens.
+% Now condition (2) should say
+% that these standard Zariski opens should cover $S$,
+% i.e. we have a partition of unity $1 = \sum_{i} \la_i f_i$.
+% Furthermore, 
+% the data of the map $S \to X$ should be equivalent to
+% the map from the standard Zariski cover agree on intersections,
+% i.e. $X$ \emph{should recognise $S$ as the coequaliser of
+% the standard Zariski cover}.
+% We arrive at a definition of schemes.
+
+\begin{dfn}
+  
+  Let $j : X \to Y$ be a map of presheaves.
+  Then $j$ is called an open immersion when
+  for all points $y : \SPEC A \to Y$,
+  the pullback $\SPEC A \times_Y X \to \SPEC A$
+  is an open immersion.
+\end{dfn}
+
+We can now define schemes.
+\begin{dfn}
+
+  Let $X$ be a Zariski sheaf.
+  An affine Zariski cover / atlas of $X$ is defined as
+  a set of open immersions $\set{j_i : \SPEC A_i \to X}_{i \in I}$
+  such that the Zariski disjoint union gives a Zariski epimorphism
+  \[
+    \coprod_{i \in I} \SPEC A_i \twoheadrightarrow X
+  \]
+  A scheme $X$ is a Zariski sheaf that admits
+  an affine Zariski atlas.
+\end{dfn}
+
+The following justifies the slogan of this section.
+
+\begin{prop}[Scheme = quotient of affines along open immersions]
+  
+  Let $X$ be a Zariski sheaf and let $\set{j_i : \SPEC A_i \to X}_{i \in I}$
+  be a set of maps.
+  Let $\cU := \coprod_{i \in I} \SPEC A_i$ be the Zariski disjoint union.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item $\set{j_i : \SPEC A_i \to X}_{i \in I}$ is a Zariski affine atlas
+    for $X$.
+    \item There is an equivalence relation $\cR$ on $\cU$ such that
+    \begin{itemize}
+      \item the projections $\cR \rightrightarrows \cU$ are open embeddings
+      \item The map $\cU \to X$ exhibits $X$ as 
+      the Zariski coequalizer of $\cR \rightrightarrows \cU$.
+    \end{itemize}
+  \end{enumerate}
+\end{prop}
+
+The proof requires some basic knowledge of the category of
+Zariski sheaves $\SH_\ZAR \AFF \subs \PSH \AFF$.
+
+\begin{proof}
+  (1) implies (2) is clear.
+
+  Let $\cU, \cR$ be as in the situation (2).
+  It suffices to show for each affine scheme summand $U = \SPEC A_i$ of $\cU$ 
+  the map $j_U : U \to \cU \to X$ is an open embedding.
+  Let $\tilde{X}$ be the coequaliser of $\cR \rightrightarrows \cU$
+  in the category of presheaves.
+  Note that the Zariski sheafification of the coequaliser sequence
+  for $\tilde{X}$ is the coequaliser sequence for $X$
+  because Zariski sheafification is a left exact left adjoint.
+  We need the following.
+  \begin{lem}
+    Let $f : X \to Y$ be a morphism of presheaves which is an open immersion.
+    Then
+    \begin{enumerate}
+      \item if $Y$ is a Zariski sheaf, so is $X$.
+      \item if $f$ is an open embedding then so is its Zariski sheafification.
+    \end{enumerate}
+    \begin{proof1}
+      (1) Exercise.
+
+      (2) Suppose we have $S \to L(Y)$ with $S$ affine.
+      We need to show $S \times_{L(Y)} L(X) \to S$ is an open embedding.
+      It suffices to do so after passing to some Zariski cover
+      $\tilde{S} \to S$.
+      One of the properties of Zariski sheafification is that
+      we can find a Zariski cover $\tilde{S} \to S$
+      such that $\tilde{S} \to S \to L(Y)$ factors as
+      $\tilde{S} \to Y \to L(Y)$.
+      The rest follows from (1) and the fact that
+      Zariski sheafification $L$ is
+      left exact.
+      \begin{cd}
+        {L(\tilde{S} \times_{Y}X)} & {\tilde{S} \times_{Y}X} & X \\
+        {\tilde{S} \times_{L(Y)}L(X)} & {\tilde{S}} & Y & {L(X)} \\
+        && S & {L(Y)}
+        \arrow[from=2-4, to=3-4]
+        \arrow[from=2-3, to=3-4]
+        \arrow[from=1-3, to=2-3]
+        \arrow[from=1-3, to=2-4]
+        \arrow[from=3-3, to=3-4]
+        \arrow[dashed, from=2-2, to=3-3]
+        \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-2, to=2-3]
+        \arrow[from=1-2, to=2-2]
+        \arrow[from=1-2, to=1-3]
+        \arrow[dashed, from=2-2, to=2-3]
+        \arrow["\simeq"{description}, draw=none, from=1-1, to=1-2]
+        \arrow["\simeq"{description}, draw=none, from=1-1, to=2-1]
+      \end{cd}
+    \end{proof1}
+  \end{lem}
+  So it suffices to show $U \to \tilde{X}$ is an open embedding.
+  Let $T \to \tilde{X}$ be a general point where $T$ is affine.
+  By the way colimits of presheaves are computed,
+  we can lift $T \to \tilde{X}$ to a map $T \to \cU$.
+  We then have the cartesian squares : 
+  \begin{cd}
+    {T \times_{\tilde{X}} U} & {\mathcal{U} \times_{\tilde{X}} U} & U \\
+    & {\cR} & {\mathcal{U}} \\
+    T & {\mathcal{U}} & {\tilde{X}}
+    \arrow[from=2-3, to=3-3]
+    \arrow[from=3-2, to=3-3]
+    \arrow[from=2-2, to=3-2]
+    \arrow[from=2-2, to=2-3]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=2-2, to=3-3]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=1-3, to=2-3]
+    \arrow[from=1-2, to=1-3]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-2, to=2-3]
+    \arrow[from=3-1, to=3-2]
+    \arrow[from=1-1, to=3-1]
+    \arrow[from=1-1, to=1-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=3-3]
+  \end{cd}
+  For the left vertical morphism to be an open embedding,
+  it suffices that the middle two vertical morphisms are open embeddings.
+  By assumption, $\cR \to \cU$ is an open embedding.
+  It remains to prove that the inclusion $U \to \cU$ is an open embedding.
+  Using the lemma above again, it suffices to do so for
+  the coproduct as presheaves, where the result is then clear.
+
+\end{proof}
+
+\begin{eg}
+  Our example $\bA^2\setminus\set{0}$ which motivated
+  Zariski sheaves is a scheme with
+  atlas given by $D(x) + D(y)$.
+\end{eg}
+
+\begin{eg}
+
+  Projective 1-space $\bP^1$ is defined by the equivalence relation
+  \begin{cd}
+    {\bA^1\setminus 0 } & {\bA^1 \coprod \bA^1} & {\bP^1}
+    \arrow["t", shift left=2, from=1-1, to=1-2]
+    \arrow["{1/t}"', shift right=2, from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+  \end{cd}
+\end{eg}
+After we see how to interpret modules from algebra as vector bundles in geometry,
+we will have another definition of $\bP^1$ and $\bP^n$ in general.
+
+\end{document}

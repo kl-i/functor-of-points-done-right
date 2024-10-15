@@ -1,0 +1,36 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+We are going to give the definition of
+$\bP^n$ as the ``quotient of $\bA^{n+1}\setminus\set{0}$
+by the scaling action of $\bG_m$''.
+We begin with the intuition of quotients of group actions
+in sets.
+
+\begin{prop}
+  
+  Let $G$ be a group acting on a set $X$.
+  Let $S$ be a another set.
+  There is a bijection between \begin{enumerate}
+    \item the set of maps $S \to X / G$
+    \item the set of $G$-equivariant maps $S \times G \to X$
+    up to the equivalence relation of \begin{cd}
+      {S \times G} & X \\
+      S & {S \times G}
+      \arrow[from=1-1, to=2-1]
+      \arrow[from=2-1, to=2-2]
+      \arrow["x", from=1-1, to=1-2]
+      \arrow["y"', from=2-2, to=1-2]
+      \arrow["{\exists \, g}"', from=1-1, to=2-2]
+    \end{cd}
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+The above indicates how to define the functor $\bP^n$.
+The issue is that for an affine $S$,
+maps $S \times G \to X$ do not glue Zariski locally on $S$.
+
+\end{document}

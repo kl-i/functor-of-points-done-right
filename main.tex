@@ -1,0 +1,84 @@
+\documentclass{article}
+\input{preamble.tex}
+
+\addbibresource{mybib.bib}
+
+\begin{document}
+
+\title{Functor of points done right}
+
+\author{Ken Lee}
+\date{Spring 2023}
+\maketitle
+
+\tableofcontents
+
+\subfile{intro.tex}
+
+\section{Affine schemes}
+  In this chapter, we develop intuition 
+  for commutative algebra as geometry.
+  \subsection{Affine space}\subfile{affine.tex}
+  \subsection{Closed immersion}\subfile{closedEmb.tex}
+  \subsection{Basic opens}\subfile{basicOpen.tex}
+  \subsection{Fiber product}\subfile{fiberProd.tex}
+  \subsection{Finite disjoint union}\subfile{disjoint.tex}
+  \subsection{Basic Zariski coverings}
+  \subfile{zariski.tex}
+
+\section{Schemes}
+  \subsection{Yoneda's lemma and presheaves}\subfile{presheaf.tex}
+  \subsection{Motivation of non-affine spaces}
+    \subfile{nonaffine.tex}
+  \subsection{Definition}\subfile{scheme.tex}
+  % \subsection{The example of projective space}
+  \subsection{Associated topological space}\subfile{top.tex}
+
+\section{Quasi-coherent sheaves}
+  \subsection{Examples of modules as general vector bundles}
+    \subfile{qcohEg.tex}
+  % over affine 1-space
+  % over projective 1-space
+  \subsection{Descent}\subfile{fpqc.tex}
+  \subsection{Quasi-coherent sheaves}
+  % Zariski descent of modules
+    \subfile{qcoh-general.tex}
+  \subsection{Induced functors on quasi-coherent sheaves}
+    \subfile{qcoh-pullback.tex}
+  % eg. taking fibers
+  % \subsection{Pushforward along affine morphisms}
+  \subsection{Concrete description of pushforward}
+    \subfile{qcqs.tex}
+  % qc morphisms := representable by qc schemes
+  % qs morphisms := diagonal qc morphism
+
+\section{Properties of Morphisms}
+  \subsection{Vector bundles}
+  % \subsection{Finite morphisms}
+  \subsection{Affine morphisms}
+  \subsection{Scheme theoretic image}
+  \subsection{Finite type, finitely presented morphisms}
+  \subsection{Universally closed, integral, finite morphisms}
+
+\section{Varieties}
+  \subsection{Integral Schemes and Rational Functions}\subfile{domain.tex}
+  % \subsection{Dimension theory for varieties}
+  \subsection{Algebraic curves}
+
+\section{Smoothness}
+  \subsection{The start of calculus : Tangent vectors}\subfile{tangent.tex}
+%   \subsection{Tangent Bundle in affine case}
+%   \subsection{Kahler differentials - Reducing everything to modules}
+%   % exact sequence for computing tangent bundle of 
+%   % closed embeddings into affine space
+%   \subsection{Tangent bundle in general case}
+
+\section{Group actions}
+  \subsection{Fundamental vector fields}\subfile{action.tex}
+  \subsection{Connections on $G$-torsors}\subfile{connection.tex}
+
+
+\section{References}
+\printbibliography
+
+\end{document}

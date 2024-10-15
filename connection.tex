@@ -1,0 +1,210 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+Let's review the three definitions of connections on
+vector bundles in differential geometry.
+Let $\pi : E \to B$ be a rank $m$ vector bundle over an $n$-dimensional manifold $B$.
+
+\begin{dfn}
+	
+  The \emph{vertical bundle of $E$} is defined as the kernel of
+	vector bundles on $E$ : 
+	\[
+    0 \to V E \to TE \map{D\pi}{} TB \times_B E \to 0
+	\]
+\end{dfn}
+Let's see what this sequence looks like locally on $E$.
+Locally on $B$,
+we have an isomorphism of vector bundles over spaces
+\begin{cd}
+	E & {\mathbb{R}^n \times \mathbb{R}^m} & {(x , a)} \\
+	B & {\mathbb{R}^n} & x
+	\arrow[from=1-1, to=2-1]
+	\arrow["\sim", from=2-1, to=2-2]
+	\arrow["x"', from=2-1, to=2-2]
+	\arrow[from=1-2, to=2-2]
+	\arrow["\sim"', from=1-1, to=1-2]
+	\arrow["{(x , a)}", from=1-1, to=1-2]
+	\arrow[maps to, from=1-3, to=2-3]
+\end{cd}
+Then the above SES looks like at each $p \in E$ with $b = \pi(p)$
+\[
+	0 \to \left\langle \frac{\partial}{\partial a^j}_p \right\rangle \to 
+	\left\< \frac{\partial}{\partial a^j}_p ,  \frac{\partial}{\partial x^k}_p\right\>
+	\to \left\< \frac{\partial}{\partial x^k}_b\right\> \to 0
+\]
+\begin{dfn}[Family of Horizontal subspaces]
+	
+	A family of horizontal subspace is a splitting of
+	the vertical bundle short exact sequence. 
+\end{dfn}
+From linear algebra,
+giving a splitting $0 \to V \to W \to W / V \to 0$
+is the same as giving a retraction of $V \to W$.
+Using this, let's describe a choice of family of horizontal subspaces in terms of
+concrete data.
+A retraction of $0 \to \left\langle \frac{\partial}{\partial a^j}_p \right\rangle \to 
+\left\< \frac{\partial}{\partial a^j}_p ,  \frac{\partial}{\partial x^k}_p\right\>$
+is equivalent to giving cotangent vectors $\theta^1_p , \dots , \theta^m_p$
+in $T^*_p E$ such that \[
+	\theta^i_p \frac{\partial}{\partial a^j}_p = 
+	\delta^i_j \frac{\partial}{\partial a^j}_p
+\]
+This is equivalent to the condition
+\[
+  \theta^j = (d a^j)_p + A^j_k(p) (d x^k)_p	
+\]
+\begin{dfn}[Linear family of horizontal spaces]
+	
+	Let $r : TE \to VE$ be a family of horizontal subspaces.
+	For $\la \in \bR$ let $\la : E \to E$ be the fiberwise scaling by $\la$ map.
+	This in particular induces $d \la : TE \to TE$.
+	Then $r$ is called \emph{linear} when for all $e \in E$ and scalars $\la$
+	we have 
+	\[
+		r_{\la e} (d \la)_e = r_e 
+	\]
+\end{dfn}
+
+% First, the idea is that for $B = \PT$ so $E$ is just a vector space,
+% then $TE \simeq E \times T_0 E$ so the SES is
+% \[
+% 	0 \to T_0 E \to E \times T_0 E \to E \to 0
+% \]
+% Of course there is an obvious $E \simeq T_0 E$ via
+% $v \mapsto \frac{\partial}{\partial v}_0$.
+% This works in families.
+% \begin{prop}
+	
+% 	Consider 
+% 	\[
+% 	  E \times_B E \to T E	
+% 	\]
+% 	by $p , v \mapsto \brkt{ p , \frac{\partial}{\partial v}_{p}}$.
+% 	This map of vector bundles over $E$
+% 	is independent of the choice of local coordinates
+% 	and induces an isomorphism $E\times_B E \simeq VE$.
+% \end{prop}
+% \begin{proof}
+% 	By dimensions, it suffices to show the map is injective on fibers.
+% 	Let $f$ be a smooth function.
+%   Using vector bundle coordinates $(x , a)$ and let
+% 	$\tilde{f}$ be the corresponding smooth function on $\bR^{n + m}$,
+% 	\[
+% 		\frac{\partial}{\partial v}_{p} f
+% 		= \COLIM_{t \to 0} \frac{f(p + t v) - f(p)}{t} 
+% 		= \COLIM_{t \to 0} \frac{\tilde{f}(x(p) , a(p) + t a(v)) - 
+% 			\tilde{f}(x(p) , a(p))}{t} 
+% 	\]
+% 	\[
+% 	  = \frac{\partial}{\partial a(v)}_{(x(p) , a(p))} \tilde{f}
+% 		= a^j(v) \frac{\partial}{\partial a^j}_{(x(p) , a(p))} \tilde{f}
+% 		= a^j(v) \frac{\partial}{\partial a^j}_{p} f	
+% 	\]
+% 	So $\partial/\partial v$ is zero iff $a^j(v) = 0$ for all $j$
+% 	iff $v = 0$ inside the fiber $E$ over $\pi(v)$.
+% \end{proof}
+
+
+
+For some reason, differential geometers like working with vector bundles
+by their total spaces whilst algebraic geometers like working with them 
+through their quasi-coherent sheaf of sections.
+
+Let $X = \SPEC A$ where $A$ is a commutative algebra over a field $k$.
+Let $G$ be an algebraic group over $k$.
+We assume we already know what a principal $G$-bundle $\pi : P \to X$ means.
+Considering the sequence of spaces $P \to X \to \SPEC k$, 
+we obtain the exact sequence
+\[
+  0 \to T_{P / X} \to T_{P} \to \pi^* T_X
+\]
+Let us compute $T_{P / X}$.
+For this, I found it easiest to consider it as a space over $P$
+and compute its points.
+Let $y : U \to P$ be a general point of $P$ where $U$ is an affine.
+Let $\tilde{U} := U \times_k \SPEC k[\epsilon]$.
+Maps from $y$ to $T_{P / X}$ are lifts $\tilde{y}$ satisfying 
+\begin{cd}
+  U & P \\
+	{\tilde{U}} & X
+	\arrow["y", from=1-1, to=1-2]
+	\arrow["{x = \pi(y)}"', from=2-1, to=2-2]
+	\arrow["\subseteq"', from=1-1, to=2-1]
+	\arrow["\pi", from=1-2, to=2-2]
+	\arrow["{\tilde{y}}"{description}, dashed, from=2-1, to=1-2]
+\end{cd}
+Note that $\tilde{U}$ has a retraction to $U$
+which gives rise to the zero tangent vector at $y$.
+By abuse of notation, we also use $y$ to denote the zero tangent vector
+$\tilde{U} \to P$ at $y$.
+Giving a general relative tangent vector at $y$ then amounts to
+a lift 
+\begin{cd}
+  & P \\
+	{\tilde{U}} & {P \times_X P}
+	\arrow["{(y , \tilde{y})}"', dashed, from=2-1, to=2-2]
+	\arrow["y", from=2-1, to=1-2]
+	\arrow["{\mathrm{fst}}"', from=2-2, to=1-2]
+\end{cd}
+However by assumption $P \times_X P \simeq P \times G$,
+so one must have $\tilde{y} = g y$ for some unique $g \in G(\tilde{U})
+= (\LIE G)(U)$.
+The above is all functorial in $y$ and hence we deduce 
+that as spaces over $P$ we have
+\[
+  T_{P / X} \simeq P \times \LIE G
+\]
+In fact, the reverse map is the map producing
+fundamental vector fields we previously saw.
+
+Note that $P \to X$ is formally smooth.
+Writing everything as quasi-coherent sheaves on $P$ we then have the SES
+\[
+  0 \to \cO_P \otimes \LIE G \to T_P \to \pi^* T_X \to 0
+\]
+We can descend this SES to $X$ by modding out $G$.
+Formally, we have descent along $G$-bundles
+\begin{cd}
+  {(\QCOH P)^G } & {\QCOH X}
+	\arrow["{\pi^*}"', shift right=2, from=1-2, to=1-1]
+	\arrow["{\pi_*(\_^G)}"', shift right=2, from=1-1, to=1-2]
+	\arrow["\sim"{description}, draw=none, from=1-1, to=1-2]
+\end{cd}
+So we obtain the SES in $\QCOH X$,
+\[
+  0 \to \pi_* (\cO_P \otimes \LIE G)^G \to \pi_*(T_P^G) \to T_X \to 0
+\]
+A \emph{connection on $P$} is a splitting of this SES in $\QCOH X$.
+Computationally, one should give such data on $P$.
+One way of doing this is to give a $G$-equivariant retraction
+of $T_P$ to $\cO_P \otimes \LIE G$.
+This amounts to giving a $G$-equivariant $(\LIE G)$-valued one form $\omega$ 
+such that for any element $\de \in \LIE G$,
+\[
+  \om(X_\de) = \de
+\]
+\cite[Section 19.1]{Mic}
+
+Exercise (which I have not done) : 
+boil this down for $G = \GL_n$.
+
+Suppose one is given a connection on $P$ as
+a section $\nabla : T_X \to \pi_*(T_P^G)$.
+The connection is called \emph{flat} if this is a morphism of Lie algebroids.
+
+Relation of D-modules and differential equations : 
+Let $(\cE , \nabla)$ be a vector bundle on a smooth curve $X$ and $\nabla$
+a connection.
+Then on an open $U$ of $X$ on which $\cE$ admits trivialising sections
+$e_1 , \dots , e_n$, we have for any section $s$ on $U$,
+\[
+  \nabla s = \nabla(s^i e_i) = ds^i \otimes e_i + s^i \nabla e_i
+  = ds^i \otimes e_i + s^i A^{_i^j} \otimes e_j
+  = ds + As
+\]
+Therefore looking for horizontal sections $\nabla s = 0$
+is equivalent to solving the $n$ 1-dimensional ordinary differential equation
+$d s = - A s$ and then pasting solutions together to all of $X$.
+
+\end{document}

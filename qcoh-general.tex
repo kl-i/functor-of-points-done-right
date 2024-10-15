@@ -1,0 +1,655 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+We define quasi-coherent sheaves on a scheme $X$
+to be such that it is equivalent to
+having modules over an affine open cover plus
+identification on pairwise intersections.
+In practice, Zariski affine covers of schemes 
+will be such that 
+the intersection of two affine opens will always be affine again.
+
+\begin{dfn}[Quasi-coherent sheaves w.r.t. Zariski affine cover]
+
+  Let $X$ be a scheme and $\cU = \coprod_{i \in I} \SPEC A_i$ 
+  a Zariski affine cover
+  where the pairwise intersections are affine.
+  Consider the following diagram : 
+  \begin{cd}
+    {\mathcal{U} \times_X \mathcal{U} \times_X \mathcal{U}} & {\mathcal{U} \times_X \mathcal{U}} & {\mathcal{U}}
+    \arrow["{p_0}"{description}, shift left=2, from=1-2, to=1-3]
+    \arrow["{p_{12}}"{description}, from=1-1, to=1-2]
+    \arrow["{p_{02}}"{description}, shift right=4, from=1-1, to=1-2]
+    \arrow["{p_{01}}"{description}, shift left=4, from=1-1, to=1-2]
+    \arrow["{p_1}"{description}, shift right=2, from=1-2, to=1-3]
+  \end{cd}
+  where we have the projections \begin{itemize}
+    \item $p_i : \cU \times_X \cU \to \cU, (x_0 , x_1) \mapsto x_i$
+    \item $p_{ij} : \cU \times_X \cU \times_X \cU \to \cU \times_X \cU, 
+    (x_0 , x_1, x_2) \mapsto (x_i , x_j)$
+  \end{itemize}
+  By our assumption on $X$,
+  all schemes are disjoint unions of affine opens of $X$.
+  Momentarily, let \[
+    \QCOH \cU := \prod_{i \in I} A_i\MOD
+  \]
+  and similarly for $\QCOH(\cU \times \cU) , \QCOH(\cU \times_X \cU \times_X \cU)$.
+  % Suppose we already know what quasi-coherent sheaves look like on
+  % $\cU , \cU \times_X \cU , \cU \times_X \cU \times_X \cU$.
+  % For example, $\QCOH \cU \simeq \prod_{U \in \cU} \cO(U)\MOD$.
+  % Note that pullback along these projections correspond to
+  % restricting to double and triple intersections.
+  For $p : \SPEC B \to \SPEC A$ any of the above projections,
+  we use $p^*$ to denote the functor $B \otimes_A \_$.
+  Then define the \emph{category $\QCOH (X , \cU)$ 
+  of quasi-coherent sheaves on $X$ w.r.t. $\cU$} as follows : 
+  \begin{itemize}
+    \item An object of $\QCOH (X , \cU)$ is 
+    a set of modules $\cF \in \QCOH(\cU)$
+    equipped with a \emph{transition map} 
+    $\phi : p_0^* \cF \cong p_1^* \cF$ 
+    in $\QCOH( \cU \times_X \cU)$ such that
+    \begin{enumerate}
+      \item $\phi = \id$ when restricted to the diagonal 
+      $\De : \cU \to \cU \times_X \cU$
+      \item the following diagram commute : 
+      \begin{cd}
+        & {p_{01}^*p_1^* \mathcal{F}} \\
+        {p_{01}^*p_0^*\mathcal{F}} && {p_{12}^*p_0^*\mathcal{F}} \\
+        {p_{02}^*p_0^*\mathcal{F}} && {p_{12}^*p_1^*\mathcal{F}} \\
+        & {p_{02}^*p_1^* \mathcal{F}}
+        \arrow["{p_{01}^*(\phi)}", from=2-1, to=1-2]
+        \arrow["{p_{12}^*(\phi)}", from=2-3, to=3-3]
+        \arrow["{p_{02}^*(\phi)}"', from=3-1, to=4-2]
+        \arrow["\sim"', from=2-1, to=3-1]
+        \arrow["\sim", from=1-2, to=2-3]
+        \arrow["\sim", from=3-3, to=4-2]
+      \end{cd}
+      % \item for $(U_i , U_j , U_k) \in \cU \times \cU \times \cU$,
+      % we have ``$\phi_{ik} = \phi_{jk} \phi_{ij}$''.
+      % More rigorously, the following diagram commutes :
+      % \begin{cd}[sep = small]
+      %   {\mathcal{F}(U_i) \otimes_{\mathcal{O}(U_i)} \mathcal{O}(U_{ij}) \otimes_{\mathcal{O}(U_{ij})} \mathcal{O}(U_{ijk})} & {\mathcal{F}(U_i) \otimes_{\mathcal{O}(U_i)} \mathcal{O}(U_{ijk})} \\
+      %   {\mathcal{F}(U_j) \otimes_{\mathcal{O}(U_j)} \mathcal{O}(U_{ij}) \otimes_{\mathcal{O}(U_{ij})} \mathcal{O}(U_{ijk})} & {\mathcal{F}(U_i) \otimes_{\mathcal{O}(U_i)} \mathcal{O}(U_{ik}) \otimes_{\mathcal{O}(U_{ik})} \mathcal{O}(U_{ijk})} \\
+      %   {\mathcal{F}(U_j) \otimes_{\mathcal{O}(U_j)} \mathcal{O}(U_{ijk})} \\
+      %   {\mathcal{F}(U_j) \otimes_{\mathcal{O}(U_j)} \mathcal{O}(U_{jk}) \otimes_{\mathcal{O}(U_{jk})} \mathcal{O}(U_{ijk})} & {\mathcal{F}(U_k) \otimes_{\mathcal{O}(U_k)} \mathcal{O}(U_{ik}) \otimes_{\mathcal{O}(U_{ik})} \mathcal{O}(U_{ijk})} \\
+      %   {\mathcal{F}(U_k) \otimes_{\mathcal{O}(U_k)} \mathcal{O}(U_{jk}) \otimes_{\mathcal{O}(U_{jk})} \mathcal{O}(U_{ijk})} & {\mathcal{F}(U_k) \otimes_{\mathcal{O}(U_k)} \mathcal{O}(U_{ijk})}
+      %   \arrow["\sim", from=1-1, to=1-2]
+      %   \arrow["\sim"', from=5-1, to=5-2]
+      %   \arrow["\sim", from=4-2, to=5-2]
+      %   \arrow["\sim"', from=2-2, to=1-2]
+      %   \arrow["{\phi_{ik} \otimes \mathrm{id}}", from=2-2, to=4-2]
+      %   \arrow["{\phi_{jk} \otimes \mathrm{id}}"', from=4-1, to=5-1]
+      %   \arrow["\sim", from=4-1, to=3-1]
+      %   \arrow["\sim"', from=2-1, to=3-1]
+      %   \arrow["{\phi_{ij} \otimes \mathrm{id}}"', from=1-1, to=2-1]
+      % \end{cd}
+      % https://q.uiver.app/?q=WzAsOSxbMCwwLCJcXG1hdGhjYWx7Rn0oVV9pKSBcXG90aW1lc197XFxtYXRoY2Fse099KFVfaSl9IFxcbWF0aGNhbHtPfShVX3tpan0pIFxcb3RpbWVzX3tcXG1hdGhjYWx7T30oVV97aWp9KX0gXFxtYXRoY2Fse099KFVfe2lqa30pIl0sWzEsMCwiXFxtYXRoY2Fse0Z9KFVfaSkgXFxvdGltZXNfe1xcbWF0aGNhbHtPfShVX2kpfSBcXG1hdGhjYWx7T30oVV97aWprfSkiXSxbMCw0LCJcXG1hdGhjYWx7Rn0oVV9rKSBcXG90aW1lc197XFxtYXRoY2Fse099KFVfayl9IFxcbWF0aGNhbHtPfShVX3tqa30pIFxcb3RpbWVzX3tcXG1hdGhjYWx7T30oVV97amt9KX0gXFxtYXRoY2Fse099KFVfe2lqa30pIl0sWzEsNCwiXFxtYXRoY2Fse0Z9KFVfaykgXFxvdGltZXNfe1xcbWF0aGNhbHtPfShVX2spfSBcXG1hdGhjYWx7T30oVV97aWprfSkiXSxbMSwzLCJcXG1hdGhjYWx7Rn0oVV9rKSBcXG90aW1lc197XFxtYXRoY2Fse099KFVfayl9IFxcbWF0aGNhbHtPfShVX3tpa30pIFxcb3RpbWVzX3tcXG1hdGhjYWx7T30oVV97aWt9KX0gXFxtYXRoY2Fse099KFVfe2lqa30pIl0sWzEsMSwiXFxtYXRoY2Fse0Z9KFVfaSkgXFxvdGltZXNfe1xcbWF0aGNhbHtPfShVX2kpfSBcXG1hdGhjYWx7T30oVV97aWt9KSBcXG90aW1lc197XFxtYXRoY2Fse099KFVfe2lrfSl9IFxcbWF0aGNhbHtPfShVX3tpamt9KSJdLFswLDEsIlxcbWF0aGNhbHtGfShVX2opIFxcb3RpbWVzX3tcXG1hdGhjYWx7T30oVV9qKX0gXFxtYXRoY2Fse099KFVfe2lqfSkgXFxvdGltZXNfe1xcbWF0aGNhbHtPfShVX3tpan0pfSBcXG1hdGhjYWx7T30oVV97aWprfSkiXSxbMCwyLCJcXG1hdGhjYWx7Rn0oVV9qKSBcXG90aW1lc197XFxtYXRoY2Fse099KFVfail9IFxcbWF0aGNhbHtPfShVX3tpamt9KSJdLFswLDMsIlxcbWF0aGNhbHtGfShVX2opIFxcb3RpbWVzX3tcXG1hdGhjYWx7T30oVV9qKX0gXFxtYXRoY2Fse099KFVfe2prfSkgXFxvdGltZXNfe1xcbWF0aGNhbHtPfShVX3tqa30pfSBcXG1hdGhjYWx7T30oVV97aWprfSkiXSxbMCwxLCJcXHNpbSJdLFsyLDMsIlxcc2ltIiwyXSxbNCwzLCJcXHNpbSJdLFs1LDEsIlxcc2ltIiwyXSxbNSw0LCJcXHBoaV97aWt9IFxcb3RpbWVzIFxcbWF0aHJte2lkfSJdLFs4LDIsIlxccGhpX3tqa30gXFxvdGltZXMgXFxtYXRocm17aWR9IiwyXSxbOCw3LCJcXHNpbSJdLFs2LDcsIlxcc2ltIiwyXSxbMCw2LCJcXHBoaV97aWp9IFxcb3RpbWVzIFxcbWF0aHJte2lkfSIsMl1d
+      
+    \end{enumerate}
+    \item a morphism $\eta : (\cF , \phi) \to (\cG , \psi)$ is
+    a morphism $\eta : \cF \to \cG$ in $\QCOH \cU$ such that
+    the following commutes : 
+    \footnote{
+      This may remind you of 
+      the definition of equivariant maps between
+      set endowed with an action of a group $G$.
+      This is not a coincidence :
+      $\QCOH (X , \cU)$ is effectively
+      quasi-coherent sheaves on $\cU$ equipped with
+      an action of the \emph{groupoid} $\cU \times_X \cU \rightrightarrows \cU$.
+    }
+    \begin{cd}
+      {p_0^* \cF} & {p_1^* \cF} \\
+      {p_0^* \cG} & {p_1^* \cG}
+      \arrow["{p_0^*(\eta)}"', from=1-1, to=2-1]
+      \arrow["{p_1^*(\eta)}", from=1-2, to=2-2]
+      \arrow["\psi"', from=2-1, to=2-2]
+      \arrow["\phi", from=1-1, to=1-2]
+    \end{cd}
+  \end{itemize}
+\end{dfn}
+
+\begin{eg}
+  
+  Let $U_0 := \SPEC k[t] , U_1 = \SPEC k[t^{-1}]$
+  be the standard affine opens of $\bP^1_k$.
+  Then $U_{01} := U_0 \times_{\bP^1_k} U_1 \simeq \SPEC k[t , t^{-1}]$.
+\end{eg}
+
+The above definition is how one goes about giving examples of
+quasi-coherent sheaves on non-affine schemes in practice.
+For theoretical purposes, we need to have
+a definition that is independent of the choice of Zariski affine cover
+and then prove that it is equivalent to the above.
+
+\begin{dfn}[Quasi-coherent sheaves on a functor]
+  
+  Let $X$ be a scheme.
+  Then a quasi-coherent sheaf on $X$ 
+  consists of the following data : 
+  \begin{itemize}
+    \item for each $x : \SPEC A \to X$,
+    an $A$-module $\cF_x$.
+    % \footnote{
+    %   I don't want to let $x$ range over all affines mapping into $X$
+    %   because this is not a set.
+    %   The collection of affine opens of $X$ on the other hand
+    %   is a set because it's bounded by
+    %   the cardinality of a specific Zariski affine cover of $X$.
+    % }
+    \item (transition map) 
+    for each $f : \SPEC B \to \SPEC A$ and $x : \SPEC A \to X$,
+    a morphism of $A$-modules 
+    \[
+      \cF_x \to \cF_{x f}
+    \]
+    that is identity when $f$ is.
+    We call the map $\cF_x \to \cF_{xf}$ 
+    the \emph{transition map associated to $f$}.
+    \item (transitivity) We require the maps given in the previous point 
+    to satisfy that for any commuting triangle on the left,
+    \begin{cd}
+      {\SPEC C} && \rightsquigarrow & {\cF_{xfg}} \\
+      {\SPEC B} & {\SPEC A} && {\cF_{xf}} & {\cF_x}
+      \arrow["g"', from=1-1, to=2-1]
+      \arrow["f"', from=2-1, to=2-2]
+      \arrow[from=1-1, to=2-2]
+      \arrow[from=2-5, to=2-4]
+      \arrow[from=2-4, to=1-4]
+      \arrow[from=2-5, to=1-4]
+    \end{cd}
+    we get a commuting triangle on the right of $A$-modules.
+    \item (quasi-coherence)
+    The transition map associated to $f : \SPEC B \to \SPEC A$
+    for any point $x : \SPEC A \to X$
+    induces an isomorphism $\cF_x \otimes_A B \simeq \cF_{x f}$.
+  \end{itemize}
+  Let $\cF , \cG$ be two quasi-coherent sheaves on $X$.
+  Then a morphism $\varphi : \cF \to \cG$ consists of the data : 
+  \begin{itemize}
+    \item for each $x : \SPEC A \to X$,
+    a morphism of $A$-modules 
+    \[
+      \varphi_x : \cF_x \to \cG_x  
+    \]
+    \item for each $f : \SPEC B \to \SPEC A$ and $x : \SPEC A \to X$,
+    we have the commutative diagram in $A$-modules 
+    \begin{cd}
+      {\mathcal{F}_{xf}} & {\mathcal{G}_{xf}} \\
+      {\mathcal{F}_x} & {\mathcal{G}_x}
+      \arrow[from=2-1, to=1-1]
+      \arrow[from=2-2, to=1-2]
+      \arrow["{\varphi_x}"', from=2-1, to=2-2]
+      \arrow["{\varphi_{xf}}", from=1-1, to=1-2]
+    \end{cd}
+    where the vertical morphisms are
+    the transition maps of $\cF$ and $\cG$
+    associated to $f$.
+  \end{itemize}
+  We write $\QCOH X$ for the category of quasi-coherent sheaves on $X$.
+\end{dfn}
+
+% A priori, a quasi-coherent sheaf consists of
+% infinite amount of data.
+% We nonetheless have the following for affine schemes.
+
+% \begin{prop}
+  
+%   Let $X = \SPEC R$.
+%   We define a functor $R\MOD \to \QCOH X$.
+%   \begin{enumerate}
+%     \item (Objects) Let $M \in R\MOD$.
+%     \begin{itemize}
+%       \item (fibers) 
+%       For every algebra map $R \to A$,
+%       we have an $A$-module $A \otimes_R M$.
+%       \item (transition maps) For $R \to A \to B$,
+%       the adjunction $B \otimes_A \_ \dashv \text{ forget } : 
+%       A\MOD \leftrightarrow B\MOD$ gives the morphism
+%       \[
+%         A \otimes_R M \to B\otimes_R M ,
+%         a \otimes x \mapsto \tilde{a} \otimes x
+%       \]
+%       where $\tilde{a}$ is the image of $a$ in $B$.
+%       If $A \to B$ is the identity of $A$
+%       then the above map is indeed the identity.
+%       \item (transitivity) This is clear.
+%       \item (quasi-coherence)
+%       The map $A \otimes_R M \to B\otimes_R M$
+%       indeed induces
+%       \[
+%         B \otimes_A (A \otimes_R M) \map{\sim}{} B\otimes_R M
+%       \]
+%     \end{itemize}
+%     \item (Morphisms) Let $\al : M \to N$ be a morphism
+%     of $R$-modules.
+%     Then functoriality of $A \otimes_R \_$
+%     across all $R \to A$ defines
+%     a morphism between the quasi-coherent sheaves associated with
+%     $M$ and $N$.
+%     Functoriality is readily checked.
+%   \end{enumerate}
+%   We have a functor $\QCOH X \to R\MOD$ given by
+%   taking fiber at $\id : \SPEC R \to \SPEC R$.
+%   Then this gives an equivalence \[
+%     R\MOD \simeq \QCOH X  
+%   \]
+% \end{prop}
+% The proof has no geometric content and is included
+% purely for pedantry.
+% Indeed, this definition of quasi-coherent sheaves
+% is designed so that this proposition holds more-or-less by definition.
+% \begin{proof}
+%   It is clear that the composition
+%   $R\MOD \to \QCOH X \to R\MOD$ is on-the-dot
+%   the identity functor.
+%   We show the other composition
+%   $\QCOH X \to R\MOD \to \QCOH X$ is isomorphic to the identity functor.
+%   Let $\cF \in \QCOH X$, $M = \cF_{\id_R}$ and $\tilde{M}$
+%   the image of $M$ under $R\MOD \to \QCOH X$.
+%   Then for each algebra map $x : \SPEC A \to \SPEC R$,
+%   quasi-coherence of $\cF$ implies that
+%   the equality $M = \cF_{\id_R}$ extends to
+%   an isomorphism
+%   \[
+%     \varphi_x^\cF : \tilde{M}_x = A \otimes_R M \map{\sim}{} \cF_x
+%   \]
+%   Now we show that for $f : \SPEC B \to \SPEC A$,
+%   the above square in the following diagram commutes :
+%   \begin{cd}
+%     {\tilde{M}_{xf}} & {\mathcal{F}_{xf}} \\
+%     {\tilde{M}_x} & {\mathcal{F}_x} \\
+%     M & {\mathcal{F}_{\id_R}}
+%     \arrow[from=2-1, to=1-1]
+%     \arrow[from=2-2, to=1-2]
+%     \arrow["{\varphi_x^\cF}"', from=2-1, to=2-2]
+%     \arrow["{\varphi_{xf}^\cF}", from=1-1, to=1-2]
+%     \arrow[from=3-1, to=2-1]
+%     \arrow["{=}"', from=3-1, to=3-2]
+%     \arrow[from=3-2, to=2-2]
+%   \end{cd}
+%   By the universal property of $\tilde{M}_x = A \otimes_R M$,
+%   it suffices to show that from $M$,
+%   ``up-up-right = up-right-up''.
+%   Indeed \begin{align*}
+%     \text{ ``up-up-right'' }
+%     &= \text{ ``right-up-up'' }\,\,\,\text{by def of $\varphi_{xf}$} \\
+%     &= \text{ ``up-right-up'' }\,\,\,\text{by def of $\varphi_x$}
+%   \end{align*}
+%   We have thus defined an isomorphism morphism 
+%   $\varphi^\cF : \tilde{M} \simeq \cF$.
+%   Now let $\al : \cF \to \cG$ in $\QCOH X$
+%   and $\varphi^\cG : \tilde{N} \simeq \cG$ be the corresponding
+%   reconstruction morphism for $\cG$.
+%   Let $\tilde{\al} : \tilde{M} \to \tilde{N}$ be the
+%   reconstructed morphism from $\al$.
+%   We wish to check commutativity of
+%   \begin{cd}
+%     {\tilde{M}} & {\mathcal{F}} \\
+%     {\tilde{N}} & {\mathcal{G}}
+%     \arrow["{\tilde{\alpha}}"', from=1-1, to=2-1]
+%     \arrow["{\varphi^\mathcal{G}}"', from=2-1, to=2-2]
+%     \arrow["\alpha", from=1-2, to=2-2]
+%     \arrow["{\varphi^\mathcal{F}}", from=1-1, to=1-2]
+%   \end{cd}
+%   We consider how we defined $\varphi_x^\cF, \varphi_x^\cG$ in the first place : 
+%   \begin{cd}
+%     M & {\mathcal{F}_{\id_R}} \\
+%     N & {\mathcal{G}_{\id_R}} & {\tilde{M}_x} & {\mathcal{F}_x} \\
+%     && {\tilde{N}_x} & {\mathcal{G}_x}
+%     \arrow["{\tilde{\alpha}_x}"', from=2-3, to=3-3]
+%     \arrow["{\varphi^\mathcal{G}_x}"', from=3-3, to=3-4]
+%     \arrow["{\alpha_x}", from=2-4, to=3-4]
+%     \arrow["{\varphi^\mathcal{F}_x}", from=2-3, to=2-4]
+%     \arrow["{=}", from=2-1, to=2-2]
+%     \arrow["{=}", from=1-1, to=1-2]
+%     \arrow["{\alpha_{\id_R}}"', from=1-1, to=2-1]
+%     \arrow["{\alpha_{\id_R}}", from=1-2, to=2-2]
+%     \arrow[from=2-1, to=3-3]
+%     \arrow[from=1-1, to=2-3]
+%     \arrow[from=2-2, to=3-4]
+%     \arrow[from=1-2, to=2-4]
+%   \end{cd}
+%   By the universal property of $\tilde{M}_x = A\otimes_R M$,
+%   it suffices to show that starting from $M$
+%   we have ``diagonal-right-down = diagonal-down-right''.
+%   Indeed \begin{align*}
+%     \text{ ``diag-right-down'' }
+%     &= \text{ ``right-diag-down' }\,\,\,\text{by def of $\varphi_{x}^\cF$} \\
+%     &= \text{ ``right-down-diag'' }\,\,\,\text{by def of $\al$} \\
+%     &= \text{ ``down-right-diag'' }\,\,\, \text{clear}\\
+%     &= \text{ ``down-diag-right'' }\,\,\,\text{by def of $\varphi_{x}^\cG$} \\
+%     &= \text{ ``diag-down-right'' }\,\,\,\text{by def of $\al_{x}$} \\
+%   \end{align*}
+% \end{proof}
+Note that a priori, a quasi-coherent sheaf consists of infinite amount of data.
+\footnote{
+  For those worried about set-theoretic issues,
+  we do indeed have a problem here.
+  For any functor $X$,
+  the category $\AFF / X$ is too large to be a set.
+  So as of now, $\QCOH X$ has a proper class of objects
+  and even for $\cF , \cG \in \QCOH X$,
+  the collection $(\QCOH X)(\cF , \cG)$ is also a proper class.
+}
+We first note :
+\begin{prop}
+  For $X = \SPEC A$,
+  \[
+    \QCOH X \simeq A\MOD  
+  \]
+\end{prop}
+\begin{proof}
+  Exercise.
+\end{proof}
+We now justify our motivation that 
+we can compute quasi-coherent sheaves from affine open covers.
+
+% \textbf{Hmmmm finiteness issues. 
+% A scheme is allowed to be covered by infinitely many affine opens,
+% i.e. allowed to be not quasi-compact.
+% So even if we assume affine diagonal,
+% the pullback of a Zariski cover to an affine may not be
+% a standard Zariski cover of the affine.
+% However, a Zariski cover of an affine
+% has a canonically refinement by an infinite standard Zariski cover.
+% So we only need descent w.r.t. infinite standard Zariski covers.
+% Hmmm but it's not true that infinite product of flat is flat.
+% Does this mean I can only defined quasi-coherent sheaves for
+% quasi-compact schemes?
+% Maybe this is okay for first passing of algebraic geometry.
+% Even in general,
+% Picard schemes, quot schemes etc are only not quasi-compact because
+% they are infinite disjoint union of quasi-compact schemes.
+% I guess I go with qcoh sheaves only on qc schemes
+% and show fpqc descent beforehand.
+% }
+
+% \begin{prop}[Faithfully flat descent of modules]
+  
+%   \cite[\href{https://stacks.math.columbia.edu/tag/023N}{Tag 023N}]{stacks-project}
+%   \footnote{
+%     Note that an infinite product of flat algebras need not stay flat!
+%   }
+% \end{prop}
+
+
+\begin{prop}
+
+  Let $X$ be a scheme. 
+  Consider $\QCOH_\AFF X$ which is defined as
+  the same as $\QCOH X$ except we only look at $x : \SPEC A \to X$
+  which is an open of $X$.
+  Also let $\cU$ be a Zariski affine cover of $X$
+  where pairwise intersections are affine.
+  Then the restriction functors
+  are equivalences of categories.\footnote{
+    In particular, all set-theoretic issues are resolved.
+    $\QCOH_\AFF X$ has a set of objects
+    and for $\cF , \cG \in \QCOH_\AFF X$,
+    the collection $(\QCOH_\AFF X)(\cF , \cG)$ is a set.
+  }
+  \begin{cd}
+    {\QCOH X} & {\QCOH_\AFF X} \\
+    & {\QCOH(X , \cU)}
+    \arrow["\sim", from=1-1, to=1-2]
+    \arrow["\sim"', from=1-1, to=2-2]
+    \arrow["\sim", from=1-2, to=2-2]
+  \end{cd}
+\end{prop}
+\begin{proof}
+  We only construct a quasi-inverse to the diagonal arrow.
+  A quasi-inverse to the horizontal map is similar
+  using a choice of arbitrary Zariski affine cover of $X$.
+  
+  (Objects)
+  Let $(\cF , \phi) \in \QCOH(X , \cU)$.
+  Let $x : \SPEC A \to X$.
+  By assumption of $\cU \to X$ being a Zariski epimorphism,
+  there exists a standard Zariski cover $\cU_A$ of $\SPEC A$ and
+  a commuting diagram : \begin{cd}
+    {\cU_A} & \cU \\
+    {\SPEC A} & X
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=2-1, to=2-2]
+    \arrow[from=1-2, to=2-2]
+    \arrow["\exists", dashed, from=1-1, to=1-2]
+  \end{cd}
+  For such a $\cU_A$,
+  we have an explicit inverse functor given by Zariski descent of modules : 
+  \begin{cd}
+    {\mathrm{QCoh}(\mathrm{Spec}\,A , \cU_A)} & A\MOD \\
+    {(\res{\mathcal{F}}{\mathcal{\cU_A}} , \res{\phi}{\mathcal{\cU_A}})} & 
+    {\mathrm{Eq}(\prod_{V \in \cU_A}\mathcal{F}(V) \rightrightarrows 
+    \prod_{V_0, V_1 \in \cU_A}\mathcal{F}(V_0 \cap V_1))}
+    \arrow["{\mathrm{Glue}_{\cU_A}}", from=1-1, to=1-2]
+    \arrow[maps to, from=2-1, to=2-2]
+  \end{cd}
+  And hence gives
+  \[
+    \mathrm{Glue}_A := \mathrm{Glue}_{\cU_A} : \QCOH(X , \cU) \to A\MOD
+  \]
+  However, in order to get a quasi-coherent sheaf on $X$
+  we also need for each inclusion of affine opens
+  $\SPEC B \to \SPEC A \to X$ a morphism of $A$-modules
+  \[
+    \mathrm{Glue}_A(\cF , \phi) \to \mathrm{Glue}_B(\cF , \phi)
+  \]
+  satisfying identity, transitivity, and quasi-coherence.
+  So we cannot depend on the choice of $\cU_A$.
+  We thus redefine $\mathrm{Glue}_A$ by using all of them at once : 
+  \[
+    \mathrm{Glue}_A : \QCOH(X , \cU) \to A\MOD , (\cF , \phi) \mapsto 
+    \COLIM_{\cV} \mathrm{Glue}_{\cU_A}(\res{\cF}{\cU_A} , \res{\phi}{\cU_A})  
+  \]
+  where the colimit is over the filtered diagram of
+  standard Zariski covers $\cU_A$ of $\SPEC A$ factoring through $\cU$.
+  \footnote{
+    The lesson here is that
+    when you do not want to make a choice and 
+    all choices are equivalent by induced maps,
+    just take the limit or colimit of the choices.
+    This gives something isomorphic to any choice but is canonical.
+  }
+  Now we get induced transition maps
+  which satisfies identity and transitivity.
+  It remains to check quasi-coherence.
+  The point is that the given projection
+  \[
+    \mathrm{Glue}_A(\cF , \phi) \map{\sim}{} 
+    \mathrm{Glue}_{\cU_A}(\res{\cF}{\cU_A} , \res{\phi}{\cU_A})  
+  \]
+  is still an isomorphism for any standard Zariski cover $\cU_A$
+  factoring through $\cU$ because all the transition maps
+  of the filtered diagram are isomorphisms.
+  Furthermore, for inclusions of $\SPEC B \to \SPEC A$ of affine opens of $X$,
+  the base change $\cU_B$ of $\cU_A$ to $\SPEC B$ is another standard Zariski cover.
+  So it follows that 
+  \begin{cd}
+    {\mathrm{Glue}_A(\mathcal{F} , \phi)} & 
+    {\mathrm{Glue}_B(\mathcal{F} , \phi)} & 
+    \rightsquigarrow & 
+    {B \otimes_A \mathrm{Glue}_A(\mathcal{F} , \phi)} & 
+    {\mathrm{Glue}_B(\mathcal{F} , \phi)} \\
+    {\mathrm{Glue}_\cU(\res{\cF}{\cU_A} , \res{\phi}{\cU_A})} & 
+    {\mathrm{Glue}_\cU(\res{\cF}{\cU_B} , \res{\phi}{\cU_B})} &
+    & 
+    {B \otimes_A \mathrm{Glue}_\cU(\res{\cF}{\cU_A} , \res{\phi}{\cU_A})} & 
+    {\mathrm{Glue}_\cU(\res{\cF}{\cU_B} , \res{\phi}{\cU_B})}
+    \arrow["\sim"', from=1-1, to=2-1]
+    \arrow["\sim"', from=1-2, to=2-2]
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=2-1, to=2-2]
+    \arrow["\sim"', from=2-4, to=2-5]
+    \arrow["\sim"', from=1-4, to=2-4]
+    \arrow["\sim", from=1-5, to=2-5]
+    \arrow[from=1-4, to=1-5]
+  \end{cd}
+  So $\mathrm{Glue}_A(\cF , \phi)$ assembles across
+  all affine opens of $X$
+  to give a quasi-coherent sheaf $\mathrm{Glue}(\cF , \phi)$ on $X$.
+
+  (Morphisms) 
+  Clear from the construction of $\mathrm{Glue}$.
+
+  ($\QCOH(X , \cU) \to \QCOH(X , \cU)$ isomorphic to identity)
+  Clear by construction.
+
+  ($\QCOH X \to \QCOH X$ isomorphic to identity)
+  Also clear from construction.
+\end{proof}
+
+% \begin{proof}[Alternative proof using fpqc descent.]
+%   Let $R$ denote the restriction functor.
+%   % We are doing an example of fpqc descent.
+
+%   (Faithful)
+%   For faithfullness,
+%   reduce to requiring for $\cF \in \QCOH X$, 
+%   $R \cF = 0$ implies $\cF = 0$.
+%   Idea : 
+%   for any $x : \SPEC A \to X$,
+%   the Zariski affine cover $\cU$ of X and X affine diagonal gives 
+%   Zariski affine cover $\cU_A$ of $\SPEC A$.
+%   The issue is that without fpqc descent of modules,
+%   we can only descent modules on \emph{standard} Zariski covers of $\SPEC A$.
+%   Technically,
+%   we can refine $\cU_A$ to a standard Zariski cover
+%   and then
+%   the point now is that $\cF_x \in A\MOD$ is zero
+%   iff it is zero when restricted to a standard Zariski cover.
+%   This works for faithfulness.
+%   However as we will now see for fullness,
+%   this will not work because taking a finite refinement is not functorial.
+
+%   (Fullness)
+%   Let $\cF, \cG \in \QCOH X$ and $\phi : R \cF \to R \cG$.
+%   We seek to construct $\cF \to \cG$ which restricts to $\phi$.
+%   Let $x : \SPEC A \to X$.
+%   Goal : construct $\cF_x \to \cG_x$ in $A\MOD$.
+%   Again,
+%   the finite Zariski cover $\cU$ of $X$
+%   pulls back to a finite Zariski cover $\cU_A$ of $\SPEC A$ as a Zariski sheaf.
+%   We want to use descent w.r.t $\cU_A$
+%   to construct $\cF_x \to \cG_x$.
+%   However, we further need this to be functorial w.r.t $x$.
+%   So we \emph{cannot} just choose a refinement of $\cU_A$
+%   to a standard Zariski cover because this will not be functorial.
+%   Fortunately, due to finiteness of $\cU_A$ 
+%   it is an fpqc cover of $\SPEC A$
+%   so we have fpqc descent.
+%   For each $U \in \cU$, 
+%   denote $U_A := \SPEC A \times_X U$ and
+%   the pullback of $\cF$ to $U_A$ as $\cF(U_A)$.
+%   The point of fpqc descent is that
+%   ``$\cF_x$ is equivalent to gluing data on a cover of $\SPEC A$''. 
+%   More concretely, 
+%   $\cF_x$ can be realised by the equalizer diagram : 
+%   \[
+%     0 \to \cF_x \to \prod_{U \in \cU} \cF(U_A) \rightrightarrows
+%     \prod_{U, V \in \cU} \cF(U_A \cap V_A)
+%   \]
+%   The data of $\phi$ then gives a morphism $\cF_x \to \cG_x$
+%   functorially in $x$.
+%   One can check that this does nothing when $\SPEC A$ is
+%   one of the affine opens in the cover $\cU$ as desired.
+
+%   (Essential Surjectivity)
+%   Take $\cF \in \QCOH(X , \cU)$.
+%   Goal : construct $\cF_x$ for every $x : \SPEC A \to X$ functorially
+%   and quasi-coherent.
+
+%   Sub-goal : fix $x : \SPEC A \to X$. 
+%   Construct $\cF_x \in A\MOD$ first.
+%   This time, we \emph{define} $\cF_x$ by the equalizer diagram in $A\MOD$
+%   \[
+%     0 \to \cF_x \to \prod_{U \in \cU} \cF(U_A) \rightrightarrows
+%     \prod_{U, V \in \cU} \cF(U_A \cap V_A)
+%   \]
+
+%   Sub-goal : now functoriality.
+%   We are given 
+%   \[
+%     \SPEC B \overset{f}{\to} \SPEC A \overset{x}{\to} X  
+%   \]
+%   We need to give a morphism $\cF_x \to \cF_{x f}$ in $A\MOD$.
+%   The forgetful functor $B\MOD \to A\MOD$ preserves limits,
+%   so the UP of $\cF_{x f}$ induces the dashed morphism in the
+%   commutative diagram : 
+%   \begin{cd}
+%     0 & {\mathcal{F}_{xf}} & {\prod_{U \in \mathcal{U}} \mathcal{F}(U_B)} & {\prod_{U , V \in \mathcal{U}} \mathcal{F}(U_B \cap V_B)} \\
+%     0 & {\mathcal{F}_x} & {\prod_{U \in \mathcal{U}} \mathcal{F}(U_A)} & {\prod_{U , V \in \mathcal{U}} \mathcal{F}(U_A \cap V_A)}
+%     \arrow[from=2-1, to=2-2]
+%     \arrow[from=2-2, to=2-3]
+%     \arrow[shift right=1, from=2-3, to=2-4]
+%     \arrow[shift left=1, from=2-3, to=2-4]
+%     \arrow[shift left=1, from=1-3, to=1-4]
+%     \arrow[shift right=1, from=1-3, to=1-4]
+%     \arrow[from=1-2, to=1-3]
+%     \arrow[from=1-1, to=1-2]
+%     \arrow[from=2-4, to=1-4]
+%     \arrow[from=2-3, to=1-3]
+%     \arrow[dashed, from=2-2, to=1-2]
+%   \end{cd}
+%   The compatibility of compositions $\SPEC C \to \SPEC B \to \SPEC A \to X$ 
+%   comes from the UP of equalizers.
+
+%   Sub-goal : Quasi-coherence.
+%   We need to show that the morphisms $\cF_x \to \cF_{xf}$ induces
+%   $\cF_x \otimes_A B \iso \cF_{x f}$ in $B\MOD$.
+%   To prove this morphisms induces $\cF_x \otimes_A B \iso \cF_{xf}$,
+%   it suffices to check it is an isomorphism on each open $U_B$ in
+%   the cover of $\SPEC B$.
+%   Tensoring $\cF_x \otimes_A B \to \cF_{xf}$ by $\cO(U_B)$,
+%   we obtain the commutative diagram in $\QCOH U_B$ :
+%   \begin{cd}
+%     {\mathcal{F}_{xf} \otimes_B \mathcal{O}(U_B)} & {\mathcal{F}(U_B)} \\
+%     {\mathcal{F}_x \otimes_A B \otimes_B \mathcal{O}(U_B)} & {\mathcal{F}(U_A) \otimes_{\mathcal{O}(U_A)} \mathcal{O}(U_B)}
+%     \arrow[from=2-1, to=1-1]
+%     \arrow["\cong", from=1-1, to=1-2]
+%     \arrow["\cong"', from=2-1, to=2-2]
+%     \arrow["\cong"', from=2-2, to=1-2]
+%   \end{cd}
+
+% \end{proof}
+
+% One make the technical leap to infinite covers.
+% The proof is abstract non-sense.
+% \begin{prop}
+%   Let $X$ be a scheme with affine diagonal
+%   and $\cU$ a Zariski affine cover of $X$.
+%   Then the restriction functor gives an equivalence \[
+%     \QCOH X \map{\sim}{} \QCOH(X , \cU)  
+%   \]
+% \end{prop}
+% \begin{proof}
+  
+% \end{proof}
+
+
+\begin{prop}
+  
+  Let $X$ be a scheme.
+  Then 
+  \begin{enumerate}
+    \item $\QCOH X$ is an abelian category with
+    small colimits.
+    \item All small colimits and finite limits are computed
+    on affine opens.
+    \item fiberwise tensor product endows $\QCOH X$
+    with a symmetric monoidal structure.
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  Small colimits are computed fiberwise.
+  This only relies on the fact that tensor product
+  preserves small colimits.
+  For kernels to exist,
+  one must compute on affine opens.
+  Then the key fact is that 
+  for $\SPEC B \to \SPEC A$ an open embedding,
+  the functor $B \otimes_A \_$ is flat.
+\end{proof}
+
+\end{document}

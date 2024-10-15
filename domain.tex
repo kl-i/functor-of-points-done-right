@@ -1,0 +1,69 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+\begin{prop}
+  
+  Let $X$ be a scheme.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item $X$ is nonempty and every nonempty affine open of $X$
+    is an integral domain.
+    \item There exists an affine open cover $\cU$ of $X$
+    such that each $U \in \cU$ is an integral domain and
+    for $U , V \in\cU$ we have $U \cap V \neq \nothing$.
+    \item $\abs{X}$ is irreducible and $X$ is reduced.
+  \end{enumerate}
+\end{prop}
+
+\begin{dfn}
+  
+  A scheme $X$ is called a \emph{domain} when
+  it satisfies any (and thus all) of the conditions in the previous proposition.
+\end{dfn}
+
+\begin{prop}
+  
+  Let $X = \SPEC A$ where $A$ is an integral domain.
+  Consider $\varnothing \neq U \subs X$ an open. 
+  Then $A \to \cO(U)$ is injective.
+
+  Thus in general, when $X$ is a domain, 
+  restriction of local functions along affine opens is injective.
+\end{prop}
+\begin{proof}
+  Let $f \in A$ and assume it is zero in $\cO(U)$.
+  Then there exists $g \in A$ with 
+  $\varnothing \neq D(g) \subs U$.
+  By assumption, $f$ must also be zero when restricted to $D(g)$,
+  i.e. it is in the kernel of $A \to A[1 / g]$.
+  This implies the existence of $n \geq 0$ with $g^n f = 0$.
+  The condition $\varnothing \neq D(g)$ implies $0 \neq g$.
+  Hence by $A$ being integral domain,
+  $f = 0$.
+\end{proof}
+
+\begin{dfn}
+  
+  Let $X$ be a domain.
+  Define the function field of $X$ to be 
+  \[
+    K(X) := \COLIM_{\nothing \neq U \text{ affine open } \subs X} \cO(U)  
+  \]
+\end{dfn}
+
+Note that for a nonempty affine open $U$,
+the map $\cO(U) \to K(X)$ is injective
+because all transition maps of the filtered diagram are injective.
+One can thus safely think about $K(X)$ as the
+``union'' of $\cO(U)$'s.
+
+\begin{prop}
+  
+  Let $X$ be a domain.
+  Then $K(X)$ is a field.
+\end{prop}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\end{document}

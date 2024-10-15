@@ -1,0 +1,42 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+We have seen how to interpret commutative algebras as spaces.
+The focus of this chapter is to extend this analogy to \emph{modules}.
+Slogan : 
+\[
+  \text{\emph{Modules are (dual to) generalised vector bundles}}  
+\]
+For intuition, let us work over an algebraically closed field $k$.
+The simplest example of the slogan is
+the interpretation of a finite dimensional $k$-vector space $V$
+as a vector bundle over $\SPEC k$.
+
+\begin{prop}
+  
+  Let $V \in \VEC^c_k$ be a finite dimensional $k$-vector space.
+  Define the presheaf $\underline{V}$ on $\AFF$ by 
+  \[
+    \underline{V}(S) := V \otimes_k \cO(S)  
+  \]
+  Then \[
+    \underline{V} \simeq \SPEC \SYM_k V^\vee
+  \]
+  where $V^\vee := \HOM_k(V , k)$.
+\end{prop}
+This fits with the intuition that
+$V^\vee$ is the collection of \emph{linear} functions on $V$
+so $\SYM_k V^\vee$ is the collection of functions on $V$
+and hence $\underline{V}$ is affine scheme capturing $V$.
+Elements of $V \otimes_k \c(S)$ are
+weighted sums of vectors in $V$ by measuring devices on $S$.
+Given a state $x : \SPEC k \to S$, 
+we can evaluate the weighted sum to obtain a single vector in $V$.
+\begin{proof}
+  \[
+    V \otimes_k \cO(S) \simeq \VEC_k(V^\vee , \cO(S))
+    \simeq \AFF_k(S , \SPEC \SYM_k V^\vee)  
+  \]
+\end{proof}
+
+\end{document}

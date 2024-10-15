@@ -1,0 +1,153 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+To motivate coverings,
+let us first review what we know about surjections in sets!
+
+\begin{prop}[Surjections in sets]
+  
+  Let $q : \cU \to X$ of sets.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item $q$ is surjective
+    \item (Effective epimorphism) Consider $\cU \times_X \cU$ whose points are
+    pairs of points $(a , b) \in \cU \times \cU$ such that
+    $q a = q b$.
+    \[
+      \cU \times_X \cU \rightrightarrows \cU \to X
+    \]
+    is the coequalizer diagram.
+    In concrete terms,
+    this says ``a map out of $X$ is the same as
+    a map out of $\cU$ which is constant along fibers of $\cU$''.
+  \end{enumerate}
+\end{prop}
+
+We can play the same game in $\AFF$,
+or dually in $\CRING$.
+Specifically, given a commutative ring $A$
+and a finite set of elements $f_1 , \dots , f_n \in A$,
+we can form \[
+  \cU := \coprod_{i = 1}^{n} D(f_i) 
+  = \coprod_{i = 1}^{n} \SPEC A[1 / f_i]
+  = \SPEC \prod_{i = 1}^n A[1 / f_i]
+\]
+Letting $X := \SPEC A$, one can show that 
+a fiber product of $\cU$ with itself over $X$ is given by 
+\[
+  \cU \times_X \cU := \SPEC \prod_{i , j = 1}^n A[1 / f_i f_j]  
+\]
+It then makes sense to ask for when
+the following is a coequalizer diagram in $\AFF$
+\[
+  \cU \times_X \cU \rightrightarrows \cU \to X  
+\]
+Or dually, we can ask when the following diagram in $\CRING$
+is a equalizer
+\[
+  A \to \prod_{i = 1}^n A[1 / f_i] \rightrightarrows 
+  \prod_{i , j = 1}^n A[1 / f_i f_j]  
+\]
+The idea is that if we view $\SPEC A$ as a physical system,
+the basic opens $D(f_1) , \dots , D(f_n)$ cover $\SPEC A$
+precisely when given any state $A \to K$ with measurements in a field $K$,
+at least one of the measuring devices $f_i$ give a non-zero measurement. 
+This leads to the following criterion.
+\begin{prop}[Criterion for partition of unity using states]
+  
+  Let $f_1 , \dots , f_n \in A$ be elements of a ring.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item for all fields $K$ and maps of affine schemes $x : \SPEC K \to \SPEC A$,
+    there exists some $f_i$ such that $f_i(x) \in K^\times$.
+    \item the elements $f_1 , \dots, f_n$ gives a \emph{partition of unity},
+    meaning $(f_1 , \dots , f_n) = (1)$.
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  (1 implies 2) This is the standard application of Zorn's lemma.
+  Assuming for a contradiction that $(f_1 , \dots , f_n)$ does not 
+  generate the unit ideal,
+  one can use Zorn's lemma to give a maximal ideal $\f{m}$ of $A$
+  containing $(f_1 , \dots , f_n)$.
+  Using $K := A / \f{m}$ gives a contradiction.
+  (2 implies 1) Suppose there exists a linear combination 
+  $\sum_{i = 1}^n \la_i f_i = 1$ inside $A$.
+  Let $K$ be a field and $x : \SPEC K \to \SPEC A$.
+  Then we cannot have $f_i(x) = 0$ for all $i$ because
+  that would imply $1 = 0$ inside $K$.
+  Thus some $f_i(x)$ must be non-zero and hence a unit in $K$.
+\end{proof}
+\begin{dfn}[Basic Zariski covers]
+  
+  We call $\SPEC B \to \SPEC A$ a \emph{basic Zariski covering}
+  when there exists $f_1 , \dots , f_n \in A$ such that
+  \[
+    B \simeq \prod_{i = 1}^n A[1 / f_i]  
+  \]
+  as $A$-algebras and any (and thus both)
+  of the conclusions of the previous proposition holds.
+\end{dfn}
+We now show that basic Zariski coverings indeed give effective coequalizers
+we discussed at the start.
+\begin{prop}[Fundamental lemma of basic Zariski covers]
+  
+  Let $f_1 , \dots , f_n \in A$ and $B$ be the $A$-algebra
+  $\prod_{i = 1}^n A[1/f_i]$.
+  Then $(f_1 , \dots , f_n) = (1)$ iff
+  for all $A$-modules $M$
+  \[
+  M \to M \otimes_A B \rightrightarrows 
+  M \otimes_A B \otimes_A B
+  \]
+  is a equalizer diagram in $A\MOD$.
+\end{prop}
+\begin{proof}
+  ($\limplies$) We want $A / (f_1 ,\dots , f_n) = 0$.
+  Applying $M = A / (f_1 ,\dots , f_n)$ to the equalizer diagram,
+  it suffices to show $(A / (f_1 ,\dots , f_n))[1 / f_i] = 0$ for each $i$.
+  This follows since $0 = f_i$ would be a unit.
+
+  ($\implies$) Note that we have isomorphisms of $B$ modules
+  and $B \otimes_A B$ modules
+  \[
+    M \otimes_A B \simeq \prod_{i = 1}^n M[1 / f_i] \,\,\,\,\,\,\,\,\,\,\,
+    M \otimes_A B \otimes_A B
+    \simeq M \otimes_A \brkt{
+      \prod_{i , j = 1}^n A [1 / f_i f_j]  
+    }
+    \simeq \prod_{i , j = 1}^n M[1 / f_i f_j]  
+  \]
+  so we equivalently asking for the following diagram to be an equalizer diagram :
+  \[
+    M \to \prod_{i = 1}^n M[1 / f_i] \rightrightarrows \prod_{i , j = 1}^n M[1 / f_i f_j]  
+  \]
+  One can prove this by direct computation. (Hint : see footnote.\footnote{
+    Prove that $(f_1 , \dots , f_n) = (1)$
+    actually implies $(f_1^N , \dots , f_n^N) = (1)$ 
+    for any $N > 0$.
+  })
+  There is an alternative proof which generalises to \emph{fpqc coverings}.
+  The idea is : 
+  \begin{enumerate}
+    \item $B$ is a \emph{faithfully flat} $A$-algebra.
+    This means $\_ \otimes_A B$ is left exact and 
+    for $M \in A\MOD$, $M \otimes_A B \simeq 0$ implies $M = 0$.
+    \item $B$ faithfully flat over $A$ implies
+    that to show left exactness sequences in $A\MOD$,
+    it suffices to show left exactness after $\_ \otimes_A B$ in $B\MOD$.
+    \item After $\_ \otimes_A B$ the equalizer fork
+    becomes a split equalizer diagram
+    and hence is left exact.
+  \end{enumerate}
+\end{proof}
+
+In chapter 3 when we see modules over a ring $A$
+as generalising vector bundles on $\SPEC A$,
+we will be able to see the above proposition as saying
+$f_1 , \dots , f_n$ gives a partition of unity
+iff generalised vector bundles on $\SPEC A$
+are determined by their restrictions to
+$\cU := \coprod_{i = 1}^n D(f_i)$.
+
+\end{document}

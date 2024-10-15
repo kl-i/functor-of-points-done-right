@@ -1,0 +1,483 @@
+\usepackage[left=1in,right=1in]{geometry}
+\usepackage{subfiles}
+\usepackage{amsmath, amssymb, stmaryrd, verbatim} % math symbols
+\usepackage{amsthm} % thm environment
+\usepackage{mdframed} % Customizable Boxes
+\usepackage{hyperref,nameref,cleveref,enumitem} % for references, hyperlinks
+\usepackage[dvipsnames]{xcolor} % Fancy Colours
+\usepackage{mathrsfs} % Fancy font
+\usepackage{bbm} % mathbb numerals
+\usepackage[bbgreekl]{mathbbol} % for bb Delta
+\usepackage{tikz, tikz-cd, float} % Commutative Diagrams
+\usetikzlibrary{decorations.pathmorphing} % for squiggly arrows in tikzcd
+\usepackage{perpage}
+\usepackage{parskip} % So that paragraphs look nice
+\usepackage{ifthen,xargs} % For defining better commands
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tgpagella}
+\usepackage{cancel}
+
+% Bibliography
+% \usepackage{url}
+\usepackage[backend=biber,
+            isbn=false,
+            doi=false,
+            giveninits=true,
+            style=alphabetic,
+            useprefix=true,
+            maxcitenames=4,
+            maxbibnames=4,
+            sorting=nyt,
+            citestyle=alphabetic]{biblatex}
+
+% Shortcuts
+
+% % Local to this project
+\newcommand{\PROP}{\mathrm{Prop}}
+\renewcommand\labelitemi{--} % Makes itemize use dashes instead of bullets
+\newcommand{\bbrkt}[1]{\llbracket #1 \rrbracket}
+\newcommand{\IND}{\mathrm{Ind}}
+\newcommand{\AFF}{\mathrm{Aff}}
+\newcommand{\FSCH}{\mathrm{fSch}}
+\newcommand{\SCH}{\mathrm{Sch}}
+\DeclareMathOperator{\SPEC}{Spec}
+\DeclareMathOperator{\QCOH}{QCoh}
+\DeclareMathOperator{\INDCOH}{IndCoh}
+\newcommand{\DR}{\mathrm{dR}}
+\newcommand{\SYM}{\mathrm{Sym}}
+\newcommand{\HOM}{\underline{\mathrm{Hom}}}
+\newcommand{\MAP}{\underline{\mathrm{Map}}}
+\newcommand{\CALG}{\mathrm{cAlg}}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\LIE}{Lie}
+\newcommand{\AD}{\mathrm{Ad}}
+\DeclareMathOperator{\MAX}{Max}
+\DeclareMathOperator{\FROB}{Frob}
+\newcommand{\SEP}{\mathrm{sep}}
+\newcommand{\LOC}{\mathrm{Loc}}
+\DeclareMathOperator{\PERV}{Perv}
+\newcommand{\RED}{\mathrm{red}}
+\newcommand{\ZAR}{\mathrm{Zar}}
+\newcommand{\FPPF}{\mathrm{fppf}}
+\newcommand{\ET}{\text{ét}}
+\DeclareMathOperator{\SPF}{Spf}
+\newcommand{\CTS}{\mathrm{cts}}
+\newcommand{\INF}{\mathrm{Inf}}
+\DeclareMathOperator{\STK}{Stk}
+\DeclareMathOperator{\PSTK}{PStk}
+\DeclareMathOperator{\SSET}{sSet}
+\DeclareMathOperator{\BUN}{Bun}
+\DeclareMathOperator{\PSH}{PSh}
+\DeclareMathOperator{\SH}{Sh}
+\newcommand{\FPQC}{\mathrm{fpqc}}
+\DeclareMathOperator{\SPH}{Sph}
+\newcommand{\FT}{\mathrm{ft}}
+\DeclareMathOperator{\CRYS}{Crys}
+\DeclareMathOperator{\GR}{Gr}
+\DeclareMathOperator{\REP}{Rep}
+\newcommand{\HITCH}{\mathrm{Hitch}}
+\newcommand{\CRIT}{\mathrm{crit}}
+\DeclareMathOperator{\LOCSYS}{LocSys}
+\newcommand{\GRPD}{\mathrm{Grpd}}
+\DeclareMathOperator{\FUN}{Fun}
+\newcommand{\HECKE}{\mathrm{Hecke}}
+\newcommand{\TRIV}{\mathrm{Triv}}
+\newcommand{\REGLUE}{\mathrm{ReGlue}}
+\newcommand{\LVL}{\mathrm{lvl}}
+\newcommand{\PT}{\mathrm{pt}}
+\DeclareMathOperator{\COH}{Coh}
+\DeclareMathSymbol\bbDe  \mathord{bbold}{"01} % blackboard Delta
+\newcommand{\CL}{\mathrm{cl}}
+\newcommand{\OPER}{\operatorname{Oper}}
+\DeclareMathOperator{\PERF}{Perf}
+\DeclareMathOperator{\INV}{Inv}
+\newcommand{\PIC}{\mathrm{Pic}}
+\newcommand{\RAT}{\mathrm{Rat}}
+\newcommand{\DIV}{\mathrm{Div}}
+
+% % Misc
+\newcommand{\brkt}[1]{\left(#1\right)}
+\newcommand{\sqbrkt}[1]{\left[#1\right]}
+\newcommand{\dash}{\text{-}}
+
+% % Logic
+\renewcommand{\implies}{\Rightarrow}
+\renewcommand{\iff}{\Leftrightarrow}
+\newcommand{\limplies}{\Leftarrow}
+\newcommand{\NOT}{\neg\,}
+\newcommand{\AND}{\, \land \,}
+\newcommand{\OR}{\, \lor \,}
+\newenvironment{forward}{($\implies$)}{}
+\newenvironment{backward}{($\limplies$)}{}
+
+% % Sets
+\DeclareMathOperator{\supp}{supp}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\st}{\,|\,}
+\newcommand{\minus}{\setminus}
+\newcommand{\subs}{\subseteq}
+\newcommand{\ssubs}{\subsetneq}
+\newcommand{\sups}{\supseteq}
+\newcommand{\ssups}{\supset}
+\DeclareMathOperator{\im}{Im}
+\newcommand{\nothing}{\varnothing}
+\DeclareMathOperator{\join}{\sqcup}
+\DeclareMathOperator{\meet}{\sqcap}
+
+% % Greek 
+\newcommand{\al}{\alpha}
+\newcommand{\be}{\beta}
+\newcommand{\ga}{\gamma}
+\newcommand{\de}{\delta}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\ph}{\varphi}
+\newcommand{\io}{\iota}
+\newcommand{\ka}{\kappa}
+\newcommand{\la}{\lambda}
+\newcommand{\om}{\omega}
+\newcommand{\si}{\sigma}
+
+\newcommand{\Ga}{\Gamma}
+\newcommand{\De}{\Delta}
+\newcommand{\Th}{\Theta}
+\newcommand{\La}{\Lambda}
+\newcommand{\Si}{\Sigma}
+\newcommand{\Om}{\Omega}
+
+% % Mathbb
+\newcommand{\bA}{\mathbb{A}}
+\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}
+\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}
+\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}
+\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}
+\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}
+\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}
+\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\id}{\mathbbm{1}}
+
+% % Mathcal
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+% % Mathfrak
+\newcommand{\f}[1]{\mathfrak{#1}}
+
+% % Mathrsfs
+\newcommand{\s}[1]{\mathscr{#1}}
+
+% % Category Theory
+\DeclareMathOperator{\obj}{Obj}
+\DeclareMathOperator{\END}{End}
+\DeclareMathOperator{\AUT}{Aut}
+\newcommand{\CAT}{\mathbf{Cat}}
+\newcommand{\SET}{\mathbf{Set}}
+\newcommand{\TOP}{\mathbf{Top}}
+\newcommand{\MON}{\mathbf{Mon}}
+\newcommand{\GRP}{\mathbf{Grp}}
+\newcommand{\AB}{\mathbf{Ab}}
+\newcommand{\RING}{\mathbf{Ring}}
+\newcommand{\CRING}{\mathbf{CRing}}
+\newcommand{\MOD}{\mathbf{Mod}}
+\newcommand{\VEC}{\mathbf{Vec}}
+\newcommand{\ALG}{\mathbf{Alg}}
+\newcommand{\ORD}{\mathbf{Ord}}
+\newcommand{\POSET}{\mathbf{PoSet}}
+\newcommand{\map}[2]{\yrightarrow[#2][2.5pt]{#1}[-1pt]}
+\newcommand{\iso}[1][]{\cong_{#1}}
+\newcommand{\OP}{\mathrm{op}}
+\newcommand{\darrow}{\downarrow}
+\newcommand{\LIM}{\varprojlim}
+\newcommand{\COLIM}{\varinjlim}
+\DeclareMathOperator{\coker}{coker}
+\newcommand{\fall}[2]{\downarrow_{#2}^{#1}}
+\newcommand{\lift}[2]{\uparrow_{#1}^{#2}}
+
+% % Algebra
+\newcommand{\nsub}{\trianglelefteq}
+\newcommand{\inv}{{-1}}
+\newcommand{\dvd}{\,|\,}
+\DeclareMathOperator{\ev}{ev}
+
+% % Analysis
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\renewcommand{\bar}[1]{\overline{#1}}
+\newcommand{\<}{\langle}
+\renewcommand{\>}{\rangle}
+\renewcommand{\hat}[1]{\widehat{#1}}
+\renewcommand{\check}[1]{\widecheck{#1}}
+\newcommand{\dsum}[2]{\sum_{#1}^{#2}}
+\newcommand{\dprod}[2]{\prod_{#1}^{#2}}
+\newcommand{\del}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\res}[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  %\vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+% % Galois
+\DeclareMathOperator{\GAL}{Gal}
+\DeclareMathOperator{\ORB}{Orb}
+\DeclareMathOperator{\STAB}{Stab}
+\newcommand{\emb}[3]{\mathrm{Emb}_{#1}(#2, #3)}
+\newcommand{\Char}[1]{\mathrm{Char}#1}
+
+%% code from mathabx.sty and mathabx.dcl to get some symbols from mathabx
+\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathx}{m}{n}{
+      <5> <6> <7> <8> <9> <10>
+      <10.95> <12> <14.4> <17.28> <20.74> <24.88>
+      mathx10
+      }{}
+\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+\DeclareFontSubstitution{U}{mathx}{m}{n}
+\DeclareMathAccent{\widecheck}{0}{mathx}{"71}
+
+% Arrows with text above and below with adjustable displacement
+% (Stolen from Stackexchange)
+\newcommandx{\yaHelper}[2][1=\empty]{
+\ifthenelse{\equal{#1}{\empty}}
+  % no offset
+  { \ensuremath{ \scriptstyle{ #2 } } } 
+  % with offset
+  { \raisebox{ #1 }[0pt][0pt]{ \ensuremath{ \scriptstyle{ #2 } } } }  
+}
+
+\newcommandx{\yrightarrow}[4][1=\empty, 2=\empty, 4=\empty, usedefault=@]{
+  \ifthenelse{\equal{#2}{\empty}}
+  % there's no text below
+  { \xrightarrow{ \protect{ \yaHelper[ #4 ]{ #3 } } } } 
+  % there's text below
+  {
+    \xrightarrow[ \protect{ \yaHelper[ #2 ]{ #1 } } ]
+    { \protect{ \yaHelper[ #4 ]{ #3 } } } 
+  } 
+}
+
+% xcolor
+\definecolor{darkgrey}{gray}{0.10}
+\definecolor{lightgrey}{gray}{0.30}
+\definecolor{slightgrey}{gray}{0.80}
+\definecolor{softblue}{RGB}{30,100,200}
+
+% hyperref
+\hypersetup{
+      colorlinks = true,
+      linkcolor = {softblue},
+      citecolor = {blue}
+}
+
+\newcommand{\link}[1]{\hypertarget{#1}{}}
+\newcommand{\linkto}[2]{\hyperlink{#1}{#2}}
+
+% Perpage
+\MakePerPage{footnote}
+
+% Theorems
+
+% % custom theoremstyles
+\newtheoremstyle{definitionstyle}
+{5pt}% above thm
+{0pt}% below thm
+{}% body font
+{}% space to indent
+{\bf}% head font
+{\vspace{1mm}}% punctuation between head and body
+{\newline}% space after head
+{\thmname{#1}\thmnote{\,\,--\,\,#3}}
+
+\newtheoremstyle{exercisestyle}%
+{5pt}% above thm
+{0pt}% below thm
+{\it}% body font
+{}% space to indent
+{\it}% head font
+{.}% punctuation between head and body
+{ }% space after head
+{\thmname{#1}\thmnote{ (#3)}}
+
+\newtheoremstyle{examplestyle}%
+{5pt}% above thm
+{0pt}% below thm
+{\it}% body font
+{}% space to indent
+{\it}% head font
+{.}% punctuation between head and body
+{\newline}% space after head
+{\thmname{#1}\thmnote{ (#3)}}
+
+\newtheoremstyle{remarkstyle}%
+{5pt}% above thm
+{0pt}% below thm
+{}% body font
+{}% space to indent
+{\it}% head font
+{.}% punctuation between head and body
+{ }% space after head
+{\thmname{#1}\thmnote{\,\,--\,\,#3}}
+
+\newtheoremstyle{questionstyle}%
+{5pt}% above thm
+{0pt}% below thm
+{}% body font
+{}% space to indent
+{\it}% head font
+{?}% punctuation between head and body
+{ }% space after head
+{\thmname{#1}\thmnote{\,\,--\,\,#3}}
+
+% Custom Environments
+
+% % Theorem environments
+
+\theoremstyle{definitionstyle}
+\newmdtheoremenv[
+    linewidth = 2pt,
+    leftmargin = 0pt,
+    rightmargin = 0pt,
+    linecolor = darkgrey,
+    topline = false,
+    bottomline = false,
+    rightline = false,
+    footnoteinside = true
+]{dfn}{Definition}
+\newmdtheoremenv[
+    linewidth = 2 pt,
+    leftmargin = 0pt,
+    rightmargin = 0pt,
+    linecolor = darkgrey,
+    topline = false,
+    bottomline = false,
+    rightline = false,
+    footnoteinside = true
+]{prop}{Proposition}
+\newmdtheoremenv[
+    linewidth = 2 pt,
+    leftmargin = 0pt,
+    rightmargin = 0pt,
+    linecolor = darkgrey,
+    topline = false,
+    bottomline = false,
+    rightline = false,
+    footnoteinside = true
+]{cor}{Corollary}
+
+\theoremstyle{exercisestyle}
+\newmdtheoremenv[
+    linewidth = 0.7 pt,
+    leftmargin = 20pt,
+    rightmargin = 0pt,
+    linecolor = darkgrey,
+    topline = false,
+    bottomline = false,
+    rightline = false,
+    footnoteinside = true
+]{ex}{Exercise}
+\newmdtheoremenv[
+    linewidth = 0.7 pt,
+    leftmargin = 20pt,
+    rightmargin = 0pt,
+    linecolor = darkgrey,
+    topline = false,
+    bottomline = false,
+    rightline = false,
+    footnoteinside = true
+]{lem}{Lemma}
+
+\theoremstyle{examplestyle}
+\newmdtheoremenv[
+    linewidth = 0.7 pt,
+    leftmargin = 0pt,
+    rightmargin = 0pt,
+    linecolor = darkgrey,
+    topline = false,
+    bottomline = false,
+    rightline = false,
+    footnoteinside = true
+]{eg}{Example}
+\newmdtheoremenv[
+    linewidth = 0.7 pt,
+    leftmargin = 0pt,
+    rightmargin = 0pt,
+    linecolor = darkgrey,
+    topline = false,
+    bottomline = false,
+    rightline = false,
+    footnoteinside = true
+]{ceg}{Counter Example}
+
+\theoremstyle{remarkstyle}
+\newtheorem{rmk}{Remark}
+
+\theoremstyle{questionstyle}
+\newtheorem{question}{Question}
+
+\newenvironment{proof1}{
+  \begin{proof}\renewcommand\qedsymbol{$\blacksquare$}
+}{
+  \end{proof}
+} % Proofs ending with black qedsymbol 
+
+% % tikzcd diagram 
+\newenvironment{cd}{
+    \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+}{
+    \end{tikzcd}
+    \end{figure}
+}
+
+% tikzcd
+% % Substituting symbols for arrows in tikz comm-diagrams.
+\tikzset{
+  symbol/.style={
+    draw=none,
+    every to/.append style={
+      edge node={node [sloped, allow upside down, auto=false]{$#1$}}}
+  }
+}

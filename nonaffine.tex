@@ -1,0 +1,489 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+There are two examples of spaces we want which are non-affine.
+\begin{enumerate}
+  \item $\bA^2 \setminus \set{0}$, the complement of 
+  the closed embedding $i : \set{0} \to \bA^2$
+  corresponding to the quotient map
+  $\bZ[x , y] \to \bZ[x , y] / (x , y)$.
+  \item Projective space $\bP^1$.
+  This should be obtained as the coequalizer 
+  \[
+    D(t) \rightrightarrows \bA^1 + \bA^1 \to \bP^1  
+  \]
+  where we have $D(t) \to \bA^1$ via $t \mapsto t$ and $t \mapsto 1 / t$.
+\end{enumerate}
+Let us discuss (1) first.
+We will discuss (2) in the next section.
+The punchline is : 
+\[
+  \text{\emph{Considering complements of closed embeddings
+  forces us into the larger category of presheaves.}}  
+\]
+\begin{dfn}[Complements]
+  
+  Let $i : Z \to X$ be a morphism in $\AFF$.
+  Define the \emph{complement of $i$} as the subpresheaf of $X$
+  \[
+    (X \setminus Z) (T) := 
+    \set{x \in X(T) \st T \times_X Z = \nothing}
+  \]
+  We say a map $j : U \to X$ in $\AFF$
+  is an affine complement of $i$ when 
+  $j$ induces an isomorphism \[
+    U \simeq X \setminus Z  
+  \]
+  We say $i$ has an complement representable by an affine scheme.
+\end{dfn}
+From the previous section,
+it is clear that if an affine complement exists, 
+it is unique up to isomorphism.
+What is not clear is that affine complements exist.
+In fact, it is not true.
+\begin{prop}
+  
+  The closed embedding $i : \set{0} \to \bA^2$ has no affine complement.
+\end{prop}
+\begin{proof}
+  
+  Suppose $j : \SPEC C \to \bA^2$ is an affine complement of $i$.
+  The idea is that $\SPEC C$ should be covered by $D(x), D(y)$.
+  Let $j = (f , g)$ where $f , g \in C$.
+  We compute the pullback of $D(x)$ along $f : \SPEC C \to \bA^2$.
+  Note that since $x$ invertible in $k[x , y , 1 / x]$,
+  the inclusion $D(x) \to \bA^2$ factors through $j$.
+  \begin{cd}
+    {\mathrm{Spec}\,C} && \rightsquigarrow & {\mathrm{Spec}\,C} & {D(x)} \\
+    {\mathbb{A}^2} & {D(x)} && {\mathbb{A}^2} & {D(x)}
+    \arrow["j"', from=1-1, to=2-1]
+    \arrow[from=2-2, to=2-1]
+    \arrow["s"', dashed, from=2-2, to=1-1]
+    \arrow["j"', from=1-4, to=2-4]
+    \arrow["s"', from=1-5, to=1-4]
+    \arrow["{\mathrm{id}}", from=1-5, to=2-5]
+    \arrow[from=2-5, to=2-4]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-5, to=2-4]
+  \end{cd} 
+  The universal property of $j : \SPEC C \to \bA^2$
+  implies that $\SPEC C \to \bA^2$ is a monomorphism.
+  Using the final proposition of the previous section,
+  we obtain $\SPEC C[1/f] = \SPEC C \times_{\bA^2} D(x) \simeq D(x)$.
+  The same goes for $D(y)$ and $D(xy)$.
+ 
+  Now, by assumption $C / (f , g) = 0$
+  i.e. $(f , g) = (1)$ so
+  $D(f) + D(g)$ gives a Zariski cover of $\SPEC C$.
+  This makes the top induced morphism in the
+  following commutative diagram an isomorphism.
+  \begin{cd}
+    C & {C[1/f] \times_{C[1/fg]} C[1/g]} \\
+    {k[x,y]} & {k[x,y , 1 / x] \times_{k[x,y , 1 / x , 1 / y]} k[x,y,1.y]}
+    \arrow["{x,y\mapsto f,g}", from=2-1, to=1-1]
+    \arrow["{\sim}",from=2-1, to=2-2]
+    \arrow["\sim", from=1-1, to=1-2]
+    \arrow["\sim"', from=2-2, to=1-2]
+  \end{cd}
+  The right morphism is an isomorphism by the previous paragraph
+  and a simple computation shows 
+  the bottom morphism is also an isomorphism.
+  It follows that $j$ is an isomorphism.
+  But this is a contradiction since taking any field $k$
+  \begin{cd}
+    {(\SPEC \, C) (k)} & {k^2\setminus\set{0}} \\
+    {\bA^2(k)} & {k^2}
+    \arrow["j"', from=1-1, to=2-1]
+    \arrow["\sim", from=1-1, to=2-1]
+    \arrow["\sim", from=2-2, to=2-1]
+    \arrow["\sim"', from=1-2, to=1-1]
+    \arrow["\subseteq"', from=1-2, to=2-2]
+    \arrow["\nsim", from=1-2, to=2-2]
+  \end{cd}
+\end{proof}
+This shows that if we want \emph{open embeddings} to make sense
+beyond basic opens,
+we need to allow ``non-affine spaces'' i.e. presheaves.
+More generally,
+\begin{dfn}[Open embedding with affine target]
+
+  Let $I \subs A$ be an ideal.
+  Then the complement of $\SPEC A / I \to \SPEC A$
+  is defined as the subfunctor of the Yoneda embedding of $\SPEC A$
+  consisting of maps $\SPEC B \to \SPEC A$
+  such that $B / I B = 0$.
+
+  A map $\SPEC B \to \SPEC A$ is called an \emph{open embedding}
+  when it is the complement of a closed embedding into $\SPEC A$.
+\end{dfn}
+We give some more properties of the presheaf category over $\AFF$.
+\begin{prop}
+  
+  The following are true : 
+  \begin{enumerate}
+    \item $\PSH \AFF$ has all limits and it is computed
+    ``pointwise'' i.e.
+    for a diagram $X : I \to \PSH \AFF$ we have
+    functorially in $S \in \AFF$
+    \[
+      (\LIM_{i \in I} X_i) (S) \map{\sim}{} \LIM_{i \in I} X_i(S)
+    \]
+    The same is true for colimits.
+    \item All epimorphisms are effective epimorphisms,
+    i.e. ``a surjection is the quotient of its source by 
+    the equivalence relation of being in same fibers''.
+    \item Limits and colimits of subobjects are computed pointwise
+    by intersection and union.
+    \item The Yoneda embedding preserves limits.
+    However it does \emph{not} preserve colimits.
+    % \item $\PSH \AFF$ is cartesian closed i.e.
+    % we can consider ``mapping spaces''.
+  \end{enumerate}
+\end{prop}
+None of the above are hard to prove,
+but let us say something about the Yoneda embedding not preserving colimits.
+At first, this may appear to be a bad thing
+however this is in fact desireable.
+Indeed, throughout the proof that $\bA^2 \setminus \set{0}$ 
+cannot be affine, we proved that we have an coequalizer diagram
+\[
+  D(x y) \rightrightarrows D(x) + D(y) \to \bA^2  
+\]
+inside the category $\AFF$.
+This is bad because this coequalizer should be $\bA^2 \setminus\set{0}$
+and we do not want the inclusion $\bA^2 \setminus \set{0} \subs \bA^2$
+to be an isomorphism!
+
+Let us investigate further.
+Note that the inclusions $D(x) , D(y) \subs \SPEC A$
+factor through $\bA^2\setminus\set{0}$
+so it makes sense to ask whether the following diagram
+in $\PSH \AFF$ is a coequalizer diagram
+\[
+  D(x y) \rightrightarrows D(x) + D(y) \to \bA^2 \setminus \set{0}
+\]
+\begin{prop}
+  
+  Let $U$ denote the coequalizer of $D(x y) \rightrightarrows D(x) + D(y)$
+  inside $\PSH \AFF$.
+  This is a subobject of $\bA^2$ but it is \emph{not}
+  isomorphic to $\bA^2\setminus\set{0}$ as subobjects of $\bA^2$.
+\end{prop}
+\begin{proof}
+  Because $D(xy) , D(x) , D(y)$ are all subfunctors of $\bA^2$,
+  the coequalizer is simply the union.
+  In other words, for $\SPEC A \in \AFF$ 
+  \[
+    U(A) = \set{(f , g) \in A^2 \st f \in A^\times \text{ or } g \in A^\times}
+  \]
+  Since $D(x) , D(y) \subs \bA^2\setminus\set{0}$
+  we have an induced inclusion $U \subs \bA^2\setminus\set{0}$.
+  However this is not an equality.
+  Indeed for $A = k[t] , f = t , g = 1 - t$
+  we have that neither $t , 1 - t$ are units but
+  $(1) = (t , 1 - t)$.
+\end{proof}
+One way of understanding the above phenomenon is that
+given $(f , g) : \SPEC A \to \bA^2\setminus\set{0}$ we have 
+a basic Zariski cover
+\[
+  D(f g) \rightrightarrows D(f) + D(g) \to \SPEC A  
+\]
+which is a coequalizer diagram in $\AFF$,
+however $U$ fails to recognise $\SPEC A$ as the coequalizer.
+Indeed, with the example in the proof,
+we have a map $D(f) + D(g) \to U$ which agrees on the
+intersection $D(fg)$ but fails to descend 
+to a map $\SPEC A \to U$.
+More precisely, let $S_{\set{f , g}}$ be the coequalizer
+of $D(f g) \rightrightarrows D(f) + D(g)$ inside $\PSH \AFF$.
+This induces a map
+\[
+  S_{\set{f , g}} \to \SPEC A  
+\]
+and $U$ fails to recognise this as an isomorphism.
+It turns out,
+trying to force $U$ to see this map as an isomorphism produces $\bA^2\setminus\set{0}$.
+Making this idea rigorous leads us to the notion of a \emph{Zariski sheaf}.
+We first abstract the above example.
+\begin{prop}[Zariski sieves]
+  
+  Let $X = \SPEC A \in \PSH \AFF$
+  and let $I \subs A$ be finite with $(I) = A$.
+  Define the Zariski sieve associated $I$ as
+  the subfunctor $S_I \subs \SPEC A$
+  of points $x : \SPEC B \to \SPEC A$
+  such that there exists a factoring for some $f \in I$
+  \[
+    \SPEC B \to \SPEC A[1 / f] \to \SPEC A
+  \]
+  Then we have a coequalizer diagram of presheaves
+  \[
+    \cU_I \times_X \cU_I \rightrightarrows \cU_I \to S_I
+  \]
+  where $\cU_I := \coprod_{f \in I} \SPEC A[1 / f]$.
+\end{prop}
+\begin{proof}
+  Colimits of presheaves are computed fiberwise.
+  We are thus reduced to showing
+  \[
+    \cU_I(B) \times_{X(B)} \cU_I(B) \rightrightarrows \cU_I(B) \to S_I(B)
+  \]
+  is a coequalizer diagram for each $\SPEC B \in \AFF$.
+  This follows because $S_I(B)$ is precisely the image of
+  $U_I(B)$ and for sets,
+  the image of a map is the coequalizer of its kernel pair.
+\end{proof}
+\begin{prop}[Zariski sheaves]
+
+  Define $\SH_\ZAR \AFF$ to be the full subcategory of $\PSH \AFF$
+  of presheaves $X$ such that for any
+  Zariski sieve inclusion $S_I \to \SPEC A$
+  we have an isomorphism
+  \[
+    (\PSH \AFF)(\SPEC A , Y) \map{\sim}{}
+    (\PSH \AFF)(S_I , Y)
+  \]
+  Such presheaves are called \emph{Zariski sheaves}.
+  \footnote{
+    \cite[\href{https://stacks.math.columbia.edu/tag/020W}{Tag 020W}]{stacks-project}
+    shows that we have a good definition.
+  }
+  Then 
+  \begin{enumerate}
+    \item We have an adjunction 
+    \begin{cd}
+      {\mathrm{Sh}_{\mathrm{Zar}} \mathrm{Aff}} & {\mathrm{PSh} \mathrm{Aff}}
+      \arrow["L"', shift right=2, from=1-2, to=1-1]
+      \arrow["\subseteq"', shift right=2, from=1-1, to=1-2]
+      \arrow["\bot"{description}, draw=none, from=1-1, to=1-2]
+    \end{cd}
+    \item the left adjoint $L$ is commutes with finite limits,
+    equivalently sends the final object to the final object and
+    preserves (finite) fiber products.
+    \item for all presheaves $X$ and $x : S \to LX$ where $S$ is affine,
+    there exists a basic Zariski cover $\cU$ of $S$ with a map
+    $\tilde{x} : \cU \to X$ such that we have a commuting square 
+    \begin{cd}
+      {\mathcal{U}} & X \\
+      S & LX
+      \arrow[from=1-2, to=2-2]
+      \arrow[from=1-1, to=2-1]
+      \arrow["x"', from=2-1, to=2-2]
+      \arrow["{\tilde{x}}", from=1-1, to=1-2]
+    \end{cd}
+  \end{enumerate}
+\end{prop}
+The functor $L$ is called (Zariski) sheafification.
+Note that the lemma of Zariski covers shows that
+all affine schemes are Zariski sheaves.
+
+To complete the example of $\bA^2\setminus\set{0}$,
+we have
+\begin{prop}
+  
+  The inclusion $j : U \subs \bA^2\setminus\set{0}$ exhibits
+  the latter as the Zariski sheafification of $U$.
+\end{prop}
+\begin{proof}
+  Let $Y \in \SH\AFF$.
+  We need to show that $\bA^2 \setminus \set{0}$ is a Zariski sheaf and 
+  $j$ induces
+  \[
+    \SH_\ZAR \AFF (\bA^2\setminus\set{0} , Y)
+    \map{\sim}{} \PSH\AFF(U , Y)
+  \]
+  (injectivity)
+  Let $\varphi , \psi : \bA^2\setminus\set{0} \to Y$
+  such that $\res{\varphi}{U} = \res{\psi}{U}$.
+  To show $\varphi = \psi$,
+  the uniqueness part of the density theorem says it suffices to show that for all
+  $(f , g) : \SPEC A \to \bA^2\setminus\set{0}$
+  we have $\varphi(f , g) = \psi(f , g)$.
+  We have the commutative diagram
+  \begin{cd}
+    {\mathrm{Spec}\,A} & {D(f) + D(g)} & {D(fg)} \\
+    Y & U
+    \arrow[from=1-2, to=1-1]
+    \arrow[shift right, from=1-3, to=1-2]
+    \arrow[shift left, from=1-3, to=1-2]
+    \arrow["{\varphi(f ,g)}"', from=1-1, to=2-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=2-2, to=2-1]
+  \end{cd}
+  Since $Y$ is a Zariski sheaf,
+  it sees $\SPEC A$ as the coequalizer of
+  $D(f g) \rightrightarrows D(f) + D(g)$.
+  In particular,
+  $\varphi(f , g)$ is determined by its restrictions to
+  $D(f) , D(g)$.
+  But $\res{\varphi(f , g)}{D(f)} = 
+  \res{\brkt{\res{\varphi}{U}}}{D(f)}$
+  and similarly for $D(g)$.
+  The same goes for $\psi(f , g)$
+  and thus $\varphi = \psi$.
+
+  (surjectivity)
+  Assume $\psi : U \to Y$ with the goal of showing
+  this extends to a map $\bA^2\setminus\set{0} \to Y$.
+  Again by the existence part of the density theorem, 
+  the data of the such a map is equivalent to the following
+  \begin{enumerate}
+    \item for each point $(f , g) : \SPEC A \to \bA^2\setminus\set{0}$
+    we give a point $\tilde{\psi}(f , g) : \SPEC A \to Y$
+    \item for each $\varphi : \SPEC B \to \SPEC A$
+    we have \[
+      \tilde{\psi}(f , g)\varphi = \tilde{\psi}(f \varphi , g \varphi)
+    \]
+    \item When $(f , g)$ lies in $U$,
+    we want $\tilde{\psi}(f , g) = \psi(f , g)$.
+  \end{enumerate}
+  Let $(f , g)$ be an $A$-point of $\bA^2\setminus\set{0}$.
+  Again since $Y$ is a Zariski sheaf,
+  it recognises $\SPEC A$ as the coequalizer of 
+  $D(fg) \rightrightarrows D(x) + D(y)$.
+  So to define $\tilde{\psi}(f , g)$ is equivalent to
+  defining an element of $Y(A[1/f]) \times_{Y(A[1/fg])} Y(A[1/g])$.
+  Again note that $D(f) , D(g) \to \bA^2\setminus\set{0}$ factor through $U$
+  and agree on $D(f g)$.
+  So we use the element 
+  \[
+    \brkt{\psi\brkt{\res{(f,g)}{D(f)}} , \psi\brkt{\res{(f,g)}{D(g)}}}  
+  \]
+  We leave (2) and (3) as an exercise.
+
+  (Zariski sheaf) 
+  A map $\SPEC A \to \bA^2\setminus\set{0}$
+  is the same as $(f , g) \in A$ such that $(f , g) = (1)$.
+  This is the same as an $A$-module map $A^2 \to A$ which is a surjection.
+  Given a basic Zariski cover $U$ of $\SPEC A$,
+  Zariski descent says the set of maps $A^2 \to A$
+  bijects by restriction to the set of maps $\cO(U)^2 \to \cO(U)$
+  compatible with descent data.
+  Since Zariski descent is an equivalence of abelian categories,
+  and cokernel on the cover is computed in each open,
+  this shows that surjectivity of an $A$-module map
+  is \emph{Zariski local}, which completes the proof.
+\end{proof}
+
+The above proof that $\bA^2\setminus\set{0}$ is a Zariski sheaf
+is an example of computation with \emph{quasi-coherent sheaves}.
+We will come back to this in chapter 3.
+
+% Throughout the above proof,
+% we used the crucial observation that
+% a map $\SPEC A \to LX$ lifts across $X \to LX$
+% for a basic Zariski cover of $\SPEC A$.
+% This generalises to the result below and 
+% is useful for dealing with sections of sheafifications, 
+% however we will omit the proof
+% since it is not very interesting.
+% \begin{prop}
+  
+%   Let $X \in \PSH \AFF$ and $\SPEC A \in \AFF$.
+%   \begin{enumerate}
+%     \item Given a point $x \in (LX) A$,
+%     there exists a Zariski covering $\cU_1 \to \SPEC A$
+%     with a map $\tilde{x} : \cU_1 \to X$
+%     such that the following diagram commutes
+%     \begin{cd}
+%       {\mathcal{U}_2} & {\mathcal{U}_1 \times_{\mathrm{Spec} A} \mathcal{U}_1} & {\mathcal{U}_1} & {\mathrm{Spec}\,A} \\
+%       && X & LX
+%       \arrow[from=2-3, to=2-4]
+%       \arrow["{\tilde{x}}", from=1-3, to=2-3]
+%       \arrow["x", from=1-4, to=2-4]
+%       \arrow[from=1-3, to=1-4]
+%       \arrow[shift right=2, from=1-2, to=1-3]
+%       \arrow[from=1-1, to=1-2]
+%       \arrow[from=1-1, to=2-3]
+%       \arrow[shift left=2, from=1-2, to=1-3]
+%     \end{cd}
+%     for some Zariski cover $\cU_2$ of $\cU_1 \times_{\SPEC A} \cU_1$.
+%     \footnote{
+%       Note that we do \emph{not} assume $\tilde{x}$
+%       coequalizes $\cU_1 \times_{\SPEC A} \cU_1 \rightrightarrows \cU_1$.
+%     }
+%     \item Given a Zariski cover $\cU_1 \to \SPEC A$
+%     and $\tilde{x} : \cU_1 \to X$ satisfying the above condition,
+%     $\tilde{x}$ descends to a unique point $x : \SPEC A \to X$.
+%   \end{enumerate}
+% \end{prop}
+
+The category of Zariski sheaves is designed to force
+Zariski covers to be effective epimorphisms.
+We have the following useful criterion for
+checking Zariski epimorphisms between general sheaves.
+\begin{prop}
+  
+  Let $p : X \to Y$ be an map in $\SH_\ZAR \AFF$.
+  Then $p$ is an epimorphism iff it is an effective epimorphism 
+  iff ``it locally has sections''
+  i.e. for all points $y : \SPEC A \to Y$
+  there exists a basic Zariski cover $\cU$ of $\SPEC A$ such that
+  there exists a commutative diagram
+  \begin{cd}
+    {\mathcal{U}} & X \\
+    {\SPEC\,A} & Y
+    \arrow["p", from=1-2, to=2-2]
+    \arrow["y"', from=2-1, to=2-2]
+    \arrow[from=1-1, to=2-1]
+    \arrow["{\exists \,x}", dashed, from=1-1, to=1-2]
+  \end{cd}
+\end{prop}
+\begin{proof}
+  
+  Let $\im p$ denote the subfunctor of $Y$
+  consisting of points $y \in Y(A)$ which admit local lifts across $p$.
+  Whether $p$ is an epimorphism or not
+  is about maps out of $Y$.
+  Therefore we need a way of detecting whether $\im p = Y$
+  using a map out of $Y$.
+  The idea is to use indicator functions A.K.A.
+  the existence of a subobject classifier.
+  We omit the proof since it requires no geometric intuition.
+
+  % Let $\PT$ denote the final object of $\PSH \AFF$.
+  % It is represented by $\SPEC \bZ$
+  % and it is also the final object of $\SH_\ZAR \AFF$.
+  % Define $\PROP := \PT + \PT$ where the coproduct is taken in $\SH_\ZAR \AFF$.
+  % By definition of Zariski sheaves, this is represented by 
+  % $\SPEC \bZ \times \bZ \simeq \SPEC \bZ[t]/(t(1 - t))$
+  % so a map $\SPEC A \to \PROP$ consist of giving an idempotent of $A$.
+  % We use $\top$ to denote the inclusion $\PT \to \PROP$
+  % corresponding the idempotent $1$ inside $\bZ$.
+
+  % We now define the indicator function of $\im p$.
+  % Define $\chi : Y \to \PROP$ by using the density theorem.
+  % Again this means we need : 
+  % \begin{enumerate}
+  %   \item for each point $y : \SPEC A \to Y$
+  %   to give an idempotent $\chi(y)$ of $A$
+  %   \item proof that for $\varphi : \SPEC B \to \SPEC A$
+  %   and $y : \SPEC A \to Y$ we have
+  %   \[
+  %    \chi(y)\varphi = \chi(y \varphi)  
+  %   \]
+  % \end{enumerate}
+
+
+
+\end{proof}
+% The issue is if we compute this in $\AFF$, we would get
+% \[
+%   k[t , 1 / t] \leftleftarrows k [t] \times k [1/t] \leftarrow 
+%   k \simeq \cO(\bP^1)
+% \]
+% But certainly we do not want $\bP^1 \simeq \SPEC k$ !
+
+% Let us write down some data we would want from $\bP^1$.
+% \begin{enumerate}
+%   \item For every $S \in \AFF_k$,
+%   we want to able to consider maps $S \to \bP^1$.
+%   \item The two maps $j_i : \bA^1 \to \bP^1$ should be \emph{open immersions}.
+%   In particular, for all $S \in \AFF_k$,
+%   we should be able to form the cartesian square
+%   and have $U_i \to S$
+% \end{enumerate}
+
+
+
+\end{document}

@@ -1,0 +1,41 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+\begin{dfn}[Fundamental vector fields A.K.A. infinitesimal action]
+  
+Let $G$ be an algebraic group over $k$ acting on
+a $k$-space $X$.
+Let $\f{g}$ denote the Lie algebra of $G$.
+Then given $\de \in \f{g} = G(k[\ep])$,
+we obtain a global vector field $X_\de$ on $X$ by
+\[
+  k[\ep] \times_k X \overset{(\de , \mathrm{id})}{\rightarrow} 
+  G \times X \overset{\mathrm{act}}{\rightarrow} X
+\]
+$X_\de$ is called the \emph{fundamental vector field associated to $\de$}.
+
+We obtain a morphism of Lie algebras 
+\[
+  \f{g} \to \Ga(X , T_X)
+\]
+
+In fact, for any affine open $U \subs X$, 
+due to smoothness of $U$ we have that fundamental vector fields on $U$
+must land inside $U$ : 
+\begin{cd}
+  U & U \\
+	{k[\epsilon] \times_k U} & X
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow["\id", from=1-1, to=1-2]
+	\arrow[from=2-1, to=2-2]
+	\arrow[dashed, from=2-1, to=1-2]
+\end{cd}
+So we get for every affine open $U$,
+\[
+  \f{g} \to \Ga(U , T_X)
+\]
+
+\end{dfn}
+
+\end{document}

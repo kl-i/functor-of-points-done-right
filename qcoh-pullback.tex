@@ -1,0 +1,64 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+\begin{dfn}
+  
+  Let $f : X \to Y$ in $\PSH \AFF$.
+  Define \[
+    f^* : \QCOH Y \to \QCOH X  
+  \]
+  by $\cF \mapsto (x \in X(A) \mapsto \cF_{fx})$.
+  This is symmetric monoidal with respect to the tensor product of
+  quasi-coherent sheaves.
+\end{dfn}
+
+\begin{prop}
+  
+  Let $f : \SPEC B \to \SPEC A$.
+  Then under the identification $\QCOH \SPEC A = A\MOD$
+  and $\QCOH \SPEC B = B\MOD$,
+  we have 
+  \[
+    f^* M \simeq B \otimes_A M  
+  \]
+\end{prop}
+\begin{proof}
+  Exercise.
+\end{proof}
+
+\begin{prop}
+  
+  Let $f : X \to Y$ be a morphism between schemes.
+  Then there exists an adjunction
+  \[
+    f^* \dashv f_* : \QCOH X \leftrightarrows \QCOH Y  
+  \]
+\end{prop}
+\begin{proof}
+  This is abstract non-sense and has no geometric content.
+  The fact that $X , Y$ are schemes ensure that
+  $\QCOH X$, $\QCOH Y$ are equivalent to small categories 
+  so that one can apply the adjoint functor theorem to $f^*$.
+  The reason that $f^*$ preserves small colimits is that
+  they are computed fiberwise.
+\end{proof}
+
+We will show how to compute sections of pushforward on affine opens.
+This requires a technical assumption of quasi-compact quasi-separated-ness
+which is covered in the next section.
+\begin{prop}[Base change for affine opens]
+  
+  Let $f : X \to Y$ be a qcqs morphism between schemes.
+  Let $j : U \subs Y$ be an affine open and $\cF \in \QCOH X$.
+  Then \[
+    (f_* \cF)(U) \simeq \cF(f^{-1}(U))  
+  \]
+\end{prop}
+Since $U$ is affine,
+we are equivalently proving $j^* f_* \simeq (f_1)_* j_1^*$
+which is an example of base change.
+\begin{proof}
+  Proved next section.
+\end{proof}
+
+\end{document}

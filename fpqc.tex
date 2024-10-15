@@ -1,0 +1,317 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+Descent of modules formalizes the idea that
+under certain conditions,
+one can view $p : \SPEC B \to \SPEC A$ as being a ``surjection''
+in the sense that
+$A$-modules can be thought of as $B$-modules
+equipped identifications of fibers along fibers of $p$.
+We begin with motivation from sets again.
+\begin{prop}
+  
+  Let $p : \cU \to X$ be a surjection of sets.
+  Define functors 
+  \begin{cd}
+    {\mathrm{Set} / X} & {\mathrm{Set} /\cU}
+    \arrow["{p^*}", from=1-1, to=1-2]
+    \arrow["{p_!}"', shift right=5, from=1-2, to=1-1]
+    \arrow["{p_*}"', shift left=5, from=1-2, to=1-1]
+  \end{cd}
+  \begin{enumerate}
+    \item $p^*$ sends $E \to X$ to $E \times_X\cU$
+    \item $p_!$ sends $F \to\cU$ to $F \to X$
+    \item $p_*$ sends $F \to\cU$ to the $X$-family
+    $x \mapsto \prod_{u \in p^{-1}(x)} F_u$.
+  \end{enumerate}
+  Consider the following diagram : 
+  \begin{cd}
+    {\mathcal{U} \times_X \mathcal{U} \times_X \mathcal{U}} & {\mathcal{U} \times_X \mathcal{U}} & {\mathcal{U}}
+    \arrow["{p_0}"{description}, shift left=2, from=1-2, to=1-3]
+    \arrow["{p_{12}}"{description}, from=1-1, to=1-2]
+    \arrow["{p_{02}}"{description}, shift right=4, from=1-1, to=1-2]
+    \arrow["{p_{01}}"{description}, shift left=4, from=1-1, to=1-2]
+    \arrow["{p_1}"{description}, shift right=2, from=1-2, to=1-3]
+  \end{cd}
+  where we have the projections \begin{itemize}
+    \item $p_i : \cU \times_X \cU \to \cU, (x_0 , x_1) \mapsto x_i$
+    \item $p_{ij} : \cU \times_X \cU \times_X \cU \to \cU \times_X \cU, 
+    (x_0 , x_1, x_2) \mapsto (x_i , x_j)$
+  \end{itemize}
+  Note that pullback along these projections correspond to
+  restricting to double and triple intersections.
+  Define $(\SET / \cU)^{\cU \times_X \cU}$ as the category where :
+  \begin{itemize}
+    \item An object of $(\SET / \cU)^{\cU \times_X \cU}$ is 
+    a family $\cF \in \SET / \cU$
+    equipped with a \emph{transition map} 
+    \[
+      \phi : p_0^* \cF \cong p_1^* \cF,
+      (u_0 , u_1 , v \in F_{u_0}) \mapsto 
+      (u_0 , u_1 , \phi(u_0 , u_1 , v) \in F_{u_1})
+    \]
+    in $\SET / \cU \times_X \cU$ such that
+    \begin{enumerate}
+      \item (reflexivity) $\phi = \id$ when restricted to the diagonal 
+      $\De : \cU \to \cU \times_X \cU$.
+      i.e. 
+      \[
+        \phi(u_0 , u_0 , v) = v  
+      \]
+      \item (transitivity) the following diagram commute : 
+      \begin{cd}
+        & {p_{01}^*p_1^* \mathcal{F}} \\
+        {p_{01}^*p_0^*\mathcal{F}} && {p_{12}^*p_0^*\mathcal{F}} \\
+        {p_{02}^*p_0^*\mathcal{F}} && {p_{12}^*p_1^*\mathcal{F}} \\
+        & {p_{02}^*p_1^* \mathcal{F}}
+        \arrow["{p_{01}^*(\phi)}", from=2-1, to=1-2]
+        \arrow["{p_{12}^*(\phi)}", from=2-3, to=3-3]
+        \arrow["{p_{02}^*(\phi)}"', from=3-1, to=4-2]
+        \arrow["\sim"', from=2-1, to=3-1]
+        \arrow["\sim", from=1-2, to=2-3]
+        \arrow["\sim", from=3-3, to=4-2]
+      \end{cd}
+      % \item for $(U_i , U_j , U_k) \in \cU \times \cU \times \cU$,
+      % we have ``$\phi_{ik} = \phi_{jk} \phi_{ij}$''.
+      % More rigorously, the following diagram commutes :
+      % \begin{cd}[sep = small]
+      %   {\mathcal{F}(U_i) \otimes_{\mathcal{O}(U_i)} \mathcal{O}(U_{ij}) \otimes_{\mathcal{O}(U_{ij})} \mathcal{O}(U_{ijk})} & {\mathcal{F}(U_i) \otimes_{\mathcal{O}(U_i)} \mathcal{O}(U_{ijk})} \\
+      %   {\mathcal{F}(U_j) \otimes_{\mathcal{O}(U_j)} \mathcal{O}(U_{ij}) \otimes_{\mathcal{O}(U_{ij})} \mathcal{O}(U_{ijk})} & {\mathcal{F}(U_i) \otimes_{\mathcal{O}(U_i)} \mathcal{O}(U_{ik}) \otimes_{\mathcal{O}(U_{ik})} \mathcal{O}(U_{ijk})} \\
+      %   {\mathcal{F}(U_j) \otimes_{\mathcal{O}(U_j)} \mathcal{O}(U_{ijk})} \\
+      %   {\mathcal{F}(U_j) \otimes_{\mathcal{O}(U_j)} \mathcal{O}(U_{jk}) \otimes_{\mathcal{O}(U_{jk})} \mathcal{O}(U_{ijk})} & {\mathcal{F}(U_k) \otimes_{\mathcal{O}(U_k)} \mathcal{O}(U_{ik}) \otimes_{\mathcal{O}(U_{ik})} \mathcal{O}(U_{ijk})} \\
+      %   {\mathcal{F}(U_k) \otimes_{\mathcal{O}(U_k)} \mathcal{O}(U_{jk}) \otimes_{\mathcal{O}(U_{jk})} \mathcal{O}(U_{ijk})} & {\mathcal{F}(U_k) \otimes_{\mathcal{O}(U_k)} \mathcal{O}(U_{ijk})}
+      %   \arrow["\sim", from=1-1, to=1-2]
+      %   \arrow["\sim"', from=5-1, to=5-2]
+      %   \arrow["\sim", from=4-2, to=5-2]
+      %   \arrow["\sim"', from=2-2, to=1-2]
+      %   \arrow["{\phi_{ik} \otimes \mathrm{id}}", from=2-2, to=4-2]
+      %   \arrow["{\phi_{jk} \otimes \mathrm{id}}"', from=4-1, to=5-1]
+      %   \arrow["\sim", from=4-1, to=3-1]
+      %   \arrow["\sim"', from=2-1, to=3-1]
+      %   \arrow["{\phi_{ij} \otimes \mathrm{id}}"', from=1-1, to=2-1]
+      % \end{cd}
+      % https://q.uiver.app/?q=WzAsOSxbMCwwLCJcXG1hdGhjYWx7Rn0oVV9pKSBcXG90aW1lc197XFxtYXRoY2Fse099KFVfaSl9IFxcbWF0aGNhbHtPfShVX3tpan0pIFxcb3RpbWVzX3tcXG1hdGhjYWx7T30oVV97aWp9KX0gXFxtYXRoY2Fse099KFVfe2lqa30pIl0sWzEsMCwiXFxtYXRoY2Fse0Z9KFVfaSkgXFxvdGltZXNfe1xcbWF0aGNhbHtPfShVX2kpfSBcXG1hdGhjYWx7T30oVV97aWprfSkiXSxbMCw0LCJcXG1hdGhjYWx7Rn0oVV9rKSBcXG90aW1lc197XFxtYXRoY2Fse099KFVfayl9IFxcbWF0aGNhbHtPfShVX3tqa30pIFxcb3RpbWVzX3tcXG1hdGhjYWx7T30oVV97amt9KX0gXFxtYXRoY2Fse099KFVfe2lqa30pIl0sWzEsNCwiXFxtYXRoY2Fse0Z9KFVfaykgXFxvdGltZXNfe1xcbWF0aGNhbHtPfShVX2spfSBcXG1hdGhjYWx7T30oVV97aWprfSkiXSxbMSwzLCJcXG1hdGhjYWx7Rn0oVV9rKSBcXG90aW1lc197XFxtYXRoY2Fse099KFVfayl9IFxcbWF0aGNhbHtPfShVX3tpa30pIFxcb3RpbWVzX3tcXG1hdGhjYWx7T30oVV97aWt9KX0gXFxtYXRoY2Fse099KFVfe2lqa30pIl0sWzEsMSwiXFxtYXRoY2Fse0Z9KFVfaSkgXFxvdGltZXNfe1xcbWF0aGNhbHtPfShVX2kpfSBcXG1hdGhjYWx7T30oVV97aWt9KSBcXG90aW1lc197XFxtYXRoY2Fse099KFVfe2lrfSl9IFxcbWF0aGNhbHtPfShVX3tpamt9KSJdLFswLDEsIlxcbWF0aGNhbHtGfShVX2opIFxcb3RpbWVzX3tcXG1hdGhjYWx7T30oVV9qKX0gXFxtYXRoY2Fse099KFVfe2lqfSkgXFxvdGltZXNfe1xcbWF0aGNhbHtPfShVX3tpan0pfSBcXG1hdGhjYWx7T30oVV97aWprfSkiXSxbMCwyLCJcXG1hdGhjYWx7Rn0oVV9qKSBcXG90aW1lc197XFxtYXRoY2Fse099KFVfail9IFxcbWF0aGNhbHtPfShVX3tpamt9KSJdLFswLDMsIlxcbWF0aGNhbHtGfShVX2opIFxcb3RpbWVzX3tcXG1hdGhjYWx7T30oVV9qKX0gXFxtYXRoY2Fse099KFVfe2prfSkgXFxvdGltZXNfe1xcbWF0aGNhbHtPfShVX3tqa30pfSBcXG1hdGhjYWx7T30oVV97aWprfSkiXSxbMCwxLCJcXHNpbSJdLFsyLDMsIlxcc2ltIiwyXSxbNCwzLCJcXHNpbSJdLFs1LDEsIlxcc2ltIiwyXSxbNSw0LCJcXHBoaV97aWt9IFxcb3RpbWVzIFxcbWF0aHJte2lkfSJdLFs4LDIsIlxccGhpX3tqa30gXFxvdGltZXMgXFxtYXRocm17aWR9IiwyXSxbOCw3LCJcXHNpbSJdLFs2LDcsIlxcc2ltIiwyXSxbMCw2LCJcXHBoaV97aWp9IFxcb3RpbWVzIFxcbWF0aHJte2lkfSIsMl1d
+      i.e. $\phi(u_1 , u_2 , \phi(u_0 , u_1 , v)) = \phi(u_0 , u_2 , v)$.
+    \end{enumerate}
+    \item a morphism $\eta : (\cF , \phi) \to (\cG , \psi)$ is
+    a morphism $\eta : \cF \to \cG$ in $\SET / \cU$ such that
+    the following commutes : 
+    \begin{cd}
+      {p_0^* \cF} & {p_1^* \cF} \\
+      {p_0^* \cG} & {p_1^* \cG}
+      \arrow["{p_0^*(\eta)}"', from=1-1, to=2-1]
+      \arrow["{p_1^*(\eta)}", from=1-2, to=2-2]
+      \arrow["\psi"', from=2-1, to=2-2]
+      \arrow["\phi", from=1-1, to=1-2]
+    \end{cd}
+  \end{itemize}
+
+
+  Then we have an equivalence between three categories : 
+  \[
+    \SET / X \simeq \MOD_T \simeq (\SET / \cU)^{\cU \times_X \cU}  
+  \]
+  where $\MOD_T$ is the category
+  of algebras over the monad $T := p^*p_!$
+  under which the following adjunctions coincide : 
+  \begin{itemize}
+    \item $p_! \dashv p^*$ for $\SET / X$
+    \item $\text{ free } \dashv \text{ forget }$ for $\MOD_T$
+    \item $L \dashv \text{ forget }$ for $(\SET / \cU)^{\cU \times_X \cU}$
+    where $L$ is explicit but I am too lazy right now to describe.
+  \end{itemize}
+\end{prop}
+A key example of a surjection $p : \cU \to X$
+is when $\cU = \coprod_{U \in I} U$ where
+$I$ is a collection of subsets of $X$ which covers $X$.
+In this case $\cU \times_X \cU \simeq \coprod_{U , V \in I} U \cap V$
+tracks the pairwise intersections.
+\begin{proof}
+  Let us make the comparison $\MOD_T \simeq (\SET / \cU)^{\cU \times_X \cU}$
+  first.
+  Note that \begin{cd}
+    {\mathcal{U}} & {\mathcal{U} \times_X \mathcal{U}} & {F \times_X \mathcal{U}} \\
+    X & {\mathcal{U}} & F
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=2-2, to=2-1]
+    \arrow[from=2-3, to=2-2]
+    \arrow[from=1-3, to=2-3]
+    \arrow["{p_1}"', from=1-2, to=1-1]
+    \arrow["{p_0}", from=1-2, to=2-2]
+    \arrow[from=1-3, to=1-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-2, to=2-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-3, to=2-2]
+  \end{cd}
+  Concretely, $F \times_X \cU$ consists of
+  $(v \in F_{u_0}, u_1)$ where $p(u_0) = p(u_1)$
+  and the projection $F \times_X \cU \to \cU$ is $(v , u_0 , u_1) \mapsto u_1$.
+
+  Now let's work out the multiplication $\mu : T^2 \to T$
+  of the monad.
+  We have 
+  \[
+    T^2 F = (F \times_X \cU) \times_X \cU
+  \]
+  The projection $(F \times_X \cU) \times_X \cU$ is
+  $(v \in F_{u_0} , u_1 , u_2) \mapsto u_2$.
+  So the multiplication $T^2 F \mapsto T F$ is 
+  \[
+    (v \in F_{u_0} , u_1 , u_2) \mapsto (v \in F_{u_0} , u_2)
+  \]
+  We can also compute the unit $F \to TF$ as 
+  \[
+    v \in F_{u_0} \mapsto (v \in F_{u_0} , u_0)  
+  \]
+  and verify the unit laws : 
+  \begin{cd}
+    {F \times_X \mathcal{U}} & {(F \times_X \mathcal{U}) \times_X \mathcal{U}} \\
+    {(F \times_X \mathcal{U}) \times_X \mathcal{U}} & {F \times_X \mathcal{U}}
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=2-1, to=2-2]
+    \arrow[from=1-1, to=1-2]
+  \end{cd}
+  \begin{itemize}
+    \item ``unit then multiply'' is 
+    $(v \in F_{u_0} , u_1) \mapsto (v \in F_{u_0} , u_0 , u_1)
+    \mapsto (v \in F_{u_0} , u_1)$
+    \item ``multiply then unit'' is
+    $(v \in F_{u_0} , u_1) \mapsto (v \in F_{u_0} , u_1 , u_1)
+    \mapsto (v \in F_{u_0} , u_1)$.
+  \end{itemize}
+  Associativity is the fact
+  that given $(v \in F_{u_0} , u_1 , u_2, u_3)$,
+  first forgeting $u_2$ then $u_1$ is the same as
+  first forgetting $u_1$ then $u_2$.
+
+  We are ready for modules over $T$.
+  A map $\phi : F \times_X \cU \to F$ over $\cU$
+  sends $(v \in F_{u_0} , u_1) \mapsto \phi(v , u_1) \in F_{u_1}$.
+  In other words, $\phi$ transports $v \in F_{u_0}$
+  to the fiber $F_{u_1}$ given that $u_0 = u_1$ in $X$.
+  This gives $F$ a $T$-module structure when we have 
+  \begin{itemize}
+    \item (associativity) 
+    $\phi(\phi(v \in F_{u_0} , u_1), u_2) = \phi(v \in F_{u_0} , u_2)$
+    \item (unity) $\phi(v \in F_{u_0} , u_0) = v$.
+  \end{itemize}
+  Here is the tautology : 
+  $\phi$ is equivalent to giving a map
+  $\widetilde{\phi} : F_{u_0} \to F_{u_1}$ for every pair
+  $p(u_0) = p(u_1)$.
+  In fancy terms, we have $p^* p_! \simeq (p_0)_! p_1^*$ which implies
+  \[
+    (\SET / \cU)(p^* p_! F , F) \simeq (\SET / \cU \times_X \cU)
+    (p_0^* F , p_1^* F)  
+  \]
+  The point now is that 
+  \begin{itemize}
+    \item associativity for $\phi$ corresponds to 
+    transitivity of $\widetilde{\phi}$
+    \item unity for $\phi$ corresponds to reflexivity of $\widetilde{\phi}$.
+  \end{itemize}
+  What about symmetry of $\widetilde{\phi}$?
+  This is implied because 
+  \[
+    \phi(\phi(v \in F_{u_0} , u_1) , u_0)
+    = \phi(v \in F_{u_0} , u_0) = v
+  \]
+  This proves the equivalence $\MOD_T \simeq (\SET / \cU)^{\cU \times_X \cU}$.
+  One can see that the forgetful functor $\MOD_T \to \SET / \cU$
+  corresponds to the forgetful functor 
+  $(\SET / \cU)^{\cU \times_X \cU} \to \SET / \cU$.
+
+  The comparison $\SET / X \simeq \MOD_T$
+  comes from the monadicity theorem.
+  Let $\mathrm{Glue} : \MOD_T \to \SET / X$ denote the
+  inverse constructed in the proof of the monadicity theorem.
+  Indeed, all the categories involved are locally small and 
+  we have a triple of adjoints
+  $p_! \dashv p^* \dashv p_*$ so $p^*$ preserves small colimits.
+  The fact that $p$ is surjective implies that
+  $p^*$ is conservative.\footnote{
+    In fact, in this situation $p$ being surjective is
+  equivalent to conservativity of $p^*$.
+  }
+  Opening the proof of the monadicity theorem,
+  the key part is that
+  for any $T$-module $\phi : TF \to F$,
+  we have the (split) coequalizer in $\MOD_T$ : 
+  \begin{cd}
+    {T^2 F} & {T F} & F
+    \arrow["\phi", from=1-2, to=1-3]
+    \arrow["{\mu_F}", shift left=2, from=1-1, to=1-2]
+    \arrow["{T(\phi)}"', shift right=2, from=1-1, to=1-2]
+  \end{cd}
+  Concretely in our situation, 
+  \begin{itemize}
+    \item $\mu_F : (v \in F_{u_0} , u_1 , u_2) \mapsto (v \in F_{u_0} , u_2)$
+    \item $T(\phi) : (v \in F_{u_0} , u_1 , u_2) \mapsto 
+    (\phi(v \in F_{u_0} , u_1) \in F_{u_1} , u_2)$
+  \end{itemize}
+  The functor $\mathrm{Glue}$ is
+  defined by forming the coequalizer diagram in $\SET / X$
+  \begin{cd}
+    {p_!p^*p_!F} & {p_! F} & {\mathrm{Glue}(F , \phi)}
+    \arrow[from=1-2, to=1-3]
+    \arrow["{\nu_F}", shift left=2, from=1-1, to=1-2]
+    \arrow["{p_!(\phi)}"', shift right=2, from=1-1, to=1-2]
+  \end{cd}
+  where \begin{itemize}
+    \item $\nu_V : (v \in F_{u_0} , u_1, x) \mapsto (v , x)$
+    \item $p_!(\phi) : (v \in F_{u_0} , u_1, x) \mapsto (\phi(v , u_1) , x)$
+  \end{itemize}
+  In other words, for each $x \in X$, 
+  the fiber $\mathrm{Glue}(F , \phi)_x$ is obtained by 
+  identifying all $F_{u}$ with $p(u) = x$ using the transition
+  map $\phi$.
+\end{proof}
+
+We now apply the above idea to
+standard Zariski covers $(f_1 , \dots , f_n) = A$.
+\[
+  p : \coprod_{i = 1}^{n} D(f_i) \to \SPEC A  
+\]
+Here the adjunction is 
+\begin{cd}
+  {(A\MOD)^\mathrm{op}} & {(B\MOD)^\mathrm{op}}
+	\arrow["{B \otimes_A \_}"', shift right=2, from=1-1, to=1-2]
+	\arrow["{\text{forget}}"', shift right=2, from=1-2, to=1-1]
+	\arrow["\bot"{description}, draw=none, from=1-2, to=1-1]
+\end{cd}
+where $B = \prod_{i = 1}^n A[1 / f_i]$.
+
+\begin{dfn}[Descent data]
+  
+  Let $A \to B$ be an algebra map.
+  Define $(B\MOD)^{B \otimes_A B}$ as the category with
+  \begin{itemize}
+    \item objects $(N , \phi)$ where
+    $N \in B\MOD$ and $\phi \in (B \otimes_A B)\MOD(B \otimes_A N , N \otimes_A B)$
+    such that we have the \emph{cocycle condition},
+    i.e. the following triangle commutes \begin{cd}
+      & {B \otimes_A N \otimes_A B} \\
+      {N \otimes_A B \otimes_A B} \\
+      & {B \otimes_A B \otimes_A N}
+      \arrow["{\phi_{01}}", from=2-1, to=1-2]
+      \arrow["{\phi_{12}}", from=1-2, to=3-2]
+      \arrow["{\phi_{02}}"', from=2-1, to=3-2]
+    \end{cd}
+    where \begin{itemize}
+      \item $\phi_{01} = \phi \otimes \id_B$
+      \item $\phi_{12} = \id_B \otimes \phi$
+      \item $\phi_{02} =$ ``swap 0-th and 2nd factor using $\phi$'',
+      which is $n \otimes f \otimes g \mapsto \sum_{i} a_i \otimes f \otimes n_i$
+      where $\phi(n \otimes g) = \sum_{i} a_i \otimes n_i$.
+    \end{itemize}
+    \item a morphism $(N , \phi) \to (N_1 , \phi_1)$ is a
+    morphism 
+  \end{itemize}
+\end{dfn}
+
+\begin{prop}[Descent for standard Zariski covers]
+  
+
+\end{prop}
+  
+\end{document}
