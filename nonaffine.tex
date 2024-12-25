@@ -16,11 +16,18 @@ There are two examples of spaces we want which are non-affine.
 \end{enumerate}
 Let us discuss (1) first.
 We will discuss (2) in the next section.
-The punchline is : 
-\[
-  \text{\emph{Considering complements of closed embeddings
-  forces us into the larger category of presheaves.}}  
-\]
+The punchline is that we have a Goldielocks situation : 
+\begin{enumerate}
+  \item $\bA^2 \setminus \set{0}$ should be
+  the union of $D(x)$ and $D(y)$ inside $\bA^2$.
+  This computation \emph{does not work} in $\AFF$ so we move to $\PSH \AFF$.
+  \item The union in $\PSH \AFF$ does not give what we want either.
+  The reason is that the union in presheaves \emph{``does not see'' all 
+  Zariski covers}.
+  Restricting to the ones that do brings us to \emph{Zariski sheaves}.
+  This is more than half of the definition of \emph{schemes},
+  the manifolds of algebraic geometry.
+\end{enumerate}
 \begin{dfn}[Complements]
   
   Let $i : Z \to X$ be a morphism in $\AFF$.
@@ -41,18 +48,35 @@ it is clear that if an affine complement exists,
 it is unique up to isomorphism.
 What is not clear is that affine complements exist.
 In fact, it is not true.
-\begin{prop}
+\begin{prop}[Union computed in $\AFF$ is no good]
   
   The closed embedding $i : \set{0} \to \bA^2$ has no affine complement.
 \end{prop}
 \begin{proof}
   
   Suppose $j : \SPEC C \to \bA^2$ is an affine complement of $i$.
-  The idea is that $\SPEC C$ should be covered by $D(x), D(y)$.
-  Let $j = (f , g)$ where $f , g \in C$.
-  We compute the pullback of $D(x)$ along $f : \SPEC C \to \bA^2$.
-  Note that since $x$ invertible in $k[x , y , 1 / x]$,
-  the inclusion $D(x) \to \bA^2$ factors through $j$.
+  Under Yoneda, $j$ is given by the data of $(f , g) \in C \times C$
+  such that $C / (f , g) = 0$.
+  We then have the following : 
+  \begin{cd}
+    {\mathrm{Spec}\,C} & {\mathrm{Spec}\,C[1 / f] + \mathrm{Spec}\,C[1 / g]} & {\mathrm{Spec}\,C[1 / fg]} \\
+    {\mathbb{A}^2} & {D(x) + D(y)} & {D(x y)}
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow[shift right, from=1-3, to=1-2]
+    \arrow[shift left, from=1-3, to=1-2]
+    \arrow[from=1-3, to=2-3]
+    \arrow[from=2-2, to=2-1]
+    \arrow[shift right, from=2-3, to=2-2]
+    \arrow[shift left, from=2-3, to=2-2]
+  \end{cd}
+  where the top row is obtained by pulling back the bottow row across $j$.
+  Now something interesting happens : 
+  we can show that $\SPEC C[1 / f] \to D(x)$ is actually an isomorphism.
+  To see this, note that $x$ is invertible in $k[x , y , 1 / x]$ so
+  the inclusion $D(x) \to \bA^2$ factors through $j$
+  by virtue of $\SPEC C = \bA^2 \setminus \set{0}$.
   \begin{cd}
     {\mathrm{Spec}\,C} && \rightsquigarrow & {\mathrm{Spec}\,C} & {D(x)} \\
     {\mathbb{A}^2} & {D(x)} && {\mathbb{A}^2} & {D(x)}
@@ -71,11 +95,13 @@ In fact, it is not true.
   we obtain $\SPEC C[1/f] = \SPEC C \times_{\bA^2} D(x) \simeq D(x)$.
   The same goes for $D(y)$ and $D(xy)$.
  
-  Now, by assumption $C / (f , g) = 0$
+  So the middle and right vertical morphisms are isomorphisms.
+  By assumption $C / (f , g) = 0$
   i.e. $(f , g) = (1)$ so
-  $D(f) + D(g)$ gives a Zariski cover of $\SPEC C$.
-  This makes the top induced morphism in the
-  following commutative diagram an isomorphism.
+  $D(f) + D(g)$ gives a {Zariski cover} of $\SPEC C$.
+  Putting it all together with the
+  fundamental lemma of basic Zariski covers, 
+  we have the following commutative diagram of rings : 
   \begin{cd}
     C & {C[1/f] \times_{C[1/fg]} C[1/g]} \\
     {k[x,y]} & {k[x,y , 1 / x] \times_{k[x,y , 1 / x , 1 / y]} k[x,y,1.y]}
@@ -116,7 +142,7 @@ More generally,
   when it is the complement of a closed embedding into $\SPEC A$.
 \end{dfn}
 We give some more properties of the presheaf category over $\AFF$.
-\begin{prop}
+\begin{prop}[How to compute limits/colimits in presheaves]
   
   The following are true : 
   \begin{enumerate}
@@ -161,7 +187,7 @@ in $\PSH \AFF$ is a coequalizer diagram
 \[
   D(x y) \rightrightarrows D(x) + D(y) \to \bA^2 \setminus \set{0}
 \]
-\begin{prop}
+\begin{prop}[Union in presheaves also no good]
   
   Let $U$ denote the coequalizer of $D(x y) \rightrightarrows D(x) + D(y)$
   inside $\PSH \AFF$.
@@ -189,64 +215,70 @@ a basic Zariski cover
   D(f g) \rightrightarrows D(f) + D(g) \to \SPEC A  
 \]
 which is a coequalizer diagram in $\AFF$,
-however $U$ fails to recognise $\SPEC A$ as the coequalizer.
+however this is \emph{not} a coequalizer diagram in $\PSH \AFF$.
+Specifically, $U$ can fail to recognise $\SPEC A$ as the coequalizer.
 Indeed, with the example in the proof,
 we have a map $D(f) + D(g) \to U$ which agrees on the
 intersection $D(fg)$ but fails to descend 
 to a map $\SPEC A \to U$.
-More precisely, let $S_{\set{f , g}}$ be the coequalizer
-of $D(f g) \rightrightarrows D(f) + D(g)$ inside $\PSH \AFF$.
-This induces a map
-\[
-  S_{\set{f , g}} \to \SPEC A  
-\]
-and $U$ fails to recognise this as an isomorphism.
+% More precisely, let $S_{\set{f , g}}$ be the coequalizer
+% of $D(f g) \rightrightarrows D(f) + D(g)$ inside $\PSH \AFF$.
+% This induces a map
+% \[
+%   S_{\set{f , g}} \to \SPEC A  
+% \]
+% and $U$ fails to recognise this as an isomorphism.
 It turns out,
-trying to force $U$ to see this map as an isomorphism produces $\bA^2\setminus\set{0}$.
+trying to force $U$ to recognise these coequalizers 
+turns it into $\bA^2\setminus\set{0}$.
 Making this idea rigorous leads us to the notion of a \emph{Zariski sheaf}.
-We first abstract the above example.
-\begin{prop}[Zariski sieves]
+% We first abstract the above example.
+% \begin{prop}[Zariski sieves]
   
-  Let $X = \SPEC A \in \PSH \AFF$
-  and let $I \subs A$ be finite with $(I) = A$.
-  Define the Zariski sieve associated $I$ as
-  the subfunctor $S_I \subs \SPEC A$
-  of points $x : \SPEC B \to \SPEC A$
-  such that there exists a factoring for some $f \in I$
-  \[
-    \SPEC B \to \SPEC A[1 / f] \to \SPEC A
-  \]
-  Then we have a coequalizer diagram of presheaves
-  \[
-    \cU_I \times_X \cU_I \rightrightarrows \cU_I \to S_I
-  \]
-  where $\cU_I := \coprod_{f \in I} \SPEC A[1 / f]$.
-\end{prop}
-\begin{proof}
-  Colimits of presheaves are computed fiberwise.
-  We are thus reduced to showing
-  \[
-    \cU_I(B) \times_{X(B)} \cU_I(B) \rightrightarrows \cU_I(B) \to S_I(B)
-  \]
-  is a coequalizer diagram for each $\SPEC B \in \AFF$.
-  This follows because $S_I(B)$ is precisely the image of
-  $U_I(B)$ and for sets,
-  the image of a map is the coequalizer of its kernel pair.
-\end{proof}
+%   Let $X = \SPEC A \in \PSH \AFF$
+%   and let $I \subs A$ be finite with $(I) = A$.
+%   Define the Zariski sieve associated $I$ as
+%   the subfunctor $S_I \subs \SPEC A$
+%   of points $x : \SPEC B \to \SPEC A$
+%   such that there exists a factoring for some $f \in I$
+%   \[
+%     \SPEC B \to \SPEC A[1 / f] \to \SPEC A
+%   \]
+%   Then we have a coequalizer diagram of presheaves
+%   \[
+%     \cU_I \times_X \cU_I \rightrightarrows \cU_I \to S_I
+%   \]
+%   where $\cU_I := \coprod_{f \in I} \SPEC A[1 / f]$.
+% \end{prop}
+% \begin{proof}
+%   Colimits of presheaves are computed fiberwise.
+%   We are thus reduced to showing
+%   \[
+%     \cU_I(B) \times_{X(B)} \cU_I(B) \rightrightarrows \cU_I(B) \to S_I(B)
+%   \]
+%   is a coequalizer diagram for each $\SPEC B \in \AFF$.
+%   This follows because $S_I(B)$ is precisely the image of
+%   $U_I(B)$ and for sets,
+%   the image of a map is the coequalizer of its kernel pair.
+% \end{proof}
 \begin{prop}[Zariski sheaves]
 
   Define $\SH_\ZAR \AFF$ to be the full subcategory of $\PSH \AFF$
-  of presheaves $X$ such that for any
-  Zariski sieve inclusion $S_I \to \SPEC A$
-  we have an isomorphism
+  of presheaves $X$ such that for all 
+  basic Zariski covers $\SPEC \prod_{i = 1}^n A[1 / f_i] \to \SPEC A$
+  of affines,
+  $X$ sees the cover as an effective epimorphism,
+  or in other words,
+  restriction along the cover gives an equalizer of sets
   \[
-    (\PSH \AFF)(\SPEC A , Y) \map{\sim}{}
-    (\PSH \AFF)(S_I , Y)
+    X(A) \to \prod_{i = 1}^n X(A[1 / f_i]) \rightrightarrows
+    \prod_{i, j = 1}^n X(A[1 / f_i f_j])
   \]
+  where we have used Yoneda's lemma.
   Such presheaves are called \emph{Zariski sheaves}.
   \footnote{
-    \cite[\href{https://stacks.math.columbia.edu/tag/020W}{Tag 020W}]{stacks-project}
-    shows that we have a good definition.
+    Our definition matches
+    \cite[\href{https://stacks.math.columbia.edu/tag/020W}{Tag 020W}]{stacks-project}.
   }
   Then 
   \begin{enumerate}
@@ -273,13 +305,17 @@ We first abstract the above example.
     \end{cd}
   \end{enumerate}
 \end{prop}
+\begin{proof}
+  We blackbox this result because the proof,
+  though perhaps long, is straightful and does not
+  use any geometric ideas.
+\end{proof}
 The functor $L$ is called (Zariski) sheafification.
 Note that the lemma of Zariski covers shows that
 all affine schemes are Zariski sheaves.
-
 To complete the example of $\bA^2\setminus\set{0}$,
 we have
-\begin{prop}
+\begin{prop}[Finally, union in Zariski sheaves is good]
   
   The inclusion $j : U \subs \bA^2\setminus\set{0}$ exhibits
   the latter as the Zariski sheafification of $U$.
@@ -369,6 +405,13 @@ The above proof that $\bA^2\setminus\set{0}$ is a Zariski sheaf
 is an example of computation with \emph{quasi-coherent sheaves}.
 We will come back to this in chapter 3.
 
+\begin{eg}
+  Let $\SPEC A + \SPEC B$ be presheaf coproduct.
+  Then this is \emph{not} a Zariski sheaf.
+  (Exercise : find a counterexample.)
+  However, its sheafification is given by $\SPEC (A \times B)$.
+\end{eg}
+
 % Throughout the above proof,
 % we used the crucial observation that
 % a map $\SPEC A \to LX$ lifts across $X \to LX$
@@ -408,11 +451,23 @@ We will come back to this in chapter 3.
 %   \end{enumerate}
 % \end{prop}
 
-The category of Zariski sheaves is designed to force
-Zariski covers to be effective epimorphisms.
-We have the following useful criterion for
-checking Zariski epimorphisms between general sheaves.
-\begin{prop}
+Since $L$ is a left adjoint,
+it follows that colimits of Zariski sheaves are
+given by $L$ applied to the corresponding presheaf colimit.
+However, Zariski sheafification is hard to compute,
+blackboxed or not.
+We have seen that effective epimorphisms
+are very important kinds of colimits because they generalise
+surjections from the quotients point of view.
+We end this section with
+a useful criterion for recognising
+effective epimorphisms between Zariski sheaves.
+In the category of sets,
+a morphism is surjective iff it admits a section.
+This is a form of the axiom of choice. 
+The following is a version of this 
+for effective epimorphisms between general Zariski sheaves.
+\begin{prop}[Local axiom of choice]
   
   Let $p : X \to Y$ be an map in $\SH_\ZAR \AFF$.
   Then $p$ is an epimorphism iff it is an effective epimorphism 

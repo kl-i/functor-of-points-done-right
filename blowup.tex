@@ -1,0 +1,244 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+We follow half of the exposition of Vakil
+and ignore the second half because I don't like the proj construction.
+
+Let us first work affine locally.
+Let $i : Z \to X$ be a closed immersion of affine schemes
+such that the ideal of $Z$ in $X$ is finitely generated over $\cO(X)$.
+
+\begin{dfn}
+  A \emph{blowup of $Z$ in $X$} is a cartesian square 
+  \begin{cd}
+    {E_ZX} & {\mathrm{Bl}_ZX} \\
+    Z & X
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-1, to=2-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=2-1, to=2-2]  
+  \end{cd}
+  such that $E_Z X \to \mathrm{Bl}_Z X$ is an effective Cartier divisor
+  and is final amongst all such diagrams.
+  More precisely, given $D \to Y$ effective Cartier divisor
+  and a cartesian square as on the left diagram below,
+  there exists a unique factoring $Y \to \mathrm{Bl}_Z X \to X$.
+  This induces the diagram on the right.
+  \footnote{
+    The morphism $D \to E_Z X$ is induced by 
+    universal property of $E_Z X$ as a fibre product.
+  }
+  \begin{cd}
+    D & Y & \rightsquigarrow & D & Y \\
+    Z & X &&& {E_ZX} & {\mathrm{Bl}_ZX} \\
+    &&&& Z & X
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-1, to=2-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=1-4, to=1-5]
+    \arrow["{\exists!}"{description}, dashed, from=1-4, to=2-5]
+    \arrow[from=1-4, to=3-5]
+    \arrow["{\exists!}"{description}, dashed, from=1-5, to=2-6]
+    \arrow[from=1-5, to=3-6]
+    \arrow[from=2-1, to=2-2]
+    \arrow[from=2-5, to=2-6]
+    \arrow[from=2-5, to=3-5]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=2-5, to=3-6]
+    \arrow[from=2-6, to=3-6]
+    \arrow[from=3-5, to=3-6]
+  \end{cd}
+\end{dfn}
+
+\begin{prop}[Blowup of origin in affine space]
+  
+  Let $Z \to X$ be $\set{0} \to \bA^{n+1}$.
+  Define $\mathrm{Bl}_0 \bA^{n+1}$ as
+  the subfunctor of $\bA^{n+1} \times \bP^n$ defined by
+  $(x , [y])$ such that for all $i \neq j$, $x_i y_j = x_j y_i$.
+  Intuitively, this is the locus where $x \in [y]$ with
+  $[y]$ seen as a line in $\bA^{n+1}$.
+  Precisely,
+  given $(x , [y]) : \SPEC A \to \bA^{n+1} \times \bP^n$
+  where $x \in A^{n+1}$ and $[y] : A^{n+1} \twoheadrightarrow L$
+  with $L$ a line bundle on $\SPEC A$,
+  we can consider for each $i \neq j$,
+  the linear map $A \to L , \la \mapsto \la(x_i y_j - x_j y_i)$.
+  The image, being the quotient of $A$ by a submodule,
+  is naturally an $A$-algebra.
+  By abuse of notation we write $A / (x_i y_j - x_j y_i)$ for this algebra.
+  Then $Z := \bigcap_{i \neq j} \SPEC A / (x_i y_j - x_j y_i)$
+  is a closed subscheme of $\SPEC A$.
+  We declare $(x , [y]) \in \mathrm{Bl}_0 \bA^{n+1}$ when $Z = \SPEC A$.
+  Then $\mathrm{Bl}_0 \bA^{n+1} \subs \bA^{n+1} \times \bP^n$ is a closed subscheme
+  and $\set{0} \times \bP^n \to \mathrm{Bl}_0 \bA^{n+1}$
+  is a blowup of $\set{0}$ inside $\bA^{n+1}$.
+\end{prop}
+\begin{proof}
+  It is clear by the construction that the blowup is a closed subscheme
+  of $\bA^{n+1} \times \bP^n$.
+
+  (Effective Cartier divisor)
+  Let $U_i \subs \bP^n$ be the locus where $y_i$ is invertible.
+  Then for $(x , [y]) \in \bA^{n+1} \times U_i$,
+  $x_i = 0$ implies for all $j \neq i$, $x_j y_i = x_i y_j = 0$
+  which implies $x_j = 0$.
+  So $(\set{0} \times \bP^n) \cap (\bA^{n+1} \times U_i)$
+  is cut out by $x_i = 0$ with $x_i \in \cO(\bA^{n+1} \times U_i)
+  \simeq \bZ[x_0 , \cdots , x_n , \frac{y_0}{y_i} , \cdots , \frac{y_n}{y_i}]$
+  a nonzerodivisor.
+
+  (Universal property)
+  Let $D \to \SPEC A$ be an effective Cartier divisor
+  given by pulling back $\set{0}$ along a morphism $f : \SPEC A \to \bA^{n+1}$.
+  Then the ideal $I_D$ of $D$ is a line bundle
+  and by assumption $I_D = (f_0 , \cdots , f_n) \subs A$.
+  This defines a point $[f] : \SPEC A \to \bP^n$.
+  We have $f_i f_j = f_j f_i$ so $[f]$ lands inside $\mathrm{Bl}_0 \bA^{n+1}$.
+
+\end{proof}
+
+\begin{eg}[Two ways of looking at $\mathrm{Bl}_0 \bA^{n+1}$]
+  
+  We can fiber $\mathrm{Bl}_0 \bA^{n+1}$ in two ways
+  along the projections of $\bA^{n+1} \times \bP^n$.
+  \begin{cd}
+    {\mathrm{Bl}_0\mathbb{A}^{n+1}} & {\mathbb{P}^{n}} \\
+    {\mathbb{A}^{n+1}}
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-1, to=2-1]
+  \end{cd}
+  For the projection to affine space,
+  the blowup isomorphic to $\bA^{n+1} \setminus \set{0}$
+  away from $\set{0}$ and a copy of $\bP^n$ on top of $\set{0}$.
+
+  For the projection to $\bP^n$,
+  then this is the \emph{tautological line bundle on $\bP^n$}.
+  We use the standard charts $U_i \simeq \set{y_i = 1} \subs \bA^{n+1}$.
+  Geometrically,
+  we map $U_i \times \bA^1 \to U_i \times \bA^{n+1}$
+  by $(y , \la) \mapsto (y , \la y)$.
+  Algebraically,
+  $\bZ[x_0 , \cdots , x_n , y_0 / y_i , \cdots , y_n / y_i] \to 
+  \bZ[x_i , y_0 / y_i , \cdots , y_n / y_i]$
+  by $x_j \mapsto x_i y_j / y_i$ and identity for the other coordinates.
+  This algebra map is by definition surjective.
+  For $i \neq j$,
+  $x_i (y_j / y_i) - x_j \mapsto \la (y_j / y_i) - \la (y_j / y_i) = 0$.
+  It remains to check the kernel is generated by these polynomials.
+  The point is that $z_i := x_i$ and
+  $z_j := x_j - (y_j / y_i) x_i$ for $j \neq i$ 
+  gives another set of coordinates.
+  \begin{align*}
+    \bZ[x_0 , \cdots , x_n , y_0 / y_i , \cdots , y_n / y_i] 
+    &\simeq \bZ[z_0 , \cdots , z_n , y_0 / y_i , \cdots , y_n / y_i] \\
+    x_i &\mapsto z_i \\
+    x_j &\mapsto z_j + (y_j / y_i) z_i \\
+    x_i &\mapsfrom z_i \\
+    x_j - (y_j / y_i) x_i &\mapsfrom z_j
+  \end{align*}
+  In these coordinates,
+  the algebra map is $z_j \mapsto 0$ and identity in other coordinates
+  so the kernel is generated by $z_j$ for $j \neq i$.
+  
+  Modulo checking transition maps are fiberwise linear,
+  we have proven that $\mathrm{Bl}_0 \bA^2 \to \bP^1$ is
+  the total space of a line bundle.
+  In the $i$-th chart, the exceptional divisor
+  is given by $z_i = 0$.
+  In other words, the exceptional divisor is nothing but the zero section.
+  
+\end{eg}
+
+\begin{eg}
+  We give an example of blowing up more general closed subschemes
+  using the blowup of the origin in affine space.
+  For simplicity, let us work over a field $k$.
+  Let $X = \SPEC k[x , y , z] / (x y)$ be the union of
+  $(y , z)$-plane $P_{y,z}$ and $(x , z)$-plane $P_{x,z}$.
+  Let $Z = \SPEC k[x , y , z] / (x , y)$ be the $z$-axis,
+  which sits in side $X$.
+  We have not defined tangent spaces yet but
+  intuitively points away from $Z$ have two dimensional tangent spaces,
+  matching the dimension of $X$.
+  However for points in $Z$ the tangent spaces are \emph{three} dimensional.
+  Points where the tangent spaces have higher than expected dimension
+  are called \emph{singular} points.
+  The blowup procedure will deal with these points.
+  We have a cartesian square :
+  \begin{cd}
+    Z & X \\
+    {\{0\}} & {\mathbb{A}^{2}}
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-1, to=2-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+    \arrow["{(x,y)}", from=1-2, to=2-2]
+    \arrow[from=2-1, to=2-2]
+  \end{cd}
+  We can form $X \times_{\bA^2} \mathrm{Bl}_0 \bA^2$.
+  As a space living over $X$,
+  the fibers are 
+  \begin{enumerate}
+    \item singleton for points not in $Z$
+    \item $\bP^1$ for points in $Z$.
+  \end{enumerate}
+  Observation : 
+  for points $p$ in $P_{y,z} \setminus Z$,
+  we can uniquely lift $p$ to a point in
+  $X \times_{\bA^2} \mathrm{Bl}_0 \bA^2$.
+  It is the point $(p , [0 , y(p)])$.
+  So intuitively,
+  the Zariski closure of the copy of $P_{y , z} \setminus Z$ in
+  $X \times_{\bA^2} \mathrm{Bl}_0 \bA^2$ contains
+  $Z \times \set{[0 , 1]}$.
+  Let us prove that this is all that is missing
+  and hence the closure is isomorphic to $P_{y , z}$.
+  The same will be true for $P_{x , z}$,
+  and so we've managed to separate the two planes!
+
+  We compute $X \times_{\bA^2} \mathrm{Bl}_0 \bA^2$.
+  For $\bA^2$ we use coordinates $x , y$
+  and for $\bP^1$ we use $[X , Y]$.\footnote{
+    It is an accident that this looks like Lie bracket of two vector fields.
+  }
+  We see $\mathrm{Bl}_0 \bA^2 \subs \bP^1 \times \bA^2$.
+  Then for affine charts $U_i$ of $\bP^1$ we get
+  \begin{align*}
+    W_0 := (U_0 \times \bA^2) \cap \mathrm{Bl}_0 \bA^2
+    = \SPEC k[x , y , 1 , Y / X] / (x (Y / X) - y) 
+    \simeq \SPEC k[x , Y / X] \\
+    W_1 := (U_1 \times \bA^2) \cap \mathrm{Bl}_0 \bA^2
+    = \SPEC k[x , y , X / Y , 1] / (y (X / Y) - x) 
+    \simeq \SPEC k[y , X / Y]
+  \end{align*}
+  Since $X$ and $\bA^2$ are affine,
+  $X \times_{\bA^2} W_i$ gives affine charts for the fibre product.
+  We compute \begin{align*}
+    \frac{k[x , y , z]}{(x y)} 
+      \otimes_{k[x , y]} {k[x , Y / X]}
+    \simeq \frac{k[x , z , Y / X]}{(x^2(Y / X))}
+    \simeq 
+  \end{align*}
+  
+\end{eg}
+
+\begin{prop}[Reduction to blowup in affine space]
+  
+  Let $Z \to X$ be a closed immersion of affine schemes.
+  Assume $I_Z = (f_0 , \cdots , f_n)$ so that we have a pullback diagram 
+  \begin{cd}
+    Z & X \\
+    {\{0\}} & {\mathbb{A}^{n+1}}
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-1, to=2-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+    \arrow["f", from=1-2, to=2-2]
+    \arrow[from=2-1, to=2-2]
+  \end{cd}
+
+\end{prop}
+
+
+
+\end{document}
